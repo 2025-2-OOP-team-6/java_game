@@ -81,3 +81,28 @@ Scenario
 RenderManager
 
 - 이 클래스에서는 swing을 사용해 화면 렌더링을 담당한다.
+
+---
+
+# [ 기본 작성 규칙 ]
+
+## [ GButton, GButtonText ]
+```
+//기본 구조
+GButton(ImageIcon image, Runnable func)     // 이미지 아이콘과, 이벤트 발생 시 함수 입력
+GButton(String imagePath, Runnable func)    // 이미지 아이콘의 path와 이벤트 발생 시 함수 입력
+GButtonText(String text, Runnable func)     // 텍스트 출력. JButton과 동일 하나, 이벤트 발생 시 함수 입력을 넘겨줌
+
+public void setBounds(int x, int y);        // 위치 조정
+public void setScale(float scale);          // 일정 비율로 이미지 스케일 조정
+public ImageIcon getImageIcon();            // 사용된 이미지 반환
+```
+- 해당 클래스 사용 시 매개변수로 넘겨줄 Runnable 함수를 따로 private으로 생성하여 넘겨줄 것
+```
+//예시
+GButtonText loginButton = new GButtonText("확인", () -> {loginButtonFunc(manager);});
+
+private void loginButtonFunc(ScreenManager manager) { ... }
+```
+
+
