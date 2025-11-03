@@ -86,6 +86,30 @@ RenderManager
 
 # [ 기본 작성 규칙 ]
 
+## [ ScreenManager ]
+- 해당 클래스는 Screen 변경에 사용되는 클래스이다
+- 화면을 추가하기 위해서는 반드시 core.java에서 인스턴스화 된 screenManager의 initScreen(Factory fac) 메소드를 통해 Screen을 추가해줘야 한다
+```
+//예시
+screenManager.initScreen(new StartScreenFactory());
+
+...
+
+class StartScreenFactory implements IScreenFactory
+{
+    public IScreen create()
+    {
+        return new StartScreen();
+    }
+}
+```
+- 또한 Screen 이넘에 스크린을 추가해줄 것
+
+- 이동을 시키기 위해서는 아래 메소드를 활용하여야 한다
+```
+screenManager.show(Screen.START);
+```
+
 ## [ GButton, GButtonText ]
 ```
 //기본 구조
@@ -108,4 +132,3 @@ private void loginButtonFunc(ScreenManager manager) { ... }
 ```
 GButtonText backButton = new GButtonText("뒤로가기", () -> {manager.show(Screen.START);});
 ```
-
