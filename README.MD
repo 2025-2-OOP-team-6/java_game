@@ -104,5 +104,8 @@ GButtonText loginButton = new GButtonText("확인", () -> {loginButtonFunc(manag
 
 private void loginButtonFunc(ScreenManager manager) { ... }
 ```
-
+- 단, 한줄일 경우 따로 작성해주지 않고 바로 익명함수로 넘겨줘도 됨
+```
+GButtonText backButton = new GButtonText("뒤로가기", () -> {manager.show(Screen.START);});
+```
 
