@@ -7,13 +7,15 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import Action.ActionManager;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 
 public class StartScreen extends JPanel implements IScreen{
 
     @Override
-    public void init(ScreenManager manager) {
+    public void init(ScreenManager scManager) {
         setLayout(new BorderLayout());
 
         JLabel titleLabel = new JLabel("Welcome to my world!", SwingConstants.CENTER);
@@ -22,7 +24,7 @@ public class StartScreen extends JPanel implements IScreen{
 
         JButton startButton = new JButton("Start Game");
         startButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        startButton.addActionListener(e->manager.show(Screen.START));
+        startButton.addActionListener(e->scManager.show(Screen.START));
         add(startButton, BorderLayout.SOUTH);
     }
 

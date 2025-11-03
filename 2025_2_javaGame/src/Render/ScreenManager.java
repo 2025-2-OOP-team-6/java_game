@@ -39,7 +39,7 @@ public class ScreenManager
                 return;
             }
         }
-        System.out.println("Error: Screen not found" + type);
+        throw new RuntimeException("Error: Screen not found" + type);
     }
 
     public JPanel getContainer()

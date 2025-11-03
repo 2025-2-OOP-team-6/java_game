@@ -6,9 +6,10 @@ public class Main {
         Core core = new Core();
 
         core.initCore();
-        if(!core.run())
-        {
-            core.end();
-        }
+        core.run();
+//        if(!core.run())
+//        {
+//            core.end();
+//        }
     }
 }
