@@ -6,7 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class GButton extends JButton implements GameUI{
+public class GButton extends JButton implements IGameUI {
 	ActionManager actionManager = new ActionManager();
 	
 	public GButton(ImageIcon image, Runnable runnable) {

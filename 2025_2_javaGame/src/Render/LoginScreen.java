@@ -1,6 +1,9 @@
-package LoginScreen;
+package Render;
 
 import Util.Screen;
+
+import Action.GButton;
+import Action.GButtonText;
 
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -9,19 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-
-import Action.GButton;
-import Action.GButtonText;
-import Render.IScreen;
-import Render.ScreenManager;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-public class HomeScreen extends JPanel implements IScreen{
+public class LoginScreen extends JPanel implements IScreen{
 
     @Override
     public void init(ScreenManager scManager) {
@@ -74,7 +71,7 @@ public class HomeScreen extends JPanel implements IScreen{
 
     @Override
     public Screen getScreenType() {
-        return Screen.HOME;
+        return Screen.LOGIN;
     }
 
     @Override

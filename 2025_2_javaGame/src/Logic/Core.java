@@ -1,27 +1,28 @@
 package Logic;
 
-import Render.IScreen;
-import Render.IScreenFactory;
-import Render.ScreenManager;
-import Render.StartScreen;
-import Util.Screen;
+import Util.Constant;
 
-import javax.swing.JFrame;
+import Render.IScreen;
+import Render.LoginScreen;
+import Render.StartScreen;
+import Render.ScreenManager;
+import Render.IScreenFactory;
 
 import Action.ActionManager;
-import LoginScreen.HomeScreen;
+
+import javax.swing.JFrame;
 
 
 public class Core
 {
-    // CONSTS
-    private final int WINDOW_WIDTH  = 1000;
-    private final int WINDOW_HEIGHT = 1000;
+    // CONSTANT
+    private Constant constant;
 
     // VARIABLES
     private JFrame window;
     private ScreenManager screenManager;
     private ActionManager actionManager;
+
 
     public void initCore()
     {
@@ -31,9 +32,9 @@ public class Core
         actionManager = new ActionManager();
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        window.setSize(constant.WINDOW_WIDTH, constant.WINDOW_HEIGHT);
 
-        screenManager.initScreen(new HomeScreenFactory());
+        screenManager.initScreen(new LoginScreenFactory());
         screenManager.initScreen(new StartScreenFactory());
        
 
@@ -95,11 +96,11 @@ class StartScreenFactory implements IScreenFactory
         return new StartScreen();
     }
 }
-class HomeScreenFactory implements IScreenFactory
+class LoginScreenFactory implements IScreenFactory
 {
     public IScreen create()
     {
-        return new HomeScreen();
+        return new LoginScreen();
     }
 }
 

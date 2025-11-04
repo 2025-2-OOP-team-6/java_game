@@ -1,21 +1,26 @@
-# Prototype 기본 구성
-
----
-
 ```java
 [src]/
+├── [Action]/
+│   ├── (C) ActionManager
+│   ├── (C) GButton
+│   ├── (C) GButtonText
+│   ├── (I) IGameUI
 ├── [FileIO]/
-│   ├── (C) Clue
 │   ├── (C) FileManager
 │   ├── (I) IFile
-│   ├── (C) Line
 │   └── (C) LogManager
 ├── [Logic]/
+│   ├── (C) Login
 │   └── (C) Core
 ├── [Render]/
-│   └── (C) RenderManager
+│   ├── (C) IScreen
+│   ├── (C) IScreenFactory
+│   ├── (C) LoginScreen
+│   ├── (C) ScreenManager
+│   ├── (C) StartScreen
 ├── [Util]/
 │   ├── (E) Phase
+│   ├── (C) Constant
 │   └── (E) Scenario
 └── (M) Main
 ```
@@ -28,16 +33,6 @@
 
 - interface이다.
 - 공통되는 기본 구조를 정의했다.
-
-### Clue
-
-- 단서를 관리하는 클래스이다.
-- index를 기반으로 단서를 가져온다.
-
-### Line
-
-- 대사를 관리하는 클래스이다.
-- index를 기반으로 단서를 가져온다.
 
 ### LogManager
 
@@ -58,8 +53,11 @@ Core
 
 - 이 클래스는 다른 package들을 관리한다.
 - init은 다른 클래스들을 초기화하는 기능을 담당한다.
-- run은 실질적인 동작이 돌아가는 함수이다.
-- endCredit 게임이 끝났을 때 실행되는 함수이다.
+- 메인로직 구현 예정
+
+Login
+
+- user의 pw와 id를 hasMap으로 관리한다.
 
 ---
 
@@ -69,27 +67,48 @@ Phase
 
 - 이 이넘은 phase에 대한 값들을 가지고 있다.
 
-Scenario
+Screen
 
-- 이 이넘은 각 시나이로 마다의 값들을 가지고 있다.
-    - 김재민 대사 1, 김재민 대사 2, 왕석빈 대사 1, 왕석빈 대사 2 ~~ 을 저장한다.
+- 화면의 이넘을 저장한다.
+
+Constant
+
+- 전역으로 사용할 상수값을 저장하는 클래스이다.
 
 ---
 
 # [ Render ]
 
-RenderManager
+IScreen
 
-- 이 클래스에서는 swing을 사용해 화면 렌더링을 담당한다.
+- 기본적인 화면 클래스에 대한 interface
+
+IScreenFactory
+
+- IScreen을 상속받은 클래스 생성시 이 인터페이스를 상속받은 factory를 사용해야 함
+
+ScreenManager
+
+- 화면 관리하는 클래스
+
+LoginScreen
+
+- 로그인 화면
+
+StartScreen
+
+- 시작 화면
 
 ---
 
-# [ 기본 작성 규칙 ]
+# 기본 작성 규칙
 
-## [ ScreenManager ]
+### ScreenManager
+
 - 해당 클래스는 Screen 변경에 사용되는 클래스이다
 - 화면을 추가하기 위해서는 반드시 core.java에서 인스턴스화 된 screenManager의 initScreen(Factory fac) 메소드를 통해 Screen을 추가해줘야 한다
-```
+
+```java
 //예시
 screenManager.initScreen(new StartScreenFactory());
 
@@ -103,15 +122,17 @@ class StartScreenFactory implements IScreenFactory
     }
 }
 ```
-- 또한 Screen 이넘에 스크린을 추가해줄 것
 
+- 또한 Screen 이넘에 스크린을 추가해줄 것
 - 이동을 시키기 위해서는 아래 메소드를 활용하여야 한다
-```
+
+```java
 screenManager.show(Screen.START);
 ```
 
-## [ GButton, GButtonText ]
-```
+### GButton, GButtonText
+
+```java
 //기본 구조
 GButton(ImageIcon image, Runnable func)     // 이미지 아이콘과, 이벤트 발생 시 함수 입력
 GButton(String imagePath, Runnable func)    // 이미지 아이콘의 path와 이벤트 발생 시 함수 입력
@@ -121,14 +142,18 @@ public void setBounds(int x, int y);        // 위치 조정
 public void setScale(float scale);          // 일정 비율로 이미지 스케일 조정
 public ImageIcon getImageIcon();            // 사용된 이미지 반환
 ```
+
 - 해당 클래스 사용 시 매개변수로 넘겨줄 Runnable 함수를 따로 private으로 생성하여 넘겨줄 것
-```
+
+```java
 //예시
 GButtonText loginButton = new GButtonText("확인", () -> {loginButtonFunc(manager);});
 
 private void loginButtonFunc(ScreenManager manager) { ... }
 ```
+
 - 단, 한줄일 경우 따로 작성해주지 않고 바로 익명함수로 넘겨줘도 됨
-```
+
+```java
 GButtonText backButton = new GButtonText("뒤로가기", () -> {manager.show(Screen.START);});
 ```

@@ -1,7 +1,5 @@
 package FileIO;
 
-import Util.Phase;
-
 import java.util.ArrayList;
 
 public class LogManager

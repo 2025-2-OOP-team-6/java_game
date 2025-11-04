@@ -1,4 +1,4 @@
-package LoginScreen;
+package Logic;
 
 import java.util.HashMap;
 
