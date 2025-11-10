@@ -8,6 +8,14 @@ public class Enemy extends Entity{
 	
 	Random rand = new Random();
 	
+	/**
+	 * 
+	 * @param name
+	 * @param hp
+	 * @param dice
+	 * @param dropTable HashMap<Item item, Integer probablity 1~100>
+	 */
+	
 	public Enemy(String name, int hp, Dice dice, HashMap<Item, Integer> dropTable) {
 		super(name,hp,dice);
 		this.dropTable = dropTable;

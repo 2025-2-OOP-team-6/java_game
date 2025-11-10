@@ -1,8 +1,5 @@
 package GameLogic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Player extends Entity {
 
 	public Player(String name, int hp, Dice dice) {

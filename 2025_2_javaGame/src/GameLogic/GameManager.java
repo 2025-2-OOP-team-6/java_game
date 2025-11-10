@@ -7,8 +7,10 @@ import java.util.Scanner;
 public class GameManager {
 	private ArrayList<Dice> diceList = new ArrayList<>();
 	private ArrayList<Enemy> enemyList = new ArrayList<>();
+	private ArrayList<Item> itemList = new ArrayList<>();
 	private final String diceFilename = "dice.txt";
 	private final String enemyFilename = "enemy.txt";
+	private final String itemFilename = "item.txt";
 	private Player player;
 	
 	public void initGame() {
@@ -39,7 +41,7 @@ public class GameManager {
 	}
 	
 	private void setEntity() {
-		player = new Player("player", 100, 100, diceList.get(0));
+		player = new Player("player", 5, diceList.get(0));
 	}
 	
 	private void run() {

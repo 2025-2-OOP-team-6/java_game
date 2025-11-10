@@ -8,14 +8,11 @@ public class Entity {
 	public Entity(String name, int hp, Dice dice) {
 		this.name = name;
 		this.hp = hp;
-		
+		this.dice = dice;
 	}
 	
 	public void damage() {
 		hp -= 1;
 	}
 	
-	public int roll() {
-		return dice.roll();
-	}
 }
