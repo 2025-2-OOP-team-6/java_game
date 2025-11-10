@@ -2,14 +2,15 @@ package GameLogic;
 
 import java.util.Scanner;
 
+
 public class Item {
 	public IGameRunnable<Entity> effect;
 	public String description;
 	public String name;
 	
-	public void setItem(Scanner scan) {
-		name = scan.next();
-		description = scan.next();
+	public Item(String name, String description) {
+		this.name = name;
+		this.description = description;
 	}
 	
 	public void setEffect(IGameRunnable<Entity> effect) {

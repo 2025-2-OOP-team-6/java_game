@@ -40,6 +40,16 @@ public class GameManager {
 		fileIn.close();
 	}
 	
+	private void readAllItems() {
+		Scanner fileIn = openFile(itemFilename);
+		Item i = null;
+		while(fileIn.hasNext()) {
+			i = new Item(fileIn.next(), fileIn.next());
+			itemList.add(i);
+		}
+		fileIn.close();
+	}
+	
 	private void setEntity() {
 		player = new Player("player", 5, diceList.get(0));
 	}
