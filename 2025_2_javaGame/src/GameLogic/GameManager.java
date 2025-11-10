@@ -45,6 +45,7 @@ public class GameManager {
 		Item i = null;
 		while(fileIn.hasNext()) {
 			i = new Item(fileIn.next(), fileIn.next());
+			// effect 추가 필요
 			itemList.add(i);
 		}
 		fileIn.close();

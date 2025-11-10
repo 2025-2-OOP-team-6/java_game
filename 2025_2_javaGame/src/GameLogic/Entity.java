@@ -1,6 +1,6 @@
 package GameLogic;
 
-public class Entity {
+public abstract class Entity {
 	String name;
 	int hp;
 	Dice dice;
@@ -15,4 +15,5 @@ public class Entity {
 		hp -= 1;
 	}
 	
+	abstract public void die(EventManager evManager);
 }

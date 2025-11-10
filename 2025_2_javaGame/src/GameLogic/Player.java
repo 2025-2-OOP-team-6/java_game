@@ -10,4 +10,9 @@ public class Player extends Entity {
 	{
 		this.dice = dice;
 	}
+	
+	@Override
+	public void die(EventManager evManager) {
+		
+	}
 }

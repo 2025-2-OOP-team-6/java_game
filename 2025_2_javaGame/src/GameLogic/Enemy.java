@@ -37,4 +37,9 @@ public class Enemy extends Entity{
 		
 		return null;
 	}
+	
+	@Override
+	public void die(EventManager evManager) {
+		
+	}
 }
