@@ -17,8 +17,12 @@ public class Dice implements Cloneable{
 	}
 	
 	@Override 
-	publDice clone() {
+	public Dice clone() {
+		try {
 		return (Dice)super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 	
 	public int roll() {

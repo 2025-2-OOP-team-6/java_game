@@ -5,9 +5,7 @@ import java.util.HashMap;
 
 public class Enemy extends Entity implements Cloneable{
 	private HashMap<Item, Integer> dropTable = new HashMap<>();
-	
 	Random rand = new Random();
-	
 	
 	/**
 	 * 
