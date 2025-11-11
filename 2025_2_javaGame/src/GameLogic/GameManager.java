@@ -12,12 +12,13 @@ public class GameManager {
 	private final String enemyFilename = "enemy.txt";
 	private final String itemFilename = "item.txt";
 	private Player player;
+	private int level = 1;
 	
 	public void initGame() {
 		readAllDices();
 		readAllEnemies();
+		readAllItems();
 		setEntity();
-		run();
 	}
 	
 	private void readAllDices() {
@@ -34,7 +35,7 @@ public class GameManager {
 		Scanner fileIn = openFile(enemyFilename);
 		Enemy e = null;
 		while(fileIn.hasNext()) {
-			e = new Enemy(fileIn.next(), fileIn.nextInt(), diceList.get(fileIn.nextInt()), null);
+			e = new Enemy(fileIn.next(), fileIn.nextInt(), diceList.get(fileIn.nextInt()).clone(), null);
 			enemyList.add(e);
 		}
 		fileIn.close();
@@ -52,8 +53,14 @@ public class GameManager {
 	}
 	
 	private void setEntity() {
-		player = new Player("player", 5, diceList.get(0));
+		player = new Player("player", 5, diceList.get(0).clone());
+		level = 1;
 	}
+	
+	public void levelUp() {
+		level++;
+	}
+	
 	
 	private void run() {
 		

@@ -1,8 +1,5 @@
 package GameLogic;
 
-import java.util.Scanner;
-
-
 public class Item {
 	public IGameRunnable<Entity> effect;
 	public String description;

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import Util.Debuff;
 
-public class Dice {
+public class Dice implements Cloneable{
 	String name;
 	public DiceRange range;
 	private Debuff debuff;
@@ -14,6 +14,11 @@ public class Dice {
 	
 	public Dice(DiceRange range) {
 		this.range = range;
+	}
+	
+	@Override 
+	publDice clone() {
+		return (Dice)super.clone();
 	}
 	
 	public int roll() {
