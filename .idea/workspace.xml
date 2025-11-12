@@ -5,11 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b2883a0-f6e1-4595-a1a1-81088bee159f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Util/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.metadata/.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/0.snap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/DataManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/ItemData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/UserData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Home/HomeLogic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Home/HomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/Clue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/FileManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/IFile.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/Line.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/LoginScreen/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/LoginScreen/HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Util/Scenario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/FileIO/LogManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Logic/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Logic/Core.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Logic/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Login/LoginLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Render/IScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Render/IScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Render/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Login/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2025_2_javaGame/src/Util/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/2025_2_javaGame/src/Util/Screen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +33,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="35070cXJyMLoQvFMOpPpKRSOkGM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -32,12 +46,17 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging develop-FileIO",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/james/Documents/2025_2_OOP_team6"
+    "last_opened_file_path": "C:/Users/james/source/JAVA/team6/java_game/2025_2_javaGame/src/Login"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\james\source\JAVA\team6\java_game\2025_2_javaGame\src\Login" />
+    </key>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8b2883a0-f6e1-4595-a1a1-81088bee159f" name="Changes" comment="" />

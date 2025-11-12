@@ -3,6 +3,7 @@ package Util;
 public enum Screen
 {
     START,
+    LOGIN_FAILED,
     LOGIN,
     HOME,
     INTRO,

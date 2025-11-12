@@ -3,7 +3,7 @@ package Logic;
 import Util.Constant;
 
 import Render.IScreen;
-import Render.LoginScreen;
+import Login.LoginScreen;
 import Render.StartScreen;
 import Render.ScreenManager;
 import Render.IScreenFactory;
