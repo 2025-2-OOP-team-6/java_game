@@ -1,4 +1,4 @@
-package Render;
+package Screen;
 
 import Util.Screen;
 
@@ -34,8 +34,8 @@ public class ScreenManager
         {
             if(target.getScreenType() == type)
             {
-                layout.show(container, type.name());
                 target.onShow();
+                layout.show(container, type.name());
                 return;
             }
         }

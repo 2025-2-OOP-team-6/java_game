@@ -1,4 +1,4 @@
-package Login;
+package Data;
 
 import java.io.IOException;
 import java.io.FileWriter;
@@ -6,13 +6,22 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
+import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 
-public class LoginLogic {
+public class AccountData {
+
+    // CONST
+    private final int ID_IDX = 0;
+    private final int PW_IDX = 1;
     private final String ACCOUNT_FILE = "..//account_file.csv";
+
+    // VARIABLE
     private HashMap<String, String> accountHashMap = new HashMap<>();
 
+
+    // FUNCTIONS
     public boolean matches(final String id, final String pw)
     {
         String storedPW = accountHashMap.get(id);
@@ -30,6 +39,14 @@ public class LoginLogic {
         accountHashMap.put(id, pw);
     }
 
+    public String[] getIDList()
+    {
+        Set<String> keyList = accountHashMap.keySet();
+        String[] idList = keyList.toArray(new String[keyList.size()]);
+
+        return idList;
+    }
+
     public void readAccountData()
     {
         try (BufferedReader br = new BufferedReader(new FileReader(ACCOUNT_FILE))) {
@@ -39,8 +56,8 @@ public class LoginLogic {
 
                 if(parts.length >= 2)
                 {
-                    String id = parts[0];
-                    String pw = parts[1];
+                    String id = parts[ID_IDX];
+                    String pw = parts[PW_IDX];
                     accountHashMap.put(id, pw);
                 }
             }
