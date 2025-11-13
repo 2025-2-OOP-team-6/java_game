@@ -32,6 +32,8 @@ public class LoginScreen extends JPanel implements IScreen
     private AccountData accountData = DataManager.getInstance().getAccountMgr();
     private JLabel title = new JLabel("LOGIN");
     private JLabel label = new JLabel("Please enter ID and PW");
+    private JLabel idNotice = new JLabel("ID   : ");
+    private JLabel pwNotice1 = new JLabel("PW : ");
     private JTextField idField = new JTextField(MAX_INPUT_SIZE);
     private JPasswordField pwField = new JPasswordField(MAX_INPUT_SIZE);
     private Constant constant;
@@ -95,6 +97,17 @@ public class LoginScreen extends JPanel implements IScreen
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         label.setForeground(Color.WHITE);
 
+        idNotice.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+        idNotice.setAlignmentX(Component.CENTER_ALIGNMENT);
+        idNotice.setForeground(Color.WHITE);
+        idNotice.setOpaque(false);
+
+        pwNotice1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+        pwNotice1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pwNotice1.setForeground(Color.WHITE);
+        pwNotice1.setOpaque(false);
+
+
         idField.setMaximumSize(new Dimension(300, 30)); // BoxLayout에서 폭 고정
         idField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -115,12 +128,43 @@ public class LoginScreen extends JPanel implements IScreen
         add(title);
         add(Box.createVerticalStrut(20)); // 간격
         add(label);
-        add(Box.createVerticalStrut(15));
-        add(idField);
-        add(Box.createVerticalStrut(10));
-        add(pwField);
+        add(Box.createVerticalStrut(5));
+        add(setIdPanel());
+        add(Box.createVerticalStrut(5));
+        add(setPWPanle1());
         add(Box.createVerticalStrut(20));
         add(buttonPanel);
+    }
+
+    private JPanel setIdPanel()
+    {
+        JPanel idPanel = new JPanel();
+        idPanel.setLayout(new BoxLayout(idPanel, BoxLayout.X_AXIS));
+        idPanel.setOpaque(false);
+        idPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        idNotice.setPreferredSize(new Dimension(60, 25)); // 라벨 너비 고정
+        idPanel.add(idNotice);
+        idPanel.add(Box.createRigidArea(new Dimension(10, 0))); // 라벨과 입력창 사이 간격
+        idPanel.add(idField);
+
+        return idPanel;
+    }
+
+    private JPanel setPWPanle1()
+    {
+        JPanel pwPanel1 = new JPanel();
+
+        pwPanel1.setLayout(new BoxLayout(pwPanel1, BoxLayout.X_AXIS));
+        pwPanel1.setOpaque(false);
+        pwPanel1.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        pwNotice1.setPreferredSize(new Dimension(60, 25)); // 라벨 너비 고정
+        pwPanel1.add(pwNotice1);
+        pwPanel1.add(Box.createRigidArea(new Dimension(10, 0))); // 라벨과 입력창 사이 간격
+        pwPanel1.add(pwField);
+
+        return pwPanel1;
     }
 
 

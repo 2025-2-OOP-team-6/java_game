@@ -1,5 +1,6 @@
 package Logic;
 
+import Data.DataManager;
 import Screen.*;
 import Util.Constant;
 
@@ -25,7 +26,7 @@ public class Core
         // -- set swing window --
         window = new JFrame("OOP-Team-6 Game");
 
-
+        DataManager.getInstance()
 
         screenManager = new ScreenManager();
         actionManager = new ActionManager();

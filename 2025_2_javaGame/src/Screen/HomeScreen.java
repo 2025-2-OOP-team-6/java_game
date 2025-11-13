@@ -17,7 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.Box;
 
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Component;
+import java.awt.Color;
+import java.awt.Font;
 
 
 public class HomeScreen extends JPanel implements IScreen
