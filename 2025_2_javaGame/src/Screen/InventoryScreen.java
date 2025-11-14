@@ -10,7 +10,6 @@ import Logic.User;
 
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -30,14 +29,11 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.util.ArrayList;
-
-public class MarketScreen extends JPanel implements IScreen
+public class InventoryScreen  extends JPanel implements IScreen
 {
     //CONST
     private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
     private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
-    private final String PURCHASE_BTN = "..//assets//buttons//purchaseBtn.png";
 
     //VARIABLES
     private JLabel titleL;
@@ -46,7 +42,6 @@ public class MarketScreen extends JPanel implements IScreen
     private GButton gobackBtn;
 
     JPanel gridPanel;
-    private ArrayList<String> purchasedList;
 
     private User user;
     private ItemData itemMgr;
@@ -65,7 +60,6 @@ public class MarketScreen extends JPanel implements IScreen
 
         this.scManager = scManager;
 
-        purchasedList = new ArrayList<>();
         itemMgr = DataManager.getInstance().getItemMgr();
         userMgr = DataManager.getInstance().getUserMgr();
         user = DataManager.getInstance().getCurrentUser();
@@ -78,7 +72,7 @@ public class MarketScreen extends JPanel implements IScreen
         JPanel header = new JPanel(new FlowLayout(FlowLayout.CENTER));
         header.setOpaque(false);
 
-        titleL = new JLabel("MARKET PLACE");
+        titleL = new JLabel("MY INVENTORY");
         titleL.setFont(new Font("맑은 고딕", Font.BOLD, 15));
         titleL.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleL.setForeground(Color.WHITE);
@@ -92,7 +86,6 @@ public class MarketScreen extends JPanel implements IScreen
         coinL.setOpaque(false);
 
         gobackBtn = new GButton(GOBACK_BTN, ()->{
-            gobackLogic();
             scManager.show(Screen.HOME);
         });
 
@@ -103,17 +96,9 @@ public class MarketScreen extends JPanel implements IScreen
         return header;
     }
 
-    private void gobackLogic()
-    {
-        String[] newItemList = purchasedList.toArray(new String[0]);
-        userMgr.addNewItem(user.getId(), newItemList);
-        JOptionPane.showMessageDialog(this, "Your Inventory is up to date");
-    }
-
-
     private JScrollPane createItemPanel()
     {
-        String[] itemList = itemMgr.getItemNames();
+        String[] itemList = userMgr.getInventory(user.getId());
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 
@@ -149,13 +134,6 @@ public class MarketScreen extends JPanel implements IScreen
             nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
             nameL.setForeground(Color.WHITE);
 
-            String priceData = String.valueOf(itemMgr.getPrice(itemName));
-            JLabel priceL = new JLabel("PRICE : " + priceData);
-            priceL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-            priceL.setAlignmentX(Component.CENTER_ALIGNMENT);
-            priceL.setForeground(Color.YELLOW);
-            priceL.setPreferredSize(new Dimension(280, 20));
-
             String attackData = String.valueOf(itemMgr.getAttack(itemName));
             JLabel attackL = new JLabel("ATTACK : " + attackData);
             attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
@@ -163,20 +141,12 @@ public class MarketScreen extends JPanel implements IScreen
             attackL.setForeground(Color.WHITE);
             attackL.setPreferredSize(new Dimension(280, 20));
 
-            GButton purchaseBtn = new GButton(PURCHASE_BTN, ()->{
-                purchaseLogic(itemName);
-            });
-            purchaseBtn.setPreferredSize(new Dimension(120, 30));
-            purchaseBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
             itemPanel.add(itemL);
             itemPanel.add(Box.createHorizontalStrut(5));
             itemPanel.add(nameL);
-            itemPanel.add(priceL);
             itemPanel.add(attackL);
             itemPanel.add(Box.createHorizontalStrut(5));
-            itemPanel.add(purchaseBtn);
 
             gridPanel.add(itemPanel);
         }
@@ -190,22 +160,6 @@ public class MarketScreen extends JPanel implements IScreen
         return scrollPane;
     }
 
-    private void purchaseLogic(final String itemName)
-    {
-        int coin = userMgr.getCoin(user.getId());
-        int price= itemMgr.getPrice(itemName);
-
-        if((coin - price) > 0)
-        {
-            userMgr.updateCoin(user.getId(), coin - price);
-            purchasedList.add(itemName);
-            String coinString = String.valueOf(userMgr.getCoin(user.getId()));
-            coinL.setText(coinString);
-            JOptionPane.showMessageDialog(this, "Purchase success");
-            return;
-        }
-        JOptionPane.showMessageDialog(this, "Not enough coin");
-    }
 
     private void setComponent()
     {
@@ -215,11 +169,11 @@ public class MarketScreen extends JPanel implements IScreen
 
     @Override
     public Screen getScreenType() {
-        return Screen.MARKET;
+        return Screen.INVEN;
     }
 
     @Override
     public void onShow() {
-        System.out.println("Start: MarketScreen is now Rendering");
+        System.out.println("Start: InventoryScreen is now Rendering");
     }
 }

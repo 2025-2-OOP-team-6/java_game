@@ -1,8 +1,9 @@
 package Logic;
 
 import Data.DataManager;
-import Screen.*;
+import Screen.ScreenManager;
 import Util.Constant;
+import Util.Screen;
 
 import Action.ActionManager;
 
@@ -26,18 +27,16 @@ public class Core
         // -- set swing window --
         window = new JFrame("OOP-Team-6 Game");
 
-        DataManager.getInstance()
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(constant.WINDOW_WIDTH, constant.WINDOW_HEIGHT);
+
+        DataManager.getInstance();
 
         screenManager = new ScreenManager();
         actionManager = new ActionManager();
 
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(constant.WINDOW_WIDTH, constant.WINDOW_HEIGHT);
-
-        screenManager.initScreen(new LoginScreenFactory());
-        screenManager.initScreen(new SignUpScreenFacotry());
-        screenManager.initScreen(new StartScreenFactory());
-        screenManager.initScreen(new HomeScreenFactory());
+        screenManager.initPriorityScreen();
+        screenManager.show(Screen.LOGIN);
 
         window.add(screenManager.getContainer());
         window.setVisible(true);
@@ -45,7 +44,6 @@ public class Core
 
     public void run()
     {
-
     }
 
     public void end()
@@ -53,27 +51,3 @@ public class Core
         // -- ending credit --
     }
 }
-
-class StartScreenFactory implements IScreenFactory
-{
-    public IScreen create()
-    {
-        return new StartScreen();
-    }
-}
-class SignUpScreenFacotry implements IScreenFactory
-{
-    public IScreen create() {return new SignUpScreen();}
-}
-class HomeScreenFactory implements IScreenFactory
-{
-    public IScreen create() {return new HomeScreen();}
-}
-class LoginScreenFactory implements IScreenFactory
-{
-    public IScreen create()
-    {
-        return new LoginScreen();
-    }
-}
-

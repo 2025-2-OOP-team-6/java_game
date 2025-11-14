@@ -31,7 +31,8 @@ public class HomeScreen extends JPanel implements IScreen
     private final String LOGOUT_BTN = "..//assets//buttons//logoutBtn.png";
     private final String MARKET_BTN = "..//assets//buttons//marketBtn.png";
     private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
-
+    private final String INVEN_BTN  = "..//assets//buttons//invenBtn.png";
+    private final String RANK_BTN   = "..//assets//buttons//rankBtn.png";
 
     //VARIABLES
     private JLabel coinLabel;
@@ -39,6 +40,8 @@ public class HomeScreen extends JPanel implements IScreen
     private JLabel timeLabel;
     private JLabel welcomeLabel;
 
+    private GButton rankBtn;
+    private GButton invenBtn;
     private GButton startBtn;
     private GButton logoutBtn;
     private GButton marketBtn;
@@ -83,12 +86,12 @@ public class HomeScreen extends JPanel implements IScreen
         welcomeArea.setOpaque(false);
 
         // - Set welcome -
-        welcomeLabel = new JLabel("환영합니다, " + "user.getId()" + "님!");
+        welcomeLabel = new JLabel("환영합니다, " + user.getId() + "님!");
         welcomeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         welcomeLabel.setForeground(Color.WHITE);
 
         // - Set coin -
-        String userCoin = "String.valueOf(userData.getCoin(user.getId()))";
+        String userCoin = String.valueOf(userData.getCoin(user.getId()));
         coinLabel = new JLabel(userCoin + " 코인");
         coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         coinLabel.setForeground(Color.YELLOW);
@@ -119,7 +122,7 @@ public class HomeScreen extends JPanel implements IScreen
 
     private JPanel createCenterPanel(ScreenManager scManager)
     {
-        JPanel centerPanel = new JPanel(new GridLayout(1, 3, 20, 20));
+        JPanel centerPanel = new JPanel(new GridLayout(1, 5, 20, 20));
         centerPanel.setOpaque(false);
 
         startBtn = new GButton(START_BTN, ()->{
@@ -134,6 +137,16 @@ public class HomeScreen extends JPanel implements IScreen
            scManager.show(Screen.SELECT);
         });
 
+        invenBtn = new GButton(INVEN_BTN, ()->{
+            scManager.show(Screen.INVEN);
+        });
+
+        rankBtn = new GButton(RANK_BTN, ()->{
+           scManager.show(Screen.RANK);
+        });
+
+        centerPanel.add(rankBtn);
+        centerPanel.add(invenBtn);
         centerPanel.add(startBtn);
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
@@ -151,14 +164,14 @@ public class HomeScreen extends JPanel implements IScreen
         bottomPanel.setOpaque(false);
 
         // - Set rank -
-        String rank = "String.valueOf(userData.getRank(user.getId()))";
+        String rank = String.valueOf(userData.getRank(user.getId()));
         rankLabel = new JLabel(rank + " 랭크");
         rankLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // - Set rank -
-        String time = "String.valueOf(userData.getTime(user.getId()))";
+        String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
         timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         timeLabel.setForeground(Color.WHITE);
@@ -178,21 +191,11 @@ public class HomeScreen extends JPanel implements IScreen
     @Override
     public void onShow()
     {
-        user = DataManager.getInstance().getCurrentUser();
+        UserData userMgr = DataManager.getInstance().getUserMgr();
+        User user = DataManager.getInstance().getCurrentUser();
 
-        if(user != null)
-        {
-            welcomeLabel.setText("환영합니다, " + user.getId() + "님!");
-
-            String coin = String.valueOf(userData.getCoin(user.getId()));
-            coinLabel.setText(coin + " 코인");
-
-            String rank = String.valueOf(userData.getRank(user.getId()));
-            rankLabel.setText(rank + "랭크");
-
-            String time = String.valueOf(userData.getTime(user.getId()));
-            timeLabel.setText(time + "초");
-        }
+        String coinString = String.valueOf(userMgr.getCoin(user.getId()));
+        coinLabel.setText(coinString);
 
         System.out.println("Start: HomeScreen is now Rendering");
     }

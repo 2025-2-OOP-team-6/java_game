@@ -20,7 +20,23 @@ public class ScreenManager
         container = new JPanel(layout);
     }
 
-    public void initScreen(IScreenFactory fac)
+    public void initPriorityScreen()
+    {
+        initScreen(new LoginScreenFactory());
+        initScreen(new SignUpScreenFacotry());
+    }
+
+    public void initAllScreens()
+    {
+        initScreen(new StartScreenFactory());
+        initScreen(new HomeScreenFactory());
+        initScreen(new MarketScreenFactory());
+        initScreen(new InventoryScreenFactory());
+        initScreen(new SelectScreenFactory());
+        initScreen(new RankScreenFactory());
+    }
+
+    private void initScreen(IScreenFactory fac)
     {
         IScreen screen = fac.create();
         screen.init(this);
@@ -46,4 +62,40 @@ public class ScreenManager
     {
         return container;
     }
+}
+
+class StartScreenFactory implements IScreenFactory
+{
+    public IScreen create()
+    {
+        return new StartScreen();
+    }
+}
+class SignUpScreenFacotry implements IScreenFactory
+{
+    public IScreen create() {return new SignUpScreen();}
+}
+class HomeScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new HomeScreen();}
+}
+class LoginScreenFactory implements IScreenFactory
+{
+    public IScreen create()  {return new LoginScreen();}
+}
+class MarketScreenFactory implements IScreenFactory
+{
+    public IScreen create() { return new MarketScreen();}
+}
+class InventoryScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new InventoryScreen();}
+}
+class SelectScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new SelectScreen();}
+}
+class RankScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new RankScreen();}
 }

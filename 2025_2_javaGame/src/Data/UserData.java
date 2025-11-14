@@ -5,8 +5,11 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
+
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class UserData
 {
@@ -24,12 +27,21 @@ public class UserData
     private final int RANK_IDX = 1;
     private final int COIN_IDX = 2;
     private final int INVEN_IDX = 3;
+    private final int MAX_CHOOSE_SIZE = 3;
     private final String PREFIX = "..//assets//files//";
     private final String SUFFIX = "_file.csv";
 
-    // VARIABLES
-    private HashMap<String, Info> userHashMap = new HashMap<>();
 
+    // VARIABLES
+    private String[] userIDList;
+    private String[] choosedCharactor;
+    private HashMap<String, Info> userHashMap;
+
+
+    public UserData()
+    {
+        choosedCharactor = new String[MAX_CHOOSE_SIZE];
+    }
 
 
     // FUNCTIONS
@@ -51,6 +63,11 @@ public class UserData
         }
 
         return null;
+    }
+
+    public String[] getChoosedCharactor()
+    {
+        return choosedCharactor;
     }
 
     public int getCoin(final String id)
@@ -90,6 +107,12 @@ public class UserData
     }
 
     // - Setters
+
+    public void updateChoosedCharactor(final String[] list)
+    {
+        if(list != null)
+            choosedCharactor = list;
+    }
 
     public void addNewUser(final String id)
     {
@@ -135,7 +158,7 @@ public class UserData
         userInfo.clearRank = rank;
     }
 
-    public void uqdateCoin(final String id, final int coin)
+    public void updateCoin(final String id, final int coin)
     {
         Info userInfo = userHashMap.get(id);
         userInfo.coin = coin;
@@ -144,42 +167,50 @@ public class UserData
 
     // - File I/O -
 
-    public void readUserData(final String id)
+    public void readUserData(final String[] userIDList)
     {
         final int MINIUM_DATA_SIZE = 3;
-        final String USER_FILE = PREFIX + id + SUFFIX;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
+        userHashMap = new HashMap<>();
 
-                if(parts.length >= MINIUM_DATA_SIZE)
-                {
-                    int time = Integer.parseInt(parts[TIME_IDX]);
-                    int rank = Integer.parseInt(parts[RANK_IDX]);
-                    int coin = Integer.parseInt(parts[COIN_IDX]);
-                    String invenString = parts[INVEN_IDX];
+        for(String id : userIDList)
+        {
+            final String USER_FILE = PREFIX + id + SUFFIX;
 
-                    Info infoNode = new Info();
-                    infoNode.clearRank = rank;
-                    infoNode.clearTime = time;
-                    infoNode.coin = coin;
-                    infoNode.inventory = invenString;
+            try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
 
-                    userHashMap.put(id, infoNode);
+                    if(parts.length >= MINIUM_DATA_SIZE)
+                    {
+                        int time = Integer.parseInt(parts[TIME_IDX]);
+                        int rank = Integer.parseInt(parts[RANK_IDX]);
+                        int coin = Integer.parseInt(parts[COIN_IDX]);
+                        String invenString = parts[INVEN_IDX];
+
+                        Info infoNode = new Info();
+                        infoNode.clearRank = rank;
+                        infoNode.clearTime = time;
+                        infoNode.coin = coin;
+                        infoNode.inventory = invenString;
+
+                        userHashMap.put(id, infoNode);
+                    }
                 }
             }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error: can not open this file (" + USER_FILE + ")" );
-        }
-        catch(NullPointerException e)
-        {
-            System.err.println("Error: Invailed file data format");
+            catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Error: can not open this file (" + USER_FILE + ")" );
+            }
+            catch(NullPointerException e)
+            {
+                System.err.println("Error: Invailed file data format");
+            }
         }
     }
+
+
 
     public void storeUserData(final String id)
     {

@@ -8,9 +8,6 @@ public enum Screen
     HOME,
     MARKET,
     SELECT,
-    INTRO,
-    PHASE_1,
-    PHASE_2,
-    PHASE_3,
-    END
+    INVEN,
+    RANK,
 }

@@ -58,7 +58,11 @@ public class LoginScreen extends JPanel implements IScreen
 
         loginBtn = new GButton(LOGIN_BTN, () -> {
             boolean loginSuccess = loginLogic();
-            if (loginSuccess) {scManager.show(Screen.HOME);}
+            if (loginSuccess)
+            {
+                scManager.initAllScreens();
+                scManager.show(Screen.HOME);
+            }
         });
 
         signUpBtn = new GButton(SIGNUP_BTN, ()-> {
@@ -77,6 +81,7 @@ public class LoginScreen extends JPanel implements IScreen
         if(accountData.matches(ID, PW))
         {
             DataManager.getInstance().loadUser(ID);
+
             JOptionPane.showMessageDialog(this, "Login Successful");
             return true;
         }

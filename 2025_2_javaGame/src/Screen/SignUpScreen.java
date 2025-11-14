@@ -3,6 +3,7 @@ package Screen;
 import Data.AccountData;
 import Data.DataManager;
 import Action.GButton;
+import Data.UserData;
 import Util.Screen;
 import Util.Constant;
 
@@ -100,6 +101,8 @@ public class SignUpScreen extends JPanel implements IScreen
         }
 
         accountData.insertData(ID, PW1);
+        UserData userMgr = DataManager.getInstance().getUserMgr();
+        userMgr.addNewUser(ID);
 
         DataManager.getInstance().loadUser(ID);
 
