@@ -4,6 +4,7 @@ import Render.IScreen;
 import Render.IScreenFactory;
 import Render.ScreenManager;
 import Render.StartScreen;
+import Render.RankingScreen;
 import Util.Screen;
 
 import javax.swing.JFrame;
@@ -12,8 +13,8 @@ import javax.swing.JFrame;
 public class Core
 {
     // CONSTS
-    private final int WINDOW_WIDTH  = 0;
-    private final int WINDOW_HEIGHT = 0;
+    private final int WINDOW_WIDTH  = 1024;
+    private final int WINDOW_HEIGHT = 760;
 
     // VARIABLES
     private JFrame window;
@@ -29,7 +30,7 @@ public class Core
         window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         screenManager.initScreen(new StartScreenFactory());
-
+        screenManager.initScreen(new RankingScreenFactory());
         return true;
     }
 
@@ -62,6 +63,9 @@ public class Core
                         break;
                     case Screen.END:
                         screenManager.show(Screen.END);
+                        break;    
+                    case Screen.RANKING:
+                        screenManager.show(Screen.RANKING);
                         break;
                     default:
                         assert true : "Error: Invailed type accession";
@@ -70,9 +74,8 @@ public class Core
                 window.add(screenManager.getContainer());
                 window.setVisible(true);
             }
+            return true;
         }
-
-        return true;
     }
 
     public void end()
@@ -86,6 +89,14 @@ class StartScreenFactory implements IScreenFactory
     public IScreen create()
     {
         return new StartScreen();
+    }
+}
+
+class RankingScreenFactory implements IScreenFactory
+{
+    public IScreen create()
+    {
+        return new RankingScreen();
     }
 }
 

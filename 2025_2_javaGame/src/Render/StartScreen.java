@@ -23,7 +23,16 @@ public class StartScreen extends JPanel implements IScreen{
         JButton startButton = new JButton("Start Game");
         startButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
         startButton.addActionListener(e->manager.show(Screen.START));
-        add(startButton, BorderLayout.SOUTH);
+
+        JButton rankingButton = new JButton("Show Ranking   "); 
+        rankingButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        rankingButton.addActionListener(e -> manager.show(Screen.RANKING));
+
+        JPanel menuPanel = new JPanel(); //랭킹버튼 추가 후 JPanel로 묶어서 StartScreen에 띄움
+        menuPanel.add(startButton);
+        menuPanel.add(rankingButton);
+
+        add(menuPanel, BorderLayout.SOUTH);
     }
 
     @Override
