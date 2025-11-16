@@ -126,7 +126,7 @@ public class HomeScreen extends JPanel implements IScreen
         centerPanel.setOpaque(false);
 
         startBtn = new GButton(START_BTN, ()->{
-           scManager.show(Screen.START);
+           scManager.show(Screen.BATTLE);
         });
 
         marketBtn = new GButton(MARKET_BTN, ()->{
