@@ -1,4 +1,4 @@
-package Render;
+package Screen;
 
 import Util.Screen;
 
@@ -6,8 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-
-import Action.ActionManager;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
