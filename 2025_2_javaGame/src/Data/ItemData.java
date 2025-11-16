@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class ItemData
-{
+public class ItemData{
     class ItemInfo
     {
         int attack  = -1;
@@ -24,13 +23,11 @@ public class ItemData
     private List<String> itemNames = new ArrayList<>();
     private HashMap<String, ItemInfo> itemInfoList = new HashMap<>();
 
-    public String[] getItemNames()
-    {
+    public String[] getItemNames(){
         return itemNames.toArray(new String[0]);
     }
 
-    public int getAttack(final String itemName)
-    {
+    public int getAttack(final String itemName){
         ItemInfo info = itemInfoList.get(itemName);
 
         if(info != null && info.attack != -1)
@@ -41,8 +38,7 @@ public class ItemData
         return -1;
     }
 
-    public int getPrice(final String itemName)
-    {
+    public int getPrice(final String itemName){
         ItemInfo info = itemInfoList.get(itemName);
 
         if(info != null && info.price != -1)
@@ -53,8 +49,7 @@ public class ItemData
         return -1;
     }
 
-    public void readItemData()
-    {
+    public void readItemData(){
         try (BufferedReader br = new BufferedReader(new FileReader(ITEM_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {

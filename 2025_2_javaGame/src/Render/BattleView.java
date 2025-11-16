@@ -27,7 +27,7 @@ import java.awt.GridLayout;
  */
 public class BattleView extends JPanel
 {
-    // 이미지 경로 (이름은 프로젝트에 맞게 수정 가능)
+    // 이미지 경로
     private static final String PLAYER_IMAGE_PATH   = "..//assets//battle//player.png";
     private static final String ENEMY_IMAGE_PATH    = "..//assets//battle//enemy.png";
     private static final String DICE_BADGE_PATH     = "..//assets//battle//diceBadge.png";

@@ -9,3 +9,4 @@ public class Constant
     public static final int WALL_GREEN = 24;
     public static final int WALL_BLUE  = 173;
 }
+

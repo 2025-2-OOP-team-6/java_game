@@ -3,7 +3,7 @@ package Logic;
 import java.util.Random;
 
 /*
-  전투의 순수 로직을 담당하는 매니저.
+  전투로직을 담당하는 매니저.
   - 주사위 범위
   - 스테이지 번호
   - 승패 판정 
@@ -30,7 +30,6 @@ public class BattleManager
     // 랜덤 주사위
     private final Random random = new Random();
 
-    // 상태 값들
     private int stage;
 
     private int playerMaxHp;
@@ -90,10 +89,8 @@ public class BattleManager
     }
 
     // 핵심 로직: 1회 결투
-    /*
-     플레이어와 적이 각각 주사위를 한 번 굴려서
-     누가 이겼는지 결과만 리턴한다.
-    */
+    //플레이어와 적이 각각 주사위를 한 번 굴려서누가 이겼는지 결과만 리턴ㄴ
+
     public DuelResult duel()
     {
         int playerRoll = roll(playerDiceMin, playerDiceMax);
@@ -112,7 +109,7 @@ public class BattleManager
         return DuelResult.DRAW;
     }
 
-    // 주사위 굴리기 최소, 최대 포함)
+    // 주사위 굴리기 최소, 최대 포함
     private int roll(final int min, final int max)
     {
         return random.nextInt(max - min + 1) + min;
