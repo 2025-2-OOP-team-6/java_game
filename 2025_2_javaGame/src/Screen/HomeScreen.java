@@ -27,12 +27,12 @@ import java.awt.Font;
 public class HomeScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String START_BTN  = "..//assets//buttons//startBtn.png";
-    private final String LOGOUT_BTN = "..//assets//buttons//logoutBtn.png";
-    private final String MARKET_BTN = "..//assets//buttons//marketBtn.png";
-    private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
-    private final String INVEN_BTN  = "..//assets//buttons//invenBtn.png";
-    private final String RANK_BTN   = "..//assets//buttons//rankBtn.png";
+    private final String START_BTN  = "assets//buttons//startBtn.png";
+    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
+    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
+    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
+    private final String INVEN_BTN  = "assets//buttons//invenBtn.png";
+    private final String RANK_BTN   = "assets//buttons//rankBtn.png";
 
     //VARIABLES
     private JLabel coinLabel;
@@ -151,7 +151,7 @@ public class HomeScreen extends JPanel implements IScreen
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        
         return centerPanel;
     }
 
