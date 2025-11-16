@@ -15,5 +15,5 @@ public abstract class Entity {
 		hp -= 1;
 	}
 	
-	abstract public void die(EventManager evManager);
+	abstract public void die(EventListener evManager);
 }

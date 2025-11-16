@@ -3,9 +3,8 @@ package GameLogic;
 import java.util.Random;
 import java.util.HashMap;
 
-public class Enemy extends Entity{
+public class Enemy extends Entity implements Cloneable{
 	private HashMap<Item, Integer> dropTable = new HashMap<>();
-	
 	Random rand = new Random();
 	
 	/**
@@ -38,8 +37,17 @@ public class Enemy extends Entity{
 		return null;
 	}
 	
+	@Override 
+	public Enemy clone() {
+		try {
+		return (Enemy)super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+	
 	@Override
-	public void die(EventManager evManager) {
+	public void die(EventListener evManager) {
 		
 	}
 }
