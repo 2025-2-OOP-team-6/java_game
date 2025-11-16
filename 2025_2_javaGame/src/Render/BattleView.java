@@ -28,14 +28,14 @@ import java.awt.GridLayout;
 public class BattleView extends JPanel
 {
     // 이미지 경로
-    private static final String PLAYER_IMAGE_PATH   = "..//assets//battle//player.png";
-    private static final String ENEMY_IMAGE_PATH    = "..//assets//battle//enemy.png";
-    private static final String DICE_BADGE_PATH     = "..//assets//battle//diceBadge.png";
-    private static final String HP_SLOT_PLAYER_PATH = "..//assets//battle//hpPlayer.png";
-    private static final String HP_SLOT_ENEMY_PATH  = "..//assets//battle//hpEnemy.png";
-    private static final String ITEM_SLOT_PATH      = "..//assets//battle//itemSlot.png";
-    private static final String DUEL_BUTTON_PATH    = "..//assets//battle//duelButton.png";
-    private static final String BACK_BUTTON_PATH    = "..//assets//buttons//gobackBtn.png";
+    private static final String PLAYER_IMAGE_PATH   = "assets//battle//player.png";
+    private static final String ENEMY_IMAGE_PATH    = "assets//battle//enemy.png";
+    private static final String DICE_BADGE_PATH     = "assets//battle//diceBadge.png";
+    private static final String HP_SLOT_PLAYER_PATH = "assets//battle//hpPlayer.png";
+    private static final String HP_SLOT_ENEMY_PATH  = "assets//battle//hpEnemy.png";
+    private static final String ITEM_SLOT_PATH      = "assets//battle//itemSlot.png";
+    private static final String DUEL_BUTTON_PATH    = "assets//battle//duelButton.png";
+    private static final String BACK_BUTTON_PATH    = "assets//buttons//gobackBtn.png";
 
     private final BattleManager battleManager;
     private final Runnable onBackToHome;
