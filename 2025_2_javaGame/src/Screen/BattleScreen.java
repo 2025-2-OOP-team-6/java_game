@@ -23,7 +23,6 @@ public class BattleScreen extends JPanel implements IScreen
 
         battleManager = new BattleManager();
 
-        // HOME 으로 돌아가는 동작을 Runnable 로 넘겨줌
         battleView = new BattleView(
             battleManager,
             () -> scManager.show(Screen.HOME)
