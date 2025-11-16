@@ -1,6 +1,5 @@
 package Screen;
 
-import Data.AccountData;
 import Data.DataManager;
 import Action.GButton;
 import Data.UserData;
@@ -20,6 +19,11 @@ import javax.swing.Box;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,7 +34,7 @@ public class SignUpScreen extends JPanel implements IScreen
     private final String CANCLE_BTN     = "assets//buttons//cancleBtn.png";
     private final String SIGNUP_BTN     = "assets//buttons//signUpBtn.png";
 
-    private AccountData      accountData = DataManager.getInstance().getAccountMgr();
+    private UserData      	userData = DataManager.getInstance().getUserMgr();
     private JLabel           title       = new JLabel("Sign Up");
     private JLabel           label       = new JLabel("Please enter ID and PW");
     private JLabel           idNotice    = new JLabel("ID    : ");
@@ -116,10 +120,10 @@ public class SignUpScreen extends JPanel implements IScreen
                 "Wrong password please retype your password");
             return false;
         }
-
-        accountData.insertData(ID, PW1);
+        
+        
         UserData userMgr = DataManager.getInstance().getUserMgr();
-        userMgr.addNewUser(ID);
+        userMgr.addUserData(ID, PW2);
         DataManager.getInstance().loadUser(ID);
 
         JOptionPane.showMessageDialog(this, "SignUp Successful");

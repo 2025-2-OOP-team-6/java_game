@@ -1,7 +1,7 @@
 package GameLogic;
 
 public class Item {
-	public IGameRunnable<Entity> effect;
+	public IGameRunnable<Entity, String> effect;
 	public String description;
 	public String name;
 	
@@ -10,11 +10,11 @@ public class Item {
 		this.description = description;
 	}
 	
-	public void setEffect(IGameRunnable<Entity> effect) {
+	public void setEffect(IGameRunnable<Entity, String> effect) {
 		this.effect = effect;
 	}
 	
-	public void useEffect(Entity e) {
-		effect.run(e);
+	public void useEffect(Entity e, String id) {
+		effect.run(e, id);
 	}
 }

@@ -23,7 +23,6 @@ import java.awt.Component;
 import java.awt.Color;
 import java.awt.Font;
 
-
 public class HomeScreen extends JPanel implements IScreen
 {
     //CONST
@@ -35,9 +34,9 @@ public class HomeScreen extends JPanel implements IScreen
     private final String RANK_BTN   = "assets//buttons//rankBtn.png";
 
     //VARIABLES
-    private JLabel coinLabel;
+    //private JLabel coinLabel;
     private JLabel rankLabel;
-    private JLabel timeLabel;
+    //private JLabel timeLabel;
     private JLabel welcomeLabel;
 
     private GButton rankBtn;
@@ -91,14 +90,14 @@ public class HomeScreen extends JPanel implements IScreen
         welcomeLabel.setForeground(Color.WHITE);
 
         // - Set coin -
-        String userCoin = String.valueOf(userData.getCoin(user.getId()));
-        coinLabel = new JLabel(userCoin + " 코인");
-        coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-        coinLabel.setForeground(Color.YELLOW);
-
+//        String userCoin = String.valueOf(userData.getCoin(user.getId()));
+//        coinLabel = new JLabel(userCoin + " 코인");
+//        coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+//        coinLabel.setForeground(Color.YELLOW);
+//
         welcomeArea.add(welcomeLabel);
-        welcomeArea.add(Box.createHorizontalStrut(10));
-        welcomeArea.add(coinLabel);
+//        welcomeArea.add(Box.createHorizontalStrut(10));
+//        welcomeArea.add(coinLabel);
 
         logoutBtn = new GButton(LOGOUT_BTN, ()->{
             logoutLogic();
@@ -113,8 +112,7 @@ public class HomeScreen extends JPanel implements IScreen
 
     private void logoutLogic()
     {
-        DataManager.getInstance().getAccountMgr().storeAccountData();
-        userData.storeUserData(user.getId());
+        DataManager.getInstance().getUserMgr().storeUserData();
     }
 
 
@@ -129,27 +127,27 @@ public class HomeScreen extends JPanel implements IScreen
            scManager.show(Screen.BATTLE);
         });
 
-        marketBtn = new GButton(MARKET_BTN, ()->{
-           scManager.show(Screen.MARKET);
-        });
+//        marketBtn = new GButton(MARKET_BTN, ()->{
+//           scManager.show(Screen.MARKET);
+//        });
 
-        selectChrBtn = new GButton(SELECT_BTN, ()->{
-           scManager.show(Screen.SELECT);
-        });
-
-        invenBtn = new GButton(INVEN_BTN, ()->{
-            scManager.show(Screen.INVEN);
-        });
+//        selectChrBtn = new GButton(SELECT_BTN, ()->{
+//           scManager.show(Screen.SELECT);
+//        });
+//
+//        invenBtn = new GButton(INVEN_BTN, ()->{
+//            scManager.show(Screen.INVEN);
+//        });
 
         rankBtn = new GButton(RANK_BTN, ()->{
            scManager.show(Screen.RANK);
         });
 
         centerPanel.add(rankBtn);
-        centerPanel.add(invenBtn);
+        //centerPanel.add(invenBtn);
         centerPanel.add(startBtn);
-        centerPanel.add(marketBtn);
-        centerPanel.add(selectChrBtn);
+        //centerPanel.add(marketBtn);
+        //centerPanel.add(selectChrBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         return centerPanel;
@@ -171,14 +169,14 @@ public class HomeScreen extends JPanel implements IScreen
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // - Set rank -
-        String time = String.valueOf(userData.getTime(user.getId()));
-        timeLabel = new JLabel(time + " 초");
-        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-        timeLabel.setForeground(Color.WHITE);
-        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//        String time = String.valueOf(userData.getTime(user.getId()));
+//        timeLabel = new JLabel(time + " 초");
+//        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+//        timeLabel.setForeground(Color.WHITE);
+//        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         bottomPanel.add(rankLabel);
-        bottomPanel.add(timeLabel);
+//        bottomPanel.add(timeLabel);
         bottomPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return bottomPanel;
@@ -191,11 +189,11 @@ public class HomeScreen extends JPanel implements IScreen
     @Override
     public void onShow()
     {
-        UserData userMgr = DataManager.getInstance().getUserMgr();
-        User user = DataManager.getInstance().getCurrentUser();
+//        UserData userMgr = DataManager.getInstance().getUserMgr();
+//        User user = DataManager.getInstance().getCurrentUser();
 
-        String coinString = String.valueOf(userMgr.getCoin(user.getId()));
-        coinLabel.setText(coinString);
+//        String coinString = String.valueOf(userMgr.getCoin(user.getId()));
+//        coinLabel.setText(coinString);
 
         System.out.println("Start: HomeScreen is now Rendering");
     }

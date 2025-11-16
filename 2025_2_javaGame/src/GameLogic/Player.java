@@ -9,10 +9,7 @@ public class Player extends Entity {
 		super(name,hp,dice);
 	}
 
-	public void changeDice(Dice dice)
-	{
-		this.dice = dice;
-	}
+	
 	
 	public void getItem(Item item) {
 		bag.add(item);

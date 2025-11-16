@@ -1,79 +1,76 @@
 package Data;
 
-import java.io.IOException;
-import java.io.FileReader;
 import java.io.BufferedReader;
-
-import java.util.List;
-import java.util.HashMap;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ItemData{
-    class ItemInfo
+import GameLogic.Entity;
+import GameLogic.IGameRunnable;
+import GameLogic.Item;
+
+public class ItemData {
+	private static final String ITEM_FILE = "assets//files//item_file.csv";
+
+    private final HashMap<String, Item> itemMap;
+    private final HashMap<String, IGameRunnable<Entity, String>> effectMap;
+    private final DiceData diceData;
+
+    public ItemData(DiceData diceData)
     {
-        int attack  = -1;
-        int price   = -1;
+    	this.diceData = diceData;
+    	itemMap = new HashMap<>();
+    	effectMap = new HashMap<>();
+    	setEffectMap();
+        readItemData();
     }
 
-    private final String ITEM_FILE = "assets//files//item_file.csv";
-    private final int ITEM_IDX   = 0;
-    private final int ATTACK_IDX = 1;
-    private final int PRICE_IDX  = 2;
-
-    private List<String> itemNames = new ArrayList<>();
-    private HashMap<String, ItemInfo> itemInfoList = new HashMap<>();
-
-    public String[] getItemNames(){
-        return itemNames.toArray(new String[0]);
+    private void setEffectMap() {
+    	effectMap.put("hpUp", (e, id) -> e.heal());
+    	effectMap.put("diceChange", (e, id) -> e.changeDice(diceData.get(id)));
+    	effectMap.put("rangeUp", (e, id) -> e.getDice().range.startChange(1));
+    	effectMap.put("rangeDown", (e, id) -> e.getDice().range.endChange(-1));
     }
-
-    public int getAttack(final String itemName){
-        ItemInfo info = itemInfoList.get(itemName);
-
-        if(info != null && info.attack != -1)
+    private void readItemData()
+    {
+        try (BufferedReader br = new BufferedReader(new FileReader(ITEM_FILE)))
         {
-            return info.attack;
-        }
-
-        return -1;
-    }
-
-    public int getPrice(final String itemName){
-        ItemInfo info = itemInfoList.get(itemName);
-
-        if(info != null && info.price != -1)
-        {
-            return info.price;
-        }
-
-        return -1;
-    }
-
-    public void readItemData(){
-        try (BufferedReader br = new BufferedReader(new FileReader(ITEM_FILE))) {
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
 
-                if(parts.length >= 3)
+            while ((line = br.readLine()) != null)
+            {
+                final String[] parts = line.split(",");
+
+                if (parts.length < 2)
                 {
-                    ItemInfo itemNode = new ItemInfo();
-                    String item = parts[ITEM_IDX];
-                    itemNode.attack = Integer.parseInt(parts[ATTACK_IDX]);
-                    itemNode.price  = Integer.parseInt(parts[PRICE_IDX]);
-
-                    itemNames.add(item);
-                    itemInfoList.put(item, itemNode);
+                    continue;
                 }
+
+                final String id = parts[0].trim();
+                final String description = parts[1].trim();
+                
+
+                final Item info = new Item(id, description);
+                info.setEffect(effectMap.get(id));
+                itemMap.put(id, info);
             }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error: can not open this file (" + ITEM_FILE + ")" );
-        }
-        catch(NullPointerException e)
+        catch (IOException e)
         {
-            System.err.println("Error: Invailed file data format");
+            e.printStackTrace();
+            System.err.println("Error: can not open this file (" + ITEM_FILE + ")");
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+            System.err.println("Error: invalid number format in " + ITEM_FILE);
         }
     }
+
+    public Item get(final String id)
+    {
+        return itemMap.get(id);
+    }
+
 }

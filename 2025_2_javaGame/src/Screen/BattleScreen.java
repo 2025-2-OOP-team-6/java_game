@@ -13,6 +13,8 @@ public class BattleScreen extends JPanel implements IScreen
 {
     private BattleManager battleManager;
     private BattleView battleView;
+    
+    private JPanel defeat;
 
     @Override
     public void init(final ScreenManager scManager)
@@ -29,6 +31,13 @@ public class BattleScreen extends JPanel implements IScreen
         );
 
         add(battleView, BorderLayout.CENTER);
+        
+        
+        
+    }
+    
+    public void showDefeat() {
+    	add(battleView, defeat);
     }
 
     @Override

@@ -19,9 +19,10 @@ public class DataManager
 
     //VARIABLES
     private UserData    userMgr;
+    private DiceData 	diceMgr;
     private ItemData    itemMgr;
-    private AccountData accountMgr;
     private CharactorData characMgr;
+    private EnemyData 	enemyMgr;
 
     private User currentUser;
     private String[] rankList;
@@ -29,15 +30,14 @@ public class DataManager
     public DataManager()
     {
         userMgr = new UserData();
-        itemMgr = new ItemData();
-        accountMgr = new AccountData();
+        diceMgr = new DiceData();
+        itemMgr = new ItemData(diceMgr);
+        enemyMgr = new EnemyData(diceMgr, itemMgr);
         characMgr = new CharactorData();
 
-        accountMgr.readAccountData();
         characMgr.readCharactorData();
 
-        userMgr.readUserData(accountMgr.getIDList());
-        itemMgr.readItemData();
+        userMgr.readUserData();
     }
 
     public static DataManager getInstance()
@@ -53,11 +53,15 @@ public class DataManager
     //FUNCTIONS
 
     // - Getters
-    public AccountData getAccountMgr()
+    public EnemyData getEnemyMgr()
     {
-        return accountMgr;
+        return enemyMgr;
     }
 
+    public DiceData getDiceMgr()
+    {
+        return diceMgr;
+    }
     public ItemData getItemMgr()
     {
         return itemMgr;
@@ -80,7 +84,7 @@ public class DataManager
 
     public String[] getTotalRanks()
     {
-        String[] idList =  accountMgr.getIDList();
+        String[] idList =  userMgr.getIDList();
 
         QuickSortUsers.quickSort(idList, 0, idList.length - 1, userMgr);
 
@@ -94,8 +98,7 @@ public class DataManager
 
     public void storeAllDatas()
     {
-        accountMgr.storeAccountData();
-        userMgr.storeUserData(currentUser.getId());
+        userMgr.storeUserData();
     }
 
     static class QuickSortUsers
@@ -103,13 +106,18 @@ public class DataManager
         public static int compareUser(String u1, String u2, UserData userMgr) {
             int rank1 = userMgr.getRank(u1);
             int rank2 = userMgr.getRank(u2);
-
+            if (rank1 == -1) {
+            	return 1;
+            }
+            if (rank2 == -1) {
+            	return -1;
+            }
             if (rank1 != rank2) {
                 return rank1 - rank2;
             } else {
-                int time1 = userMgr.getTime(u1);
-                int time2 = userMgr.getTime(u2);
-                return time1 - time2;
+                int stage1 = userMgr.getStage(u1);
+                int stage2 = userMgr.getStage(u2);
+                return stage2 - stage1;
             }
         }
 

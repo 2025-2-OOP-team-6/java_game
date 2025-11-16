@@ -30,9 +30,9 @@ public class ScreenManager
     {
         initScreen(new StartScreenFactory());
         initScreen(new HomeScreenFactory());
-        initScreen(new MarketScreenFactory());
-        initScreen(new InventoryScreenFactory());
-        initScreen(new SelectScreenFactory());
+//        initScreen(new MarketScreenFactory());
+//        initScreen(new InventoryScreenFactory());
+//        initScreen(new SelectScreenFactory());
         initScreen(new RankScreenFactory());
         initScreen(new BattleScreenFactory());
     }
@@ -84,18 +84,18 @@ class LoginScreenFactory implements IScreenFactory
 {
     public IScreen create()  {return new LoginScreen();}
 }
-class MarketScreenFactory implements IScreenFactory
-{
-    public IScreen create() { return new MarketScreen();}
-}
-class InventoryScreenFactory implements IScreenFactory
-{
-    public IScreen create() {return new InventoryScreen();}
-}
-class SelectScreenFactory implements IScreenFactory
-{
-    public IScreen create() {return new SelectScreen();}
-}
+//class MarketScreenFactory implements IScreenFactory
+//{
+//    public IScreen create() { return new MarketScreen();}
+//}
+//class InventoryScreenFactory implements IScreenFactory
+//{
+//    public IScreen create() {return new InventoryScreen();}
+//}
+//class SelectScreenFactory implements IScreenFactory
+//{
+//    public IScreen create() {return new SelectScreen();}
+//}
 class RankScreenFactory implements IScreenFactory
 {
     public IScreen create() {return new RankScreen();}

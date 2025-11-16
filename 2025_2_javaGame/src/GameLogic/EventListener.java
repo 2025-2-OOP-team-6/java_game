@@ -13,17 +13,22 @@ public class EventListener {
 		switch (e) {
 		case TURN_MOVE: {
 			turnMove(object);
+			break;
 		}
 		case USE_ITEM: {
 			useItem(object);
+			break;
 		}
 		case NEXT_MAP: {
 			nextMap(object);
+			break;
 		}
 		case GAMEOVER: {
 			gameOver();
+			break;
 		}
-		default: throw new RuntimeException("해당하지 않는 이벤트가 입력되었습니다."); break; 
+		default: throw new RuntimeException("해당하지 않는 이벤트가 입력되었습니다."); 
+		 
 		}
 	}
 	private void turnMove(Object o) {
@@ -41,7 +46,7 @@ public class EventListener {
 	}
 	private void useItem(Object o) {
 		Item item = (Item)o;
-		item.useEffect(player);
+		item.useEffect(player, null);
 		player.bag.remove(item);
 	}
 	private void nextMap(Object o) {

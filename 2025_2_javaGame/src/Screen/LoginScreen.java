@@ -1,7 +1,7 @@
 package Screen;
 
-import Data.AccountData;
 import Data.DataManager;
+import Data.UserData;
 import Action.GButton;
 import Util.Screen;
 import Util.Constant;
@@ -29,7 +29,7 @@ public class LoginScreen extends JPanel implements IScreen
     private final String LOGIN_BTN  = "assets//buttons//loginBtn.png";
     private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
 
-    private AccountData accountData = DataManager.getInstance().getAccountMgr();
+    private UserData userData = DataManager.getInstance().getUserMgr();
     private JLabel title = new JLabel("LOGIN");
     private JLabel label = new JLabel("Please enter ID and PW");
     private JLabel idNotice = new JLabel("ID   : ");
@@ -78,7 +78,7 @@ public class LoginScreen extends JPanel implements IScreen
         final String PW = new String (pwField.getPassword());
 
 
-        if(accountData.matches(ID, PW))
+        if(userData.matches(ID, PW))
         {
             DataManager.getInstance().loadUser(ID);
 
@@ -181,5 +181,7 @@ public class LoginScreen extends JPanel implements IScreen
     @Override
     public void onShow() {
         System.out.println("Start: StartScreen is now Rendering");
+        idField.setText("");
+        pwField.setText("");
     }
 }

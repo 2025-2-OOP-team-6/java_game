@@ -29,6 +29,7 @@ public class Core
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(constant.WINDOW_WIDTH, constant.WINDOW_HEIGHT);
+        window.setLocationRelativeTo(null);
 
         DataManager.getInstance();
 

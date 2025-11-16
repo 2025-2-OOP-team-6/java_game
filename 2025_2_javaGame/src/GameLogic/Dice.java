@@ -12,7 +12,8 @@ public class Dice implements Cloneable{
 	
 	Random rand = new Random();
 	
-	public Dice(DiceRange range) {
+	public Dice(String name, DiceRange range) {
+		this.name = name;
 		this.range = range;
 	}
 	

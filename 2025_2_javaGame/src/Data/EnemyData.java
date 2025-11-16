@@ -3,42 +3,31 @@ package Data;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import GameLogic.Dice;
+import GameLogic.Enemy;
+import GameLogic.Item;
 
 
 //적(Enemy) 데이터 관리 클래스.
 
 public class EnemyData
 {
-    private static final String ENEMY_FILE = "..//assets//files//enemy_file.csv";
+    private static final String ENEMY_FILE = "assets//files//enemy_file.csv";
 
-    public static class EnemyInfo
+    private final HashMap<String, Enemy> enemyMap;
+    private final DiceData diceData;
+    private final ItemData itemData;
+    private final HashMap<Item, Integer> dropTable;
+
+    public EnemyData(DiceData diceData, ItemData itemData)
     {
-        public final String id;
-        public final int maxHp;
-        public final int diceMin;
-        public final int diceMax;
-        public final int stage;
-
-        public EnemyInfo(final String id,
-                         final int maxHp,
-                         final int diceMin,
-                         final int diceMax,
-                         final int stage)
-        {
-            this.id = id;
-            this.maxHp = maxHp;
-            this.diceMin = diceMin;
-            this.diceMax = diceMax;
-            this.stage = stage;
-        }
-    }
-
-    private final HashMap<String, EnemyInfo> enemyMap;
-
-    public EnemyData()
-    {
-        enemyMap = new HashMap<>();
+    	dropTable = new HashMap<>();
+    	this.diceData = diceData;
+    	this.itemData = itemData;
+    	enemyMap = new HashMap<>();
         readEnemyData();
     }
 
@@ -52,18 +41,14 @@ public class EnemyData
             {
                 final String[] parts = line.split(",");
 
-                if (parts.length < 5)
-                {
-                    continue;
-                }
-
                 final String id = parts[0].trim();
                 final int maxHp = Integer.parseInt(parts[1].trim());
-                final int diceMin = Integer.parseInt(parts[2].trim());
-                final int diceMax = Integer.parseInt(parts[3].trim());
-                final int stage = Integer.parseInt(parts[4].trim());
-
-                final EnemyInfo info = new EnemyInfo(id, maxHp, diceMin, diceMax, stage);
+                final Dice dice = diceData.get(parts[2].trim());
+                final int length = Integer.parseInt(parts[3].trim());
+                for(int i=0; i<length; i++)
+                	dropTable.put(itemData.get(parts[4+i].trim()), Integer.parseInt(parts[5+i].trim()));
+                
+                final Enemy info = new Enemy(id, maxHp, dice, dropTable);
                 enemyMap.put(id, info);
             }
         }
@@ -79,20 +64,8 @@ public class EnemyData
         }
     }
 
-    public EnemyInfo getEnemy(final String id)
+    public Enemy get(final String id)
     {
         return enemyMap.get(id);
-    }
-
-    public EnemyInfo getEnemyForStage(final int stage)
-    {
-        for (EnemyInfo info : enemyMap.values())
-        {
-            if (info.stage == stage)
-            {
-                return info;
-            }
-        }
-        return null;
     }
 }

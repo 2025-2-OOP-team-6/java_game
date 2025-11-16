@@ -11,8 +11,21 @@ public abstract class Entity {
 		this.dice = dice;
 	}
 	
+	public Dice getDice() {
+		return dice;
+	}
+	
 	public void damage() {
 		hp -= 1;
+	}
+	
+	public void heal() {
+		hp += 1;
+	}
+	
+	public void changeDice(Dice dice)
+	{
+		this.dice = dice;
 	}
 	
 	abstract public void die(EventListener evManager);

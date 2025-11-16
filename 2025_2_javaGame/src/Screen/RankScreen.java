@@ -125,7 +125,7 @@ public class RankScreen extends JPanel implements IScreen
             itemL.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JLabel nameL = new JLabel(top3User[i]);
-            JLabel timeL = new JLabel(String.valueOf(userMgr.getTime(top3User[i])));
+            JLabel timeL = new JLabel(String.valueOf(userMgr.getStage(top3User[i])));
             JLabel rankL = new JLabel(String.valueOf(userMgr.getRank(top3User[i])));
 
             for (JLabel label : new JLabel[]{itemL, nameL, timeL, rankL}) {
@@ -178,7 +178,7 @@ public class RankScreen extends JPanel implements IScreen
 
             JLabel rankL = new JLabel(String.valueOf(i + 1), JLabel.CENTER);
             JLabel idL = new JLabel(userid, JLabel.CENTER);
-            JLabel timeL = new JLabel(String.valueOf(userMgr.getTime(userid)), JLabel.CENTER);
+            JLabel timeL = new JLabel(String.valueOf(userMgr.getStage(userid)), JLabel.CENTER);
             JLabel scoreL = new JLabel(String.valueOf(userMgr.getRank(userid)), JLabel.CENTER);
 
             Font font = new Font("맑은 고딕", Font.BOLD, 14);
