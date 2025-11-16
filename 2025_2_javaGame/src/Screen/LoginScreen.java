@@ -26,8 +26,8 @@ import java.awt.Font;
 public class LoginScreen extends JPanel implements IScreen
 {
     private final int MAX_INPUT_SIZE = 15;
-    private final String LOGIN_BTN = "..//assets//buttons//loginBtn.png";
-    private final String SIGNUP_BTN = "..//assets//buttons//signUpBtn.png";
+    private final String LOGIN_BTN  = "assets//buttons//loginBtn.png";
+    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
 
     private AccountData accountData = DataManager.getInstance().getAccountMgr();
     private JLabel title = new JLabel("LOGIN");

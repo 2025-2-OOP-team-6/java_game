@@ -28,7 +28,7 @@ public class UserData
     private final int COIN_IDX = 2;
     private final int INVEN_IDX = 3;
     private final int MAX_CHOOSE_SIZE = 3;
-    private final String PREFIX = "..//assets//files//";
+    private final String PREFIX = "assets//files//";
     private final String SUFFIX = "_file.csv";
 
 

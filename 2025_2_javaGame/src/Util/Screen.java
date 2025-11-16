@@ -10,4 +10,5 @@ public enum Screen
     SELECT,
     INVEN,
     RANK,
+    BATTLE,
 }

@@ -15,7 +15,7 @@ public class AccountData {
     // CONST
     private final int ID_IDX = 0;
     private final int PW_IDX = 1;
-    private final String ACCOUNT_FILE = "..//assets//files//account_file.csv";
+    private final String ACCOUNT_FILE = "assets//files//account_file.csv";
 
     // VARIABLE
     private HashMap<String, String> accountHashMap = new HashMap<>();

@@ -16,17 +16,14 @@ public class ItemData
         int price   = -1;
     }
 
-    //CONST
-    private final String ITEM_FILE = "..//assets//files//item_file.csv";
+    private final String ITEM_FILE = "assets//files//item_file.csv";
     private final int ITEM_IDX   = 0;
     private final int ATTACK_IDX = 1;
     private final int PRICE_IDX  = 2;
 
-    //VARIABLE
     private List<String> itemNames = new ArrayList<>();
     private HashMap<String, ItemInfo> itemInfoList = new HashMap<>();
 
-    //FUNCTIONS
     public String[] getItemNames()
     {
         return itemNames.toArray(new String[0]);
