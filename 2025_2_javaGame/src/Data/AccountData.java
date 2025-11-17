@@ -34,9 +34,17 @@ public class AccountData {
         return false;
     }
 
-    public void insertData(final String id, final String pw)
+    public boolean insertData(final String id, final String pw)
     {
+         String existsID = accountHashMap.get(id);
+
+        if(existsID != null)
+        {
+            return false;
+        }
+
         accountHashMap.put(id, pw);
+        return true;
     }
 
     public String[] getIDList()
