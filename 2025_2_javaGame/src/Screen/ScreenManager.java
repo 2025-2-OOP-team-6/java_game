@@ -82,7 +82,7 @@ class HomeScreenFactory implements IScreenFactory
 }
 class LoginScreenFactory implements IScreenFactory
 {
-    public IScreen create()  {return new BattleScreen();}
+    public IScreen create()  {return new LoginScreen();}
 }
 //class MarketScreenFactory implements IScreenFactory
 //{

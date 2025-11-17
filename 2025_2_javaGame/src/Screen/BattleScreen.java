@@ -61,8 +61,8 @@ public class BattleScreen extends JPanel implements IScreen
         
         add(player);
         add(enemy3);
-        add(enemy2);
-        add(enemy1);
+        //add(enemy2);
+//        add(enemy1);
         add(hpBar);
         add(rangeBar);
         add(resultBar);
@@ -81,7 +81,7 @@ public class BattleScreen extends JPanel implements IScreen
     @Override
     public Screen getScreenType()
     {
-        return Screen.LOGIN;
+        return Screen.BATTLE;
     }
 
     @Override
