@@ -102,53 +102,62 @@ public class InventoryScreen  extends JPanel implements IScreen
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 
-        for(String itemName : itemList)
+        if(itemList == null || itemList.length == 0)
         {
-            JPanel itemPanel = new JPanel();
-            itemPanel.setPreferredSize(new Dimension(250, 250));
-            itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
-            itemPanel.setOpaque(false);
-            itemPanel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.GRAY),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
-            ));
-            itemPanel.addMouseListener(new MouseAdapter() {
-                public void mouseEntered(MouseEvent e)
-                {
-                    itemPanel.setBackground(new Color(50, 50, 50));
-                    itemPanel.setOpaque(true);
-                }
-                public void mouseEvent(MouseEvent e)
-                {
-                    itemPanel.setOpaque(false);
-                    itemPanel.repaint();
-                }
-            });
+            JLabel emptyL = new JLabel("No times in inventory");
+            emptyL.setForeground(Color.WHITE);
+            gridPanel.add(emptyL);
+        }
+        else
+        {
+            for(String itemName : itemList)
+            {
+                JPanel itemPanel = new JPanel();
+                itemPanel.setPreferredSize(new Dimension(250, 250));
+                itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
+                itemPanel.setOpaque(false);
+                itemPanel.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(Color.GRAY),
+                        BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                ));
+                itemPanel.addMouseListener(new MouseAdapter() {
+                    public void mouseEntered(MouseEvent e)
+                    {
+                        itemPanel.setBackground(new Color(50, 50, 50));
+                        itemPanel.setOpaque(true);
+                    }
+                    public void mouseEvent(MouseEvent e)
+                    {
+                        itemPanel.setOpaque(false);
+                        itemPanel.repaint();
+                    }
+                });
 
-            Image original = new ImageIcon(ITEM_IMAGE).getImage();
-            Image scaledImage = original.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            JLabel itemL = new JLabel(new ImageIcon(scaledImage));
+                Image original = new ImageIcon(ITEM_IMAGE).getImage();
+                Image scaledImage = original.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                JLabel itemL = new JLabel(new ImageIcon(scaledImage));
 
-            JLabel nameL = new JLabel(itemName);
-            nameL.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-            nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
-            nameL.setForeground(Color.WHITE);
+                JLabel nameL = new JLabel(itemName);
+                nameL.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+                nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
+                nameL.setForeground(Color.WHITE);
 
-            String attackData = String.valueOf(itemMgr.getAttack(itemName));
-            JLabel attackL = new JLabel("ATTACK : " + attackData);
-            attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-            attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
-            attackL.setForeground(Color.WHITE);
-            attackL.setPreferredSize(new Dimension(280, 20));
+                String attackData = String.valueOf(itemMgr.getAttack(itemName));
+                JLabel attackL = new JLabel("ATTACK : " + attackData);
+                attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+                attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
+                attackL.setForeground(Color.WHITE);
+                attackL.setPreferredSize(new Dimension(280, 20));
 
 
-            itemPanel.add(itemL);
-            itemPanel.add(Box.createHorizontalStrut(5));
-            itemPanel.add(nameL);
-            itemPanel.add(attackL);
-            itemPanel.add(Box.createHorizontalStrut(5));
+                itemPanel.add(itemL);
+                itemPanel.add(Box.createHorizontalStrut(5));
+                itemPanel.add(nameL);
+                itemPanel.add(attackL);
+                itemPanel.add(Box.createHorizontalStrut(5));
 
-            gridPanel.add(itemPanel);
+                gridPanel.add(itemPanel);
+            }
         }
 
         JScrollPane scrollPane = new JScrollPane(gridPanel);
@@ -173,7 +182,13 @@ public class InventoryScreen  extends JPanel implements IScreen
     }
 
     @Override
-    public void onShow() {
+    public void onShow()
+    {
+        removeAll();
+        setComponent();
+        revalidate();
+        repaint();
+
         System.out.println("Start: InventoryScreen is now Rendering");
     }
 }

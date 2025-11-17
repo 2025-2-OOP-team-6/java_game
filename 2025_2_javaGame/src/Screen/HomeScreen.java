@@ -52,6 +52,7 @@ public class HomeScreen extends JPanel implements IScreen
     private User user;
     private UserData userData;
     private Constant constant;
+    private ScreenManager screenMgr;
 
 
 
@@ -67,10 +68,16 @@ public class HomeScreen extends JPanel implements IScreen
 
         user = DataManager.getInstance().getCurrentUser();
         userData = DataManager.getInstance().getUserMgr();
+        screenMgr = scManager;
 
-        add(createHeaderPanel(scManager), BorderLayout.NORTH);
-        add(createCenterPanel(scManager), BorderLayout.CENTER);
-        add(createBottomPanel(scManager), BorderLayout.SOUTH);
+        setComponent();
+    }
+
+    private void setComponent()
+    {
+        add(createHeaderPanel(screenMgr), BorderLayout.NORTH);
+        add(createCenterPanel(screenMgr), BorderLayout.CENTER);
+        add(createBottomPanel(screenMgr), BorderLayout.SOUTH);
     }
 
 
@@ -196,6 +203,11 @@ public class HomeScreen extends JPanel implements IScreen
 
         String coinString = String.valueOf(userMgr.getCoin(user.getId()));
         coinLabel.setText(coinString);
+
+        removeAll();
+        setComponent();
+        revalidate();
+        repaint();
 
         System.out.println("Start: HomeScreen is now Rendering");
     }

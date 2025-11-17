@@ -99,6 +99,11 @@ public class SignUpScreen extends JPanel implements IScreen
             JOptionPane.showMessageDialog(this, "Wrong password please retype your password");
             return false;
         }
+        else if(!accountData.insertData(ID, PW1))
+        {
+            JOptionPane.showMessageDialog(this, "Duplicate ID please retype your ID and PW");
+            return false;
+        }
 
         accountData.insertData(ID, PW1);
         UserData userMgr = DataManager.getInstance().getUserMgr();

@@ -163,7 +163,7 @@ public class SelectScreen extends JPanel implements IScreen
             GButton chooseBtn = new GButton(CHOOSE_BTN, ()->{
                 ++index;
                 JOptionPane.showMessageDialog(this, itemName + " Charactor has Chosen");
-                charactors[index % MAX_CHOOSE_SIZE] = itemName;
+                choosedChractor[index % MAX_CHOOSE_SIZE] = itemName;
             });
 
             itemPanel.add(itemL);

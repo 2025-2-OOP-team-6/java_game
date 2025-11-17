@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import java.io.File;
 
 import java.util.Map;
 import java.util.List;
@@ -16,9 +17,9 @@ public class UserData
     // INNER CLASS
     private class Info
     {
-        int clearTime = -1;
-        int clearRank = -1;
-        int coin = -1;
+        int clearTime = 0;
+        int clearRank = 0;
+        int coin = 0;
         String inventory = "";
     }
 
@@ -33,20 +34,13 @@ public class UserData
 
 
     // VARIABLES
-    private String[] userIDList;
     private String[] choosedCharactor;
     private HashMap<String, Info> userHashMap;
 
 
-    public UserData()
-    {
-        choosedCharactor = new String[MAX_CHOOSE_SIZE];
-    }
-
-
     // FUNCTIONS
 
-    // - Getters -
+    // ------------------ Getters -----------------
     public String[] getInventory(final String id)
     {
         String[] inventory;
@@ -74,39 +68,39 @@ public class UserData
     {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.coin != -1)
+        if(userInfo != null && userInfo.coin != 0)
         {
             return userInfo.coin;
         }
 
-        return -1;
+        return 0;
     }
 
     public int getTime(final String id)
     {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.clearTime != -1)
+        if(userInfo != null && userInfo.clearTime != 0)
         {
             return userInfo.clearTime;
         }
 
-        return -1;
+        return 0;
     }
 
     public int getRank(final String id)
     {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.clearRank != -1)
+        if(userInfo != null && userInfo.clearRank != 0)
         {
             return userInfo.clearRank;
         }
 
-        return -1;
+        return 0;
     }
 
-    // - Setters
+    // ----------------------- Setters -------------------------
 
     public void updateChoosedCharactor(final String[] list)
     {
@@ -118,6 +112,7 @@ public class UserData
     {
         Info newUser = new Info();
         userHashMap.put(id, newUser);
+        storeUserData(id);
     }
 
     public void addNewItem(final String id, final String[] items)
@@ -165,6 +160,7 @@ public class UserData
     }
 
 
+
     // - File I/O -
 
     public void readUserData(final String[] userIDList)
@@ -173,9 +169,18 @@ public class UserData
 
         userHashMap = new HashMap<>();
 
+
         for(String id : userIDList)
         {
             final String USER_FILE = PREFIX + id + SUFFIX;
+            File userFile = new File(USER_FILE);
+
+            if(!userFile.exists())
+            {
+                System.out.println("File not found" + USER_FILE + "creating new file..");
+                addNewUser(id);
+                continue;
+            }
 
             try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
                 String line;
@@ -184,16 +189,12 @@ public class UserData
 
                     if(parts.length >= MINIUM_DATA_SIZE)
                     {
-                        int time = Integer.parseInt(parts[TIME_IDX]);
-                        int rank = Integer.parseInt(parts[RANK_IDX]);
-                        int coin = Integer.parseInt(parts[COIN_IDX]);
-                        String invenString = parts[INVEN_IDX];
-
                         Info infoNode = new Info();
-                        infoNode.clearRank = rank;
-                        infoNode.clearTime = time;
-                        infoNode.coin = coin;
-                        infoNode.inventory = invenString;
+
+                        infoNode.clearTime = Integer.parseInt(parts[TIME_IDX]);
+                        infoNode.clearRank = Integer.parseInt(parts[RANK_IDX]);
+                        infoNode.coin      = Integer.parseInt(parts[COIN_IDX]);
+                        infoNode.inventory = parts[INVEN_IDX];
 
                         userHashMap.put(id, infoNode);
                     }
@@ -231,6 +232,14 @@ public class UserData
         {
             e.printStackTrace();
             System.err.println("Error: Can not write data (" + USER_FILE + ")");
+        }
+    }
+
+    public void storeAllUserData()
+    {
+        for(String id : userHashMap.keySet())
+        {
+            storeUserData(id);
         }
     }
 }

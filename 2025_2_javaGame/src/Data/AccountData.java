@@ -36,14 +36,15 @@ public class AccountData {
 
     public boolean insertData(final String id, final String pw)
     {
-         String existsID = accountHashMap.get(id);
+        String definedId = accountHashMap.get(id);
 
-        if(existsID != null)
+        if(definedId != null)
         {
             return false;
         }
 
         accountHashMap.put(id, pw);
+
         return true;
     }
 
