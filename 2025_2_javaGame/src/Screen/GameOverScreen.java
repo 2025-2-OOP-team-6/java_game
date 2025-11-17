@@ -102,8 +102,8 @@ public class GameOverScreen extends JPanel implements IScreen
         centerPanel.add(scoreLabel);
         centerPanel.add(Box.createVerticalStrut(20));
 
-        // 게임 시간 표시
-        timeLabel = new JLabel("게임 시간: " + timeSpent + "초");
+        // 게임 시간 표시 현재는 임시로 유저 데이터에서 불러오도록 설정
+        timeLabel = new JLabel("게임 시간: " + userData.getTime(user.getId()) + "초");
         timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
         timeLabel.setForeground(Color.WHITE);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,7 +112,7 @@ public class GameOverScreen extends JPanel implements IScreen
         centerPanel.add(Box.createVerticalStrut(20));
 
         // 보상 표시
-        rewardLabel = new JLabel("획득 코인: " + reward);
+        rewardLabel = new JLabel("현재 코인: " + userData.getCoin(user.getId()));
         rewardLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
         rewardLabel.setForeground(Color.YELLOW);
         rewardLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -183,6 +183,6 @@ public class GameOverScreen extends JPanel implements IScreen
         revalidate();
         repaint();
 
-        System.out.println("GameOverScreen is now Rendering - Score: " + score + ", Time: " + timeSpent + ", Reward: " + reward);
+        
     }
 }
