@@ -4,6 +4,8 @@ import Util.Screen;
 
 import javax.swing.JPanel;
 
+import GameLogic.GameManager;
+
 import java.awt.CardLayout;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class ScreenManager
     private JPanel container;
     private CardLayout layout;
     private ArrayList<IScreen> screenList = new ArrayList<>();
+    private GameManager gameMgr;
 
     public ScreenManager()
     {
@@ -26,6 +29,13 @@ public class ScreenManager
         initScreen(new SignUpScreenFacotry());
     }
 
+    public void setGameMgr(GameManager gameMgr) {
+    	this.gameMgr = gameMgr;
+    }
+    public GameManager getGameMgr() {
+    	return gameMgr;
+    }
+    
     public void initAllScreens()
     {
         initScreen(new StartScreenFactory());

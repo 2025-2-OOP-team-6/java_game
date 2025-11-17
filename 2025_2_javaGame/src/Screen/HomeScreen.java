@@ -51,6 +51,8 @@ public class HomeScreen extends JPanel implements IScreen
     private User user;
     private UserData userData;
     private Constant constant;
+    
+    
 
 
 
@@ -124,7 +126,10 @@ public class HomeScreen extends JPanel implements IScreen
         centerPanel.setOpaque(false);
 
         startBtn = new GButton(START_BTN, ()->{
-           scManager.show(Screen.BATTLE);
+        	
+        	if(scManager.getGameMgr()!= null) {
+        		scManager.show(Screen.BATTLE);
+        	}
         });
 
 //        marketBtn = new GButton(MARKET_BTN, ()->{

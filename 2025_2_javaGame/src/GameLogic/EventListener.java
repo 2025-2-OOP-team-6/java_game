@@ -1,9 +1,14 @@
 package GameLogic;
 
+import java.util.Random;
+
+import Data.DataManager;
 import Util.EventEnum;
 
 public class EventListener {
 	private Player player;
+	private final Random rand = new Random();
+	private final DataManager dataMgr = DataManager.getInstance();
 	
 	public EventListener(Player player) {
 		this.player = player;
@@ -11,6 +16,10 @@ public class EventListener {
 	
 	public void call(EventEnum e, Object object) {
 		switch (e) {
+		case START: {
+			start();
+			break;
+		}
 		case TURN_MOVE: {
 			turnMove(object);
 			break;
@@ -43,6 +52,10 @@ public class EventListener {
 			
 		}
 		
+	}
+	private void start() {
+		int mapNum = rand.nextInt(3)+1;
+		dataMgr.setMap(mapNum);
 	}
 	private void useItem(Object o) {
 		Item item = (Item)o;

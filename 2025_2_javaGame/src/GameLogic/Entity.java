@@ -15,6 +15,10 @@ public abstract class Entity {
 		return dice;
 	}
 	
+	public int getHp() {
+		return hp;
+	}
+	
 	public void damage() {
 		hp -= 1;
 	}

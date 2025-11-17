@@ -4,6 +4,9 @@ import Logic.User;
 
 import java.util.Currency;
 
+import GameLogic.GameManager;
+import GameLogic.Player;
+
 public class DataManager
 {
     //ENUM
@@ -24,6 +27,10 @@ public class DataManager
     private CharactorData characMgr;
     private EnemyData 	enemyMgr;
 
+    
+    private int mapNum = 0;
+    private Player player;
+
     private User currentUser;
     private String[] rankList;
 
@@ -34,7 +41,8 @@ public class DataManager
         itemMgr = new ItemData(diceMgr);
         enemyMgr = new EnemyData(diceMgr, itemMgr);
         characMgr = new CharactorData();
-
+        
+        player = new Player("player", 5, diceMgr.get("first"));
         characMgr.readCharactorData();
 
         userMgr.readUserData();
@@ -46,6 +54,7 @@ public class DataManager
         {
             instance = new DataManager();
         }
+         
         return instance;
     }
 
@@ -71,7 +80,7 @@ public class DataManager
     {
         return userMgr;
     }
-
+    
     public CharactorData getCharactorMgr()
     {
         return characMgr;
@@ -82,6 +91,14 @@ public class DataManager
         return currentUser;
     }
 
+    public void setMap(int n) {
+		mapNum = n;
+	}
+	
+	public int getMap() {
+		return mapNum;
+	}
+	
     public String[] getTotalRanks()
     {
         String[] idList =  userMgr.getIDList();
@@ -149,4 +166,13 @@ public class DataManager
             users[j] = temp;
         }
     }
+
+	public void setPlayer(Player player) {
+		this.player = player; 
+	}
+	public Player getPlayer() {
+		
+		return player;
+		
+	}
 }

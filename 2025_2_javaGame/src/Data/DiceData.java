@@ -3,12 +3,10 @@ package Data;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import GameLogic.Dice;
 import GameLogic.DiceRange;
-import GameLogic.Item;
 
 public class DiceData {
 	private static final String DICE_FILE = "assets//files//dice_file.csv";
@@ -39,7 +37,7 @@ public class DiceData {
                 }
 
                 final String id = parts[0].trim();
-                final DiceRange range = new DiceRange(Integer.parseInt(parts[1].trim()), Integer.parseInt(parts[2].trim()));
+                final DiceRange range = new DiceRange(1,2);
                 
 
                 final Dice info = new Dice(id, range);

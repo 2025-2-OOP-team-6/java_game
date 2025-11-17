@@ -1,36 +1,38 @@
-gi	package GameLogic;
+package GameLogic;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import Data.DataManager;
+import Util.EventEnum;
 
 public class GameManager {
 	private Player player;
-	private DataManager dataMgr = new DataManager();
-	private int level = 1;
+	private final DataManager dataMgr = DataManager.getInstance();
+	private EventListener eventListener;
+	private int stage = 1;
+	
 	
 	public void initGame() {
-		
 		setEntity();
+		eventListener = new EventListener(player);
+		eventListener.call(EventEnum.START, null);
 	}
 	
 	
 	
 	private void setEntity() {
+		
 		player = new Player("player", 5, dataMgr.getDiceMgr().get("first"));
-		level = 1;
+		dataMgr.setPlayer(player);
+		stage = 1;
 	}
 	
 	public void levelUp() {
-		level++;
+		stage++;
 	}
 	
-	
-	private void run() {
-		
-	}
 	
 	Scanner openFile(String filename) {
 		Scanner filein = null;
