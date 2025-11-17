@@ -174,7 +174,7 @@ public class StartScreen extends JPanel implements IScreen{
 
 
             GButton adventureBtn = new GButton(START_ADVENTURE_BTN, ()->{
-                screenMgr.show(Screen.LOGIN);
+                screenMgr.show(Screen.GAMEOVER);
             });
 
             GButton chooseBtn = new GButton(CHANGE_CHARACTOR_BTN, ()->{

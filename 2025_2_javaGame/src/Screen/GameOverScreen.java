@@ -17,12 +17,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Component;
+import java.awt.FlowLayout;
 
 public class GameOverScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String HOME_BTN = "..//assets//buttons//homeBtn.png";
-    private final String RETRY_BTN = "..//assets//buttons//retryBtn.png";
+    private final String HOME_BTN = "..//assets//buttons//gobackBtn.png";
+    private final String RETRY_BTN = "..//assets//buttons//startAdventureBtn.png";
 
     //VARIABLES
     private JLabel titleLabel;
@@ -124,8 +125,7 @@ public class GameOverScreen extends JPanel implements IScreen
     // -- Set Bottom Panel --
     private JPanel createBottomPanel()
     {
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 20));
         bottomPanel.setOpaque(false);
 
         retryBtn = new GButton(RETRY_BTN, () -> {
@@ -143,11 +143,8 @@ public class GameOverScreen extends JPanel implements IScreen
             screenMgr.show(Screen.HOME);
         });
 
-        bottomPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(retryBtn);
-        bottomPanel.add(Box.createHorizontalStrut(30));
         bottomPanel.add(homeBtn);
-        bottomPanel.add(Box.createHorizontalGlue());
 
         return bottomPanel;
     }
