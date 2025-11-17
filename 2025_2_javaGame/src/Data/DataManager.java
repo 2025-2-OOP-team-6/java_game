@@ -4,6 +4,7 @@ import Logic.User;
 
 import java.util.Currency;
 
+import GameLogic.EventListener;
 import GameLogic.GameManager;
 import GameLogic.Player;
 
@@ -26,13 +27,14 @@ public class DataManager
     private ItemData    itemMgr;
     private CharactorData characMgr;
     private EnemyData 	enemyMgr;
+    private EventListener eventListener;
 
     
-    private int mapNum = 0;
-    private Player player;
 
     private User currentUser;
     private String[] rankList;
+
+	
 
     public DataManager()
     {
@@ -41,8 +43,10 @@ public class DataManager
         itemMgr = new ItemData(diceMgr);
         enemyMgr = new EnemyData(diceMgr, itemMgr);
         characMgr = new CharactorData();
+         
         
-        player = new Player("player", 5, diceMgr.get("first"));
+        final Player player = new Player("player", 5, diceMgr.get("first"));
+        eventListener = new EventListener(player);
         characMgr.readCharactorData();
 
         userMgr.readUserData();
@@ -62,6 +66,10 @@ public class DataManager
     //FUNCTIONS
 
     // - Getters
+    
+    public EventListener getEventListener() {
+		return eventListener;
+	}
     public EnemyData getEnemyMgr()
     {
         return enemyMgr;
@@ -91,14 +99,11 @@ public class DataManager
         return currentUser;
     }
 
-    public void setMap(int n) {
-		mapNum = n;
-	}
-	
-	public int getMap() {
-		return mapNum;
-	}
-	
+    
+    public void initEventListener(Player player) {
+    	eventListener = new EventListener(player);
+    }
+    
     public String[] getTotalRanks()
     {
         String[] idList =  userMgr.getIDList();
@@ -167,12 +172,5 @@ public class DataManager
         }
     }
 
-	public void setPlayer(Player player) {
-		this.player = player; 
-	}
-	public Player getPlayer() {
-		
-		return player;
-		
-	}
+	
 }

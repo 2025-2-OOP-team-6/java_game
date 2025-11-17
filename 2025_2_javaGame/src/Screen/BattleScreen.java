@@ -2,6 +2,7 @@ package Screen;
 
 import Logic.BattleManager;
 import Render.BattleView;
+import Util.EventEnum;
 import Util.Position;
 import Util.Screen;
 
@@ -12,6 +13,7 @@ import Action.GPanel;
 import Data.DataManager;
 import GameLogic.Enemy;
 import GameLogic.Entity;
+import GameLogic.Item;
 import GameLogic.Player;
 
 import javax.swing.BorderFactory;
@@ -27,6 +29,7 @@ import java.util.HashMap;
 
 public class BattleScreen extends JPanel implements IScreen
 {
+	private final DataManager dataMgr = DataManager.getInstance();
 
 	private final GPanel background = new GPanel("assets//battle//background.png");
 	private final GPanel bottomBar = new GPanel("assets//battle//bottomBar.png");
@@ -34,9 +37,8 @@ public class BattleScreen extends JPanel implements IScreen
 	private final GPanel enemy1 = new GPanel("assets//battle//enemy1.png");
 	private final GPanel enemy2 = new GPanel("assets//battle//enemy2.png");
 	private final GPanel enemy3 = new GPanel("assets//battle//enemy3.png");
-	private final GButton fightBtn = new GButton("assets//battle//fightBtn.png", ()->{System.out.print("asd");});
+	private final GButton fightBtn = new GButton("assets//battle//fightBtn.png", null);
 	
-	private final GButton itemBtn = new GButton("assets//battle//itemBtn.png", ()->{System.out.print("asd");});
 	
 	private final GPanel playerImg = new GPanel("assets//battle//warrior.png");
 	//private final GPanel wizard = new GPanel("assets//battle//wizard.png");
@@ -45,53 +47,41 @@ public class BattleScreen extends JPanel implements IScreen
 	private final Position ENEMY1_POS = new Position(772,284);
 	private final Position ENEMY2_POS = new Position(748,184);
 	private final Position ENEMY3_POS = new Position(708,140);
-
-    private final DataManager dataMgr = DataManager.getInstance();
+	private final Position ITEMBTN_POS = new Position(45,517);
+	
+    
     private Enemy enemy;
     private Player player;
-    private HashMap<Entity, GPanel> entityMap; 
+    
+    private HashMap<Entity, GPanel> entityMap;
+    private HashMap<GButton, Item> itemMap;
     
     private ArrayList<GPanel> playerBarList;
     private ArrayList<GPanel> enemyBarList;
+    private ArrayList<GButton> itemBarList;
     
     @Override
     public void init(final ScreenManager scManager)
     {
     	scManager.getGameMgr().initGame();
     	entityMap = new HashMap<>();
+    	itemMap = new HashMap<>();
     	playerBarList = new ArrayList<>();
     	enemyBarList = new ArrayList<>();
-    	player = dataMgr.getPlayer();
+    	itemBarList = new ArrayList<>();
+    	
+    	player = dataMgr.getEventListener().getPlayer();
     	
         setLayout(null);
         
-//        background.setBounds(0,0);
-//        bottomBar.setBounds(0,368);
-//        defeat.setBounds(295,262);
-//        enemy1.setBounds(772,284);
-//        enemy2.setBounds(748,184);
-//        enemy3.setBounds(708,140);
-//        fightBtn.setBounds(536,520);
-//        
-//        itemBtn.setBounds(28,520);
-//        rangeBar.setBounds(252,88);
-//        resultBar.setBounds(176,72);
-//        player.setBounds(176,228);
         
-        
-//        wizard.setBounds(201,247);
-//        add(wizard);
-        
-        setStage(dataMgr.getMap());
-        
-        
-        
+        setStage(dataMgr.getEventListener().getMapNum());    
     }
     
     private void setStage(int id) {
     	
     	setDefaultObject();
-    	System.out.print(dataMgr.getMap());
+    	System.out.print(dataMgr.getEventListener().getMapNum());
     	switch(id) {
     		case 1: {
     			enemy = dataMgr.getEnemyMgr().get("enemy1").clone();
@@ -117,13 +107,11 @@ public class BattleScreen extends JPanel implements IScreen
     			add(enemy3);
     			break;
     		}
-    		
     		default: 
     	}
     	
-    	
+    	fightBtn.setListener(()->{dataMgr.getEventListener().call(EventEnum.TURN_MOVE, enemy);});
     	addObejct();
-    	
     }
     
     private void setBar(Position pos, Entity e) {
@@ -155,19 +143,33 @@ public class BattleScreen extends JPanel implements IScreen
 			playerBarList.add(g);
 		else
 			enemyBarList.add(g);
-    	
-    	
     }
     
-    private void setDefaultObject() {
+    private void setItemBar() {
+    	GButton g;
+    	
+    	for(int i=0; i<6; i++) {
+    		int id = i;
+    		g = new GButton("assets//battle//itemBtn.png", () -> clickItemButton(id));
+    		g.setBounds(ITEMBTN_POS.x+(i%3)*145,ITEMBTN_POS.y+(int)(i/3)*120);
+    		System.out.print(g.getY()+"\n");
+    		itemBarList.add(g);
+    		itemMap.put(g, null);
+    	}
+    }
+    
+    private void clickItemButton(int id) {
+    	itemMap.get(itemBarList.get(id)).useEffect(player, null);
+	}
 
+	private void setDefaultObject() {
+		
         background.setBounds(0,0);
         bottomBar.setBounds(0,368);
         fightBtn.setBounds(536,520);
         
-        itemBtn.setBounds(28,520);
 
-        
+        setItemBar();
         
         playerImg.setBounds(PLAYER_POS.x, PLAYER_POS.y);
         entityMap.put(player, playerImg);
@@ -181,8 +183,10 @@ public class BattleScreen extends JPanel implements IScreen
     	for(GPanel g:enemyBarList) {
     		add(g);
     	}
+    	for(GButton g:itemBarList) {
+    		add(g);
+    	}
     	add(playerImg);
-        add(itemBtn);
         add(fightBtn);
         add(bottomBar);
         add(background);

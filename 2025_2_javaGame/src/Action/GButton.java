@@ -44,6 +44,7 @@ public class GButton extends JButton implements IGameUI {
         setBounds(0,0);
 	}
 	
+	
 	@Override
 	public void setBounds(int x, int y) {
 		super.setBounds(x, y, getIcon().getIconWidth(), getIcon().getIconHeight());
@@ -65,6 +66,11 @@ public class GButton extends JButton implements IGameUI {
 	    } else {
 	        return null;  
 	    }
+	}
+
+	public void setListener(Runnable r) {
+		actionManager.put(this, r);
+		
 	}
 	
 	

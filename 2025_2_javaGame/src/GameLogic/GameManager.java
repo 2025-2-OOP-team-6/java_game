@@ -8,24 +8,23 @@ import Data.DataManager;
 import Util.EventEnum;
 
 public class GameManager {
-	private Player player;
 	private final DataManager dataMgr = DataManager.getInstance();
-	private EventListener eventListener;
+	
 	private int stage = 1;
 	
 	
 	public void initGame() {
 		setEntity();
-		eventListener = new EventListener(player);
-		eventListener.call(EventEnum.START, null);
+		dataMgr.getEventListener().call(EventEnum.START, null);
 	}
 	
 	
 	
 	private void setEntity() {
 		
-		player = new Player("player", 5, dataMgr.getDiceMgr().get("first"));
-		dataMgr.setPlayer(player);
+		Player player = new Player("player", 5, dataMgr.getDiceMgr().get("dice1"));
+		if (player.dice == null) throw new RuntimeException("dice가 지정이 안됐습니다");
+		dataMgr.initEventListener(player);
 		stage = 1;
 	}
 	

@@ -8,7 +8,9 @@ import Util.EventEnum;
 public class EventListener {
 	private Player player;
 	private final Random rand = new Random();
-	private final DataManager dataMgr = DataManager.getInstance();
+	
+	private int mapNum = 0;
+	
 	
 	public EventListener(Player player) {
 		this.player = player;
@@ -54,8 +56,7 @@ public class EventListener {
 		
 	}
 	private void start() {
-		int mapNum = rand.nextInt(3)+1;
-		dataMgr.setMap(mapNum);
+		mapNum = rand.nextInt(3)+1;
 	}
 	private void useItem(Object o) {
 		Item item = (Item)o;
@@ -68,6 +69,19 @@ public class EventListener {
 	}
 	private void gameOver() {
 		
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	public int getMapNum() {
+		
+		return mapNum;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 
