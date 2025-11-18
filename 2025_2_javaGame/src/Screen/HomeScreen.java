@@ -12,6 +12,7 @@ import Logic.User;
 import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Box;
@@ -20,6 +21,7 @@ import javax.swing.Box;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -33,6 +35,8 @@ public class HomeScreen extends JPanel implements IScreen
     private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
     private final String INVEN_BTN  = "..//assets//buttons//invenBtn.png";
     private final String RANK_BTN   = "..//assets//buttons//rankBtn.png";
+    private final String MYPAGE_BTN = "..//assets//buttons//myPageBtn.png";
+    private final String STATISTIC_BTN = "..//assets//buttons//statisticBtn.png";
 
     //VARIABLES
     private JLabel coinLabel;
@@ -46,6 +50,8 @@ public class HomeScreen extends JPanel implements IScreen
     private GButton logoutBtn;
     private GButton marketBtn;
     private GButton selectChrBtn;
+    private GButton mypageBtn;
+    private GButton statisticBtn;
 
     private Color wallpaper;
 
@@ -129,34 +135,61 @@ public class HomeScreen extends JPanel implements IScreen
 
     private JPanel createCenterPanel(ScreenManager scManager)
     {
-        JPanel centerPanel = new JPanel(new GridLayout(1, 5, 20, 20));
+        JPanel centerPanel = new JPanel(new GridLayout(1, 7, 20, 20));
         centerPanel.setOpaque(false);
 
-        startBtn = new GButton(START_BTN, ()->{
+        final int BTN_WIDTH = 100;
+        final int BTN_HEIGHT = 100;
+
+        Image original = new ImageIcon(STATISTIC_BTN).getImage();
+        Image scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        statisticBtn = new GButton(new ImageIcon(scaled), ()->{
+            scManager.show(Screen.STATISTIC);
+        });
+
+        original = new ImageIcon(START_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        startBtn = new GButton(new ImageIcon(scaled), ()->{
            scManager.show(Screen.START);
         });
 
-        marketBtn = new GButton(MARKET_BTN, ()->{
+        original = new ImageIcon(MARKET_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        marketBtn = new GButton(new ImageIcon(scaled), ()->{
            scManager.show(Screen.MARKET);
         });
 
-        selectChrBtn = new GButton(SELECT_BTN, ()->{
+        original = new ImageIcon(SELECT_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        selectChrBtn = new GButton(new ImageIcon(scaled), ()->{
            scManager.show(Screen.SELECT);
         });
 
-        invenBtn = new GButton(INVEN_BTN, ()->{
+        original = new ImageIcon(INVEN_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        invenBtn = new GButton(new ImageIcon(scaled), ()->{
             scManager.show(Screen.INVEN);
         });
 
-        rankBtn = new GButton(RANK_BTN, ()->{
+        original = new ImageIcon(RANK_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        rankBtn = new GButton(new ImageIcon(scaled), ()->{
            scManager.show(Screen.RANK);
         });
 
+        original = new ImageIcon(MYPAGE_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        mypageBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.MYPAGE);
+        });
+
+        centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
         centerPanel.add(invenBtn);
         centerPanel.add(startBtn);
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
+        centerPanel.add(mypageBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return centerPanel;

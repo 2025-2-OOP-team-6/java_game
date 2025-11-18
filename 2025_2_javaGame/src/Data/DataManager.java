@@ -18,9 +18,10 @@ public class DataManager
     private static DataManager instance;
 
     //VARIABLES
-    private UserData    userMgr;
-    private ItemData    itemMgr;
-    private AccountData accountMgr;
+    private LogData       logMgr;
+    private UserData      userMgr;
+    private ItemData      itemMgr;
+    private AccountData   accountMgr;
     private CharactorData characMgr;
 
     private User currentUser;
@@ -38,6 +39,8 @@ public class DataManager
 
         userMgr.readUserData(accountMgr.getIDList());
         itemMgr.readItemData();
+
+        logMgr = new LogData();
     }
 
     public static DataManager getInstance()
@@ -77,6 +80,8 @@ public class DataManager
     {
         return currentUser;
     }
+
+    public LogData getLogMgr() {return logMgr;}
 
     public String[] getTotalRanks()
     {

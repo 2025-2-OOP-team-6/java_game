@@ -20,7 +20,7 @@ public class UserData
         int clearTime = 0;
         int clearRank = 0;
         int coin = 0;
-        String inventory = "";
+        String inventory = " ";
     }
 
     //CONST
@@ -183,8 +183,10 @@ public class UserData
             }
 
             try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
-                String line;
-                while ((line = br.readLine()) != null) {
+                String line = br.readLine();
+
+                if(line != null)
+                {
                     String[] parts = line.split(",");
 
                     if(parts.length >= MINIUM_DATA_SIZE)
