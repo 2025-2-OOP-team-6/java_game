@@ -2,6 +2,7 @@ package Screen;
 
 import Data.DataManager;
 import Action.GButton;
+import Data.SuggestData;
 import Data.UserData;
 import Util.Constant;
 import Data.ItemData;
@@ -50,6 +51,7 @@ public class MarketScreen extends JPanel implements IScreen
 
     private User user;
     private ItemData itemMgr;
+    private SuggestData sugMgr;
     private UserData userMgr;
     private Constant constant;
     private ScreenManager scManager;
@@ -69,6 +71,7 @@ public class MarketScreen extends JPanel implements IScreen
         itemMgr = DataManager.getInstance().getItemMgr();
         userMgr = DataManager.getInstance().getUserMgr();
         user = DataManager.getInstance().getCurrentUser();
+        sugMgr = DataManager.getInstance().getSugMgr();
 
         setComponent();
     }
@@ -113,7 +116,7 @@ public class MarketScreen extends JPanel implements IScreen
 
     private JScrollPane createItemPanel()
     {
-        String[] itemList = itemMgr.getItemNames();
+        String[] itemList = sugMgr.getSuggestItems(user.getId());
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 

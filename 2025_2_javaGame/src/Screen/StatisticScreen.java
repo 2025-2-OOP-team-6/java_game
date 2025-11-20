@@ -7,11 +7,9 @@ import Data.UserData;
 import Util.Constant;
 import Action.GButton;
 import Data.DataManager;
-import Data.CharactorData;
 
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +17,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 
-public class statisticScreen extends JPanel implements IScreen
+public class StatisticScreen extends JPanel implements IScreen
 {
     //CONST
     private final String BAR_IMAGE       = "..//assets//images//barImage.png";
@@ -77,17 +75,9 @@ public class statisticScreen extends JPanel implements IScreen
 
     private JPanel createTimeGraph()
     {
-        String[] timeList = logMgr.getTimeGraphData(user.getId());
-
-        for(String time : timeList)
-        {
-
-        }
 
 
-        JPanel graph = new JPanel(new GridLayout);
-
-
+        return null;
     }
 
     private JPanel createStatisticPanel()
@@ -109,7 +99,7 @@ public class statisticScreen extends JPanel implements IScreen
 
     private JScrollPane createLogPanel()
     {
-        String[] logList = logMgr.getLogList();
+        String[] logList = null;
 
     JPanel logListPanel = new JPanel(new BorderLayout());
 

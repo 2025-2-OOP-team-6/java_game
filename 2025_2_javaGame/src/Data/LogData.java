@@ -1,13 +1,12 @@
 package Data;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
-import java.io.File;
 
-import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -15,27 +14,71 @@ import java.util.ArrayList;
 
 public class LogData
 {
-    class Logs
+    public final class LogCon {
+        private final String date;
+        private final String time;
+        private final String rank;
+        private final String item;
+        private final String character;
+        private final String mob;
+        private final String result;
+
+        public LogCon(String date, String time, String rank, String item, String character, String mob, String result) {
+            this.date = date;
+            this.time = time;
+            this.rank = rank;
+            this.item = item;
+            this.character = character;
+            this.mob = mob;
+            this.result = result;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public String getRank() {
+            return rank;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
+        public String getCharacter() {
+            return character;
+        }
+
+        public String getMob() {
+            return mob;
+        }
+
+        public String getResult() {
+            return result;
+        }
+    }
+
+    private class Logs
     {
-        List<String> dateLogs       = new ArrayList<>();
-        List<String> timeLogs       = new ArrayList<>();
-        List<String> rankLogs       = new ArrayList<>();
-        List<String> itemLogs       = new ArrayList<>();
-        List<String> charactorLogs  = new ArrayList<>();
-        List<String> mobLogs        = new ArrayList<>();
-        List<String> resultLogs     = new ArrayList<>();
+        ArrayList<LogCon> logList = new ArrayList<>();
     }
 
     //CONST
     private final String SUFFIX = "_logData.csv";
     private final String PREFIX = "..//assets//files//";
 
+    private final String DUMMY_LOG_ENTRY = "2000-01-01,00:00:00,0,DefaultItem,DefaultChar,DefaultMob,Win";
+
     private final int MINIUM_DATA_SIZE  = 7;
     private final int DATE_IDX          = 0;
     private final int TIME_IDX          = 1;
     private final int RANK_IDX          = 2;
     private final int ITEM_IDX          = 3;
-    private final int CHARACTOR_IDX     = 4;
+    private final int CHARACTER_IDX     = 4;
     private final int MOB_IDX           = 5;
     private final int RESULT_IDX        = 6;
 
@@ -44,28 +87,52 @@ public class LogData
 
     //DATA MANAGERS
     private UserData userMgr;
+    private ItemData itemMgr;
     private CharactorData charMgr;
 
 
-    public LogData()
+    public LogData(UserData userMgr, CharactorData charMgr, ItemData itemMgr)
     {
         userLogsList = new HashMap<>();
 
-        userMgr = DataManager.getInstance().getUserMgr();
-        charMgr = DataManager.getInstance().getCharactorMgr();
+        this.userMgr = userMgr;
+        this.charMgr = charMgr;
+        this.itemMgr = itemMgr;
 
         readLogData();
     }
 
+
     // ------------- Getters ---------------
+
+    public LogCon getLatestLog(final String id)
+    {
+        Logs node = userLogsList.get(id);
+
+        if(node != null && !node.logList.isEmpty())
+        {
+            return node.logList.get(node.logList.size() - 1);
+        }
+
+        return null;
+    }
+
 
     public String[] getDataLogs(final String id)
     {
          Logs node = userLogsList.get(id);
 
-         if(node != null && !node.dateLogs.isEmpty())
+         if(node != null && !node.logList.isEmpty())
          {
-             return node.dateLogs.toArray(new String[0]).clone();
+             final int LOG_LIST_SIZE = node.logList.size();
+             String[] dateLogList = new String[LOG_LIST_SIZE];
+
+             for(int i = 0; i < LOG_LIST_SIZE; ++i)
+             {
+                dateLogList[i] = node.logList.get(i).getDate();
+             }
+
+             return dateLogList;
          }
 
          return null;
@@ -75,21 +142,17 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.timeLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
-            return node.itemLogs.toArray(new String[0]).clone();
-        }
+            final int LOG_LIST_SIZE = node.logList.size();
+            String[] timeLogList = new String[LOG_LIST_SIZE];
 
-        return null;
-    }
+            for(int i = 0; i < LOG_LIST_SIZE; ++i)
+            {
+                timeLogList[i] = node.logList.get(i).getTime();
+            }
 
-    public String[] getTimeGraphData(final String id)
-    {
-        Logs node = userLogsList.get(id);
-
-        if(node != null && !node.itemLogs.isEmpty())
-        {
-            return node.itemLogs.toArray(new String[0]).clone();
+            return timeLogList;
         }
 
         return null;
@@ -99,9 +162,17 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.rankLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
-            return node.rankLogs.toArray(new String[0]).clone();
+            final int LOG_LIST_SIZE = node.logList.size();
+            String[] RankLogList = new String[LOG_LIST_SIZE];
+
+            for(int i = 0; i < LOG_LIST_SIZE; ++i)
+            {
+                RankLogList[i] = node.logList.get(i).getRank();
+            }
+
+            return RankLogList;
         }
 
         return null;
@@ -111,15 +182,13 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.itemLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
-            final ItemData itemMgr = DataManager.getInstance().getItemMgr();
             final int ITEM_LIST_LENGTH = itemMgr.getItemNames().length;
-            final int ITEM_LOG_LENGTH = node.itemLogs.size();
+            final int ITEM_LOG_LENGTH = node.logList.size();
 
             final String[] itemList = itemMgr.getItemNames();
             int[] itemUseCount = new int[ITEM_LIST_LENGTH];
-
 
             for(int i = 0; i < ITEM_LIST_LENGTH; ++i)
             {
@@ -127,7 +196,7 @@ public class LogData
 
                 for(int j = 0; j < ITEM_LOG_LENGTH; ++j)
                 {
-                    if(itemList[i].equals(node.itemLogs.get(j)))
+                    if(itemList[i].equals(node.logList.get(j).getItem()))
                     {
                         itemUseCount[i] += 1;
                     }
@@ -144,21 +213,21 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.charactorLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
             final String[] charList = charMgr.getjobList();
-            final int CHARACTOR_LIST_LENGTH = charList.length;
-            final int CHARACTOR_LOG_LENGTH = node.charactorLogs.size();
+            final int CHARACTER_LIST_LENGTH = charList.length;
+            final int CHARACTER_LOG_LENGTH = node.logList.size();
 
-            int[] charUseCount = new int[CHARACTOR_LIST_LENGTH];
+            int[] charUseCount = new int[CHARACTER_LIST_LENGTH];
 
-            for(int i = 0; i < CHARACTOR_LIST_LENGTH; ++i)
+            for(int i = 0; i < CHARACTER_LIST_LENGTH; ++i)
             {
                 charUseCount[i] = 0;
 
-                for(int j = 0; j < CHARACTOR_LOG_LENGTH; ++j)
+                for(int j = 0; j < CHARACTER_LOG_LENGTH; ++j)
                 {
-                    if(charList[i].equals(node.charactorLogs.get(j)))
+                    if(charList[i].equals(node.logList.get(j).getCharacter()))
                     {
                         charUseCount[i] += 1;
                     }
@@ -175,11 +244,11 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.mobLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
             // TODO : PUT MOB MANAGER
             final int MOB_LIST_LENGTH = 1;
-            final int MOB_LOG_LENGTH = node.mobLogs.size();
+            final int MOB_LOG_LENGTH = node.logList.size();
             final String[] mobList = null;
 
             int[] mobUseCount = new int[MOB_LIST_LENGTH];
@@ -190,7 +259,7 @@ public class LogData
 
                 for(int j = 0; j < MOB_LOG_LENGTH; ++j)
                 {
-                    if(mobList[i].equals(null))
+                    if(mobList[i].equals(node.logList.get(i).getMob()))
                     {
                         mobUseCount[i] += 1;
                     }
@@ -207,9 +276,17 @@ public class LogData
     {
         Logs node = userLogsList.get(id);
 
-        if(node != null && !node.resultLogs.isEmpty())
+        if(node != null && !node.logList.isEmpty())
         {
-            return node.resultLogs.toArray(new String[0]).clone();
+            final int LOG_LIST_SIZE = node.logList.size();
+            String[] resultLogList = new String[LOG_LIST_SIZE];
+
+            for(int i = 0; i < LOG_LIST_SIZE; ++i)
+            {
+                resultLogList[i] = node.logList.get(i).getResult();
+            }
+
+            return resultLogList;
         }
 
         return null;
@@ -222,6 +299,21 @@ public class LogData
     private void addNewUser(final String id)
     {
         Logs newLog = new Logs();
+
+        String[] parts = DUMMY_LOG_ENTRY.split(",");
+
+        LogCon newCon = new LogCon(
+                parts[DATE_IDX],
+                parts[TIME_IDX],
+                parts[RANK_IDX],
+                parts[ITEM_IDX],
+                parts[CHARACTER_IDX],
+                parts[MOB_IDX],
+                parts[RESULT_IDX]
+        );
+
+        newLog.logList.add(newCon);
+
         userLogsList.put(id, newLog);
     }
 
@@ -233,13 +325,17 @@ public class LogData
         assert(target != null) : "Error: Invalid user id" + id + "log insertion failure";
         assert(parts.length >= MINIUM_DATA_SIZE) : "Error: not enough parameters";
 
-        target.dateLogs.add(parts[DATE_IDX]);
-        target.timeLogs.add(parts[TIME_IDX]);
-        target.rankLogs.add(parts[RANK_IDX]);
-        target.itemLogs.add(parts[ITEM_IDX]);
-        target.charactorLogs.add(parts[CHARACTOR_IDX]);
-        target.mobLogs.add(parts[MOB_IDX]);
-        target.resultLogs.add(parts[RESULT_IDX]);
+        LogCon newLog = new LogCon(
+                parts[DATE_IDX],
+                parts[TIME_IDX],
+                parts[RANK_IDX],
+                parts[ITEM_IDX],
+                parts[CHARACTER_IDX],
+                parts[MOB_IDX],
+                parts[RESULT_IDX]
+        );
+
+        target.logList.add(newLog);
     }
 
     private void readLogData()
@@ -255,27 +351,34 @@ public class LogData
             {
                 addNewUser(userId);
                 writeLogData(userId);
-                return;
+                continue;
             }
 
             try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
-                String line = br.readLine();
-                if(line != null)
+                String line;
+
+                Logs newLogs = new Logs();
+
+                while((line = br.readLine()) != null)
                 {
                     String[] parts = line.split(",");
 
                     assert(parts.length >= MINIUM_DATA_SIZE) : "Error: Invaild argument";
 
-                        Logs target = new Logs();
+                    LogCon newCon = new LogCon(
+                            parts[DATE_IDX],
+                            parts[TIME_IDX],
+                            parts[RANK_IDX],
+                            parts[ITEM_IDX],
+                            parts[CHARACTER_IDX],
+                            parts[MOB_IDX],
+                            parts[RESULT_IDX]
+                    );
 
-                        target.dateLogs.add(parts[DATE_IDX]);
-                        target.timeLogs.add(parts[TIME_IDX]);
-                        target.rankLogs.add(parts[RANK_IDX]);
-                        target.itemLogs.add(parts[ITEM_IDX]);
-                        target.charactorLogs.add(parts[CHARACTOR_IDX]);
-                        target.mobLogs.add(parts[MOB_IDX]);
-                        target.resultLogs.add(parts[RESULT_IDX]);
+                    newLogs.logList.add(newCon);
                 }
+
+                userLogsList.put(userId, newLogs);
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -295,20 +398,20 @@ public class LogData
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE)))
         {
             final Logs userLogs = userLogsList.get(id);
-            final int LOGS_LENGTH = userLogs.dateLogs.size();
+            final int LOGS_LENGTH = userLogs.logList.size();
 
-            for(int i = 0; i < LOGS_LENGTH; ++i)
+            for(LogCon con : userLogs.logList)
             {
-                String date = userLogs.dateLogs.get(i);
-                String time = userLogs.timeLogs.get(i);
-                String rank = userLogs.rankLogs.get(i);
-                String item = userLogs.itemLogs.get(i);
-                String charactor = userLogs.charactorLogs.get(i);
-                String mob = userLogs.mobLogs.get(i);
-                String result = userLogs.resultLogs.get(i);
-
-
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s", date, time, rank, item, charactor, mob, result);
+                String line = String.format(
+                        "%s,%s,%s,%s,%s,%s,%s",
+                        con.getDate(),
+                        con.getTime(),
+                        con.getRank(),
+                        con.getItem(),
+                        con.getCharacter(),
+                        con.getMob(),
+                        con.getResult()
+                );
                 writer.write(line);
                 writer.newLine();
             }
