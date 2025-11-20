@@ -11,4 +11,5 @@ public enum Screen
     INVEN,
     RANK,
     GAMEOVER,
+    CREDIT,
 }

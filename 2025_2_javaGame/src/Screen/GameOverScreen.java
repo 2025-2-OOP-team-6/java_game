@@ -24,6 +24,7 @@ public class GameOverScreen extends JPanel implements IScreen
     //CONST
     private final String HOME_BTN = "..//assets//buttons//gobackBtn.png";
     private final String RETRY_BTN = "..//assets//buttons//startAdventureBtn.png";
+    private final String CREDIT_BTN = "..//assets//buttons//endingCreditBtn.png";
 
     //VARIABLES
     private JLabel titleLabel;
@@ -32,6 +33,7 @@ public class GameOverScreen extends JPanel implements IScreen
 
     private GButton homeBtn;
     private GButton retryBtn;
+    private GButton creditBtn;
 
     private Color wallpaper;
 
@@ -125,14 +127,19 @@ public class GameOverScreen extends JPanel implements IScreen
         homeBtn = new GButton(HOME_BTN, () -> {
             // 보상을 사용자에게 지급
             int currentCoin = userData.getCoin(user.getId());
-            userData.updateCoin(user.getId(), currentCoin + coin);
+            userData.updateCoin(user.getId(), currentCoin);
             userData.storeUserData(user.getId());
 
             resetGameData();
             screenMgr.show(Screen.HOME);
         });
 
+        creditBtn = new GButton(CREDIT_BTN, () -> {
+            screenMgr.show(Screen.CREDIT);
+        });
+
         bottomPanel.add(retryBtn);
+        bottomPanel.add(creditBtn);
         bottomPanel.add(homeBtn);
 
         return bottomPanel;
@@ -141,7 +148,7 @@ public class GameOverScreen extends JPanel implements IScreen
     /**
      * 게임 결과 데이터 설정
      * @param timeSpent 게임 시간 (초)
-     * @param coin 보상 코인
+     * @param coin 남은 코인 
      */
     public void setGameResult(int timeSpent, int coin)
     {
@@ -159,7 +166,9 @@ public class GameOverScreen extends JPanel implements IScreen
     }
 
     @Override
-    public Screen getScreenType() { return Screen.GAMEOVER; }
+    public Screen getScreenType() {
+         return Screen.GAMEOVER; 
+        }
 
     @Override
     public void onShow()

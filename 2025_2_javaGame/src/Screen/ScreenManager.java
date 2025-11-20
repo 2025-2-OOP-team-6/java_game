@@ -35,6 +35,7 @@ public class ScreenManager
         initScreen(new SelectScreenFactory());
         initScreen(new RankScreenFactory());
         initScreen(new GameOverScreenFactory());
+        initScreen(new EndingCreditScreenFactory());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -103,4 +104,8 @@ class RankScreenFactory implements IScreenFactory
 class GameOverScreenFactory implements IScreenFactory
 {
     public IScreen create() {return new GameOverScreen();}
+}
+class EndingCreditScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new EndingCreditScreen();}
 }
