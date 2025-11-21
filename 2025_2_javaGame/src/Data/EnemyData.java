@@ -46,7 +46,7 @@ public class EnemyData
                 final Dice dice = diceData.get(parts[2].trim());
                 final int length = Integer.parseInt(parts[3].trim());
                 for(int i=0; i<length; i++)
-                	dropTable.put(itemData.get(parts[4+i].trim()), Integer.parseInt(parts[5+i].trim()));
+                	dropTable.put(itemData.get(parts[4+i*2].trim()), Integer.parseInt(parts[5+i*2].trim()));
                 
                 final Enemy info = new Enemy(id, maxHp, dice, dropTable);
                 enemyMap.put(id, info);

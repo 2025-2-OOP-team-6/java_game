@@ -67,6 +67,10 @@ public class GButton extends JButton implements IGameUI {
 	        return null;  
 	    }
 	}
+	
+	public void setImageIcon(String imagePath) {
+		setIcon(new ImageIcon(imagePath));
+	}
 
 	public void setListener(Runnable r) {
 		actionManager.put(this, r);

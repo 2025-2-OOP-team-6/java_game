@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import Util.Position;
+
 import javax.swing.ImageIcon;
 
 import java.io.File;
@@ -18,12 +21,14 @@ public class GPanel extends JPanel {
 
     private BufferedImage image;   
     private float scale = 1.0f;
-
+    private String imagePath;
     public GPanel(ImageIcon icon) {
         this.image = toARGB(icon.getImage());
         setBounds(0, 0);
         setOpaque(false); 
     }
+    
+    private Position pos = new Position(0,0);
 
     
     public GPanel(String imagePath) {
@@ -33,6 +38,7 @@ public class GPanel extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.imagePath = imagePath;
         setBounds(0, 0);
         setOpaque(false);
     }
@@ -56,6 +62,37 @@ public class GPanel extends JPanel {
                 (int) (scale * image.getWidth()),
                 (int) (scale * image.getHeight())
         );
+        if (x!=0) {
+        	pos.x = x;
+            pos.y = y;
+        }
+        
+    }
+    
+    public void darken(int amount) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgba = image.getRGB(x, y);
+
+                int a = (rgba >> 24) & 0xFF;
+                int r = (rgba >> 16) & 0xFF;
+                int g = (rgba >> 8)  & 0xFF;
+                int b = rgba & 0xFF;
+
+                // amount 만큼 밝기 조절 (양수=밝게, 음수=어둡게)
+                r = Math.min(255, Math.max(0, r + amount));
+                g = Math.min(255, Math.max(0, g + amount));
+                b = Math.min(255, Math.max(0, b + amount));
+
+                int newRGBA = (a << 24) | (r << 16) | (g << 8) | b;
+                image.setRGB(x, y, newRGBA);
+            }
+        }
+
+        repaint();
     }
 
     @Override
@@ -81,5 +118,19 @@ public class GPanel extends JPanel {
         g2.drawImage(image, at, this);
         g2.dispose();
     }
+    
+    public String getImagePath() {
+    	return imagePath;
+    }
 
+    public void setImage(String imagePath) {
+    	try {
+            BufferedImage readImg = ImageIO.read(new File(imagePath));
+            this.image = toARGB(readImg); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.imagePath = imagePath;
+        setBounds(pos.x, pos.y);
+    }
 }

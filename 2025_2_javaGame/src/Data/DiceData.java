@@ -37,7 +37,7 @@ public class DiceData {
                 }
 
                 final String id = parts[0].trim();
-                final DiceRange range = new DiceRange(1,2);
+                final DiceRange range = new DiceRange(Integer.parseInt(parts[1].trim()),Integer.parseInt(parts[2].trim()));
                 
 
                 final Dice info = new Dice(id, range);
@@ -60,5 +60,9 @@ public class DiceData {
     {
         return diceMap.get(id);
     }
-
+    
+    public int getSize()
+    {
+        return diceMap.size();
+    }
 }

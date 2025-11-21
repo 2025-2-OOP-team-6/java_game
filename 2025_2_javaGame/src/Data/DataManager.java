@@ -34,7 +34,6 @@ public class DataManager
     private User currentUser;
     private String[] rankList;
 
-	
 
     public DataManager()
     {
@@ -47,7 +46,7 @@ public class DataManager
         
         final Player player = new Player("player", 5, diceMgr.get("first"));
         eventListener = new EventListener(player);
-        characMgr.readCharactorData();
+        //characMgr.readCharactorData();
 
         userMgr.readUserData();
     }
@@ -66,7 +65,6 @@ public class DataManager
     //FUNCTIONS
 
     // - Getters
-    
     public EventListener getEventListener() {
 		return eventListener;
 	}
@@ -99,7 +97,6 @@ public class DataManager
         return currentUser;
     }
 
-    
     public void initEventListener(Player player) {
     	eventListener = new EventListener(player);
     }

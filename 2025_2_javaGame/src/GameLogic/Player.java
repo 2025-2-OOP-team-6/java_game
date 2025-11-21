@@ -2,21 +2,29 @@ package GameLogic;
 
 import java.util.ArrayList;
 
+import Data.DataManager;
+import Util.EventEnum;
+
 public class Player extends Entity {
-	ArrayList<Item> bag;
+	private ArrayList<Item> bag;
 
 	public Player(String name, int hp, Dice dice) {
 		super(name,hp,dice);
+		bag = new ArrayList<>(); 
 	}
 
-	
+	public ArrayList<Item> getBag() {
+		return bag;
+	}
 	
 	public void getItem(Item item) {
-		bag.add(item);
+		if(item != null)
+			bag.add(item);
+		
 	}
 	
 	@Override
-	public void die(EventListener evManager) {
-		
+	public void die() {
+		DataManager.getInstance().getEventListener().call(EventEnum.GAMEOVER, this);
 	}
 }

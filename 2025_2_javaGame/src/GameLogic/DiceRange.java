@@ -25,4 +25,11 @@ public class DiceRange {
 			throw new RuntimeException("end보다 start가 크거나 같음");
 		}
 	}
+	
+	public int[] getRange() {
+		int[] ranges = new int[2];
+		ranges[0] = start;
+		ranges[1] = end;
+		return ranges;
+	}
 }

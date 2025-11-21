@@ -29,8 +29,14 @@ public class ItemData {
     private void setEffectMap() {
     	effectMap.put("hpUp", (e, id) -> e.heal());
     	effectMap.put("diceChange", (e, id) -> e.changeDice(diceData.get(id)));
-    	effectMap.put("rangeUp", (e, id) -> e.getDice().range.startChange(1));
-    	effectMap.put("rangeDown", (e, id) -> e.getDice().range.endChange(-1));
+    	effectMap.put("rangeUp", (e, id) -> {
+    		if (e.getDice().range.getRange()[0] < 5)
+    			e.getDice().range.startChange(1);
+    	});
+    	effectMap.put("rangeDown", (e, id) -> {
+    		if (e.getDice().range.getRange()[0] > 2)
+    			e.getDice().range.endChange(-1);	
+    	});
     }
     private void readItemData()
     {
@@ -49,9 +55,10 @@ public class ItemData {
 
                 final String id = parts[0].trim();
                 final String description = parts[1].trim();
+                final String imagePath = parts[2].trim();
                 
 
-                final Item info = new Item(id, description);
+                final Item info = new Item(id, description, imagePath);
                 info.setEffect(effectMap.get(id));
                 itemMap.put(id, info);
             }
@@ -70,7 +77,8 @@ public class ItemData {
 
     public Item get(final String id)
     {
+    	if (id == "null") return null; 
         return itemMap.get(id);
     }
-
+    
 }

@@ -2,7 +2,6 @@ package GameLogic;
 
 import java.util.Random;
 
-import Data.DataManager;
 import Util.EventEnum;
 
 public class EventListener {
@@ -10,6 +9,10 @@ public class EventListener {
 	private final Random rand = new Random();
 	
 	private int mapNum = 0;
+	private boolean isClear = false;
+	private boolean isStart = false;
+	private int stage = 0; 
+	private int isWin = 0;
 	
 	
 	public EventListener(Player player) {
@@ -44,45 +47,84 @@ public class EventListener {
 	}
 	private void turnMove(Object o) {
 		Enemy enemy = (Enemy)o;
-		if (player.dice.roll() > enemy.dice.roll()) {
+		int playerResult = player.dice.roll();
+		int enemyResult = enemy.dice.roll();
+		isWin = 	playerResult-enemyResult ;
+				
+		System.out.print("hp : "+enemy.getHp());
+		if (playerResult > enemyResult) {
 			enemy.damage();
-		}
-		else if (player.dice.roll() < enemy.dice.roll()) {
-			player.damage();
-		}
-		else {
 			
 		}
-		
+		else if (playerResult < enemyResult) {
+			player.damage();
+		}
+		System.out.print("player : "+playerResult+", enemy : "+enemyResult+"\n");	
 	}
+	
 	private void start() {
-		mapNum = rand.nextInt(3)+1;
+		if (stage < 10) {
+			mapNum = rand.nextInt(2)+1;
+		}	
+		else if (stage >= 10) {
+			mapNum = rand.nextInt(2)+2;
+		}
+		isClear = false;
 	}
+	
 	private void useItem(Object o) {
 		Item item = (Item)o;
-		item.useEffect(player, null);
-		player.bag.remove(item);
+		player.getBag().remove(item);
+		
 	}
+	
 	private void nextMap(Object o) {
-		GameManager gameManager = (GameManager)o;
-		gameManager.levelUp();
+		Enemy enemy = (Enemy)o;
+		Item i = enemy.dropItem();
+		
+		player.getItem(i);
+		
+		
+		isClear = true;
+		stage++;
+		
+		
 	}
+	
 	private void gameOver() {
 		
 	}
 
+	public void setStage(int stage) {
+		this.stage = stage;
+	}
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 	
 	public int getMapNum() {
-		
 		return mapNum;
 	}
+	public int getStage() {
+		return stage;
+	}
 
+	public boolean getClear() {
+		return isClear;
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}
 
+	public boolean getIsStart() {
+		return isStart;
+	}
+	public void setIsStart(boolean isStart) {
+		this.isStart = isStart;
+	}
+	public int getIsWin() {
+		return isWin;
+	}
 
 }

@@ -28,7 +28,12 @@ public class Dice implements Cloneable{
 	
 	public int roll() {
 		value = rand.nextInt(range.start, range.end+1);
+		
 		applyDebuff();
+		return value;
+	}
+	
+	public int getValue() {
 		return value;
 	}
 	
@@ -38,5 +43,10 @@ public class Dice implements Cloneable{
 	
 	private void applyDebuff() {
 		/* 디버프 설정 */
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+		
 	}
 }
