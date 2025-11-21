@@ -4,6 +4,9 @@ import java.util.Random;
 
 import Util.EventEnum;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class EventListener {
 	private Player player;
 	private final Random rand = new Random();
@@ -13,7 +16,9 @@ public class EventListener {
 	private boolean isStart = false;
 	private int stage = 0; 
 	private int isWin = 0;
+	private String log = "";
 	
+	private LocalDateTime now = LocalDateTime.now();
 	
 	public EventListener(Player player) {
 		this.player = player;
@@ -78,12 +83,20 @@ public class EventListener {
 		
 	}
 	
+	public void setLog() {
+		
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd,HH:mm:ss");
+        String formatted = now.format(formatter);
+        String log = formatted+String.format("%s", null);
+        System.out.print(formatted);
+	}
+	
 	private void nextMap(Object o) {
 		Enemy enemy = (Enemy)o;
 		Item i = enemy.dropItem();
 		
 		player.getItem(i);
-		
+		setLog();
 		
 		isClear = true;
 		stage++;
