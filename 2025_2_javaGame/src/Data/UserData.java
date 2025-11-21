@@ -126,6 +126,7 @@ public class UserData {
         }
 
         userInfo.inventory += sb.toString();
+        storeUserData(id);
     }
 
     public void dropItem(final String id, String[] drops) {
@@ -177,8 +178,10 @@ public class UserData {
             }
 
             try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
-                String line;
-                while ((line = br.readLine()) != null) {
+                String line = br.readLine();
+
+                if(line != null)
+                {
                     String[] parts = line.split(",");
 
                     if (parts.length >= MINIUM_DATA_SIZE) {
@@ -210,6 +213,8 @@ public class UserData {
 
     public void storeUserData(final String id) {
         final String USER_FILE = PREFIX + id + SUFFIX;
+
+        Info userInfo = userHashMap.get(id);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
 

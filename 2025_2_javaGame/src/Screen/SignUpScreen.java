@@ -163,14 +163,14 @@ public class SignUpScreen extends JPanel implements IScreen
 
         // 컴포넌트 순서대로 추가
         add(title);
-        add(Box.createVerticalStrut(20)); // 간격
+        add(Box.createVerticalStrut(40)); // 간격
         add(label);
         add(setIdPanel());
-        add(Box.createVerticalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(setPWPanle1());
-        add(Box.createVerticalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(setPWPanel2());
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(40));
         add(buttonPanel);
     }
 

@@ -7,29 +7,24 @@ import Data.UserData;
 import Util.Screen;
 import Logic.User;
 
-import javax.swing.SwingConstants;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Box;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Color;
-import java.awt.Font;
 
-public class HomeScreen extends JPanel implements IScreen {
-    // CONST
-    private final String START_BTN = "assets//buttons//startBtn.png";
-    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
-    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
-    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
-    private final String INVEN_BTN = "assets//buttons//invenBtn.png";
-    private final String RANK_BTN = "assets//buttons//rankBtn.png";
-    private final String MYPAGE_BTN = "assets//buttons//mypageBtn.png";
+import java.awt.*;
+
+
+public class HomeScreen extends JPanel implements IScreen
+{
+    //CONST
+    private final String START_BTN  = "..//assets//buttons//startBtn.png";
+    private final String LOGOUT_BTN = "..//assets//buttons//logoutBtn.png";
+    private final String MARKET_BTN = "..//assets//buttons//marketBtn.png";
+    private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
+    private final String INVEN_BTN  = "..//assets//buttons//invenBtn.png";
+    private final String RANK_BTN   = "..//assets//buttons//rankBtn.png";
+    private final String MYPAGE_BTN = "..//assets//buttons//myPageBtn.png";
+    private final String STATISTIC_BTN = "..//assets//buttons//statisticBtn.png";
 
     // VARIABLES
     private JLabel coinLabel;
@@ -43,6 +38,8 @@ public class HomeScreen extends JPanel implements IScreen {
     private GButton logoutBtn;
     private GButton marketBtn;
     private GButton selectChrBtn;
+    private GButton mypageBtn;
+    private GButton statisticBtn;
 
     private Color wallpaper;
 
@@ -74,8 +71,11 @@ public class HomeScreen extends JPanel implements IScreen {
 
     // -- Set Header Panel --
 
-    private JPanel createHeaderPanel(ScreenManager scManager) {
-        JPanel headerPanel = new JPanel(new BorderLayout());
+    private JPanel createHeaderPanel(ScreenManager scManager)
+    {
+        Color darkWall = new Color(64, 64, 115);
+
+        JPanel headerPanel =  new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
 
         JPanel welcomeArea = new JPanel();
@@ -87,15 +87,34 @@ public class HomeScreen extends JPanel implements IScreen {
         welcomeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         welcomeLabel.setForeground(Color.WHITE);
 
+
+        RoundPanel welcomBox = new RoundPanel(25);
+        welcomBox.setLayout(new FlowLayout(FlowLayout.CENTER));
+        welcomBox.setBackground(darkWall);
+        welcomBox.setBorder(
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        );
+        welcomBox.add(welcomeLabel);
+
         // - Set coin -
         String userCoin = String.valueOf(userData.getCoin(user.getId()));
         coinLabel = new JLabel(userCoin + " 코인");
         coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         coinLabel.setForeground(Color.YELLOW);
 
-        welcomeArea.add(welcomeLabel);
-        welcomeArea.add(Box.createHorizontalStrut(10));
-        welcomeArea.add(coinLabel);
+        RoundPanel coinBox = new RoundPanel(25);
+        coinBox.setLayout(new FlowLayout(FlowLayout.CENTER));
+        coinBox.setBackground(darkWall);
+        coinBox.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(Color.YELLOW, 1),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                )
+        );
+        coinBox.add(coinLabel);
+
+        welcomeArea.add(welcomBox, BorderLayout.EAST);
+        welcomeArea.add(coinBox, BorderLayout.WEST);
 
         // - MyPage Button -
         JPanel buttonArea = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
@@ -126,45 +145,78 @@ public class HomeScreen extends JPanel implements IScreen {
 
     // -- Set Center Panel --
 
-    private JPanel createCenterPanel(ScreenManager scManager) {
-        JPanel centerPanel = new JPanel(new GridLayout(1, 5, 20, 20));
+    private JPanel createCenterPanel(ScreenManager scManager)
+    {
+        JPanel centerPanel = new JPanel(new GridLayout(1, 7, 20, 20));
         centerPanel.setOpaque(false);
 
-        startBtn = new GButton(START_BTN, () -> {
-            scManager.show(Screen.START);
+        final int BTN_WIDTH = 100;
+        final int BTN_HEIGHT = 100;
+
+        Image original = new ImageIcon(STATISTIC_BTN).getImage();
+        Image scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        statisticBtn = new GButton(new ImageIcon(scaled), ()->{
+            scManager.show(Screen.STATISTIC);
         });
 
-        marketBtn = new GButton(MARKET_BTN, () -> {
-            scManager.show(Screen.MARKET);
+        original = new ImageIcon(START_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        startBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.START);
         });
 
-        selectChrBtn = new GButton(SELECT_BTN, () -> {
-            scManager.show(Screen.SELECT);
+        original = new ImageIcon(MARKET_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        marketBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.MARKET);
         });
 
-        invenBtn = new GButton(INVEN_BTN, () -> {
+        original = new ImageIcon(SELECT_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        selectChrBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.SELECT);
+        });
+
+        original = new ImageIcon(INVEN_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        invenBtn = new GButton(new ImageIcon(scaled), ()->{
             scManager.show(Screen.INVEN);
         });
 
-        rankBtn = new GButton(RANK_BTN, () -> {
-            scManager.show(Screen.RANK);
+        original = new ImageIcon(RANK_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        rankBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.RANK);
         });
 
+        original = new ImageIcon(MYPAGE_BTN).getImage();
+        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        mypageBtn = new GButton(new ImageIcon(scaled), ()->{
+           scManager.show(Screen.MYPAGE);
+        });
+
+
+        centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
         centerPanel.add(invenBtn);
         centerPanel.add(startBtn);
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
+        centerPanel.add(mypageBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return centerPanel;
     }
+
+
 
     // -- Set Bottom Panel --
 
     private JPanel createBottomPanel(ScreenManager scManager) {
         JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 20, 20));
         bottomPanel.setOpaque(false);
+
+        Color darkWall = new Color(64, 64, 115);
 
         // - Set rank -
         String rank = String.valueOf(userData.getRank(user.getId()));
@@ -173,6 +225,36 @@ public class HomeScreen extends JPanel implements IScreen {
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        RoundPanel rankBox  = new RoundPanel(25);
+        rankBox.setLayout(new BorderLayout());
+        rankBox.setBackground(darkWall);
+        rankBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "BEST RANK!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY
+                )
+        );
+        rankBox.add(rankLabel);
+
+        RoundPanel rankBox  = new RoundPanel(25);
+        rankBox.setLayout(new BorderLayout());
+        rankBox.setBackground(darkWall);
+        rankBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "BEST RANK!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY
+                )
+        );
+        rankBox.add(rankLabel);
+
         // - Set time -
         String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
@@ -180,8 +262,24 @@ public class HomeScreen extends JPanel implements IScreen {
         timeLabel.setForeground(Color.WHITE);
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        bottomPanel.add(rankLabel);
-        bottomPanel.add(timeLabel);
+        RoundPanel timeBox = new RoundPanel(25);
+        timeBox.setLayout(new BorderLayout());
+        timeBox.setBackground(darkWall);
+        timeBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "TIME!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY
+                )
+        );
+
+        timeBox.add(timeLabel);
+
+        bottomPanel.add(rankBox);
+        bottomPanel.add(timeBox);
         bottomPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return bottomPanel;
@@ -198,7 +296,11 @@ public class HomeScreen extends JPanel implements IScreen {
         User user = DataManager.getInstance().getCurrentUser();
 
         String coinString = String.valueOf(userMgr.getCoin(user.getId()));
-        coinLabel.setText(coinString);
+        String rankString = String.valueOf(userMgr.getRank(user.getId()));
+        String timeString = String.valueOf(userMgr.getTime(user.getId()));
+        coinLabel.setText(coinString + " coin");
+        timeLabel.setText(timeString + " sec");
+        rankLabel.setText(rankString + " rank");
 
         removeAll();
         setComponent();

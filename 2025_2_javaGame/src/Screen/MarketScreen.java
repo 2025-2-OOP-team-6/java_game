@@ -1,5 +1,6 @@
 package Screen;
 
+import Data.AnalysisData;
 import Data.DataManager;
 import Action.GButton;
 import Data.UserData;
@@ -17,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Box;
+import javax.swing.border.TitledBorder;
 
 
 import java.awt.Font;
@@ -52,6 +54,7 @@ public class MarketScreen extends JPanel implements IScreen
     private ItemData itemMgr;
     private UserData userMgr;
     private Constant constant;
+    private AnalysisData ansMgr;
     private ScreenManager scManager;
 
     @Override
@@ -69,6 +72,7 @@ public class MarketScreen extends JPanel implements IScreen
         itemMgr = DataManager.getInstance().getItemMgr();
         userMgr = DataManager.getInstance().getUserMgr();
         user = DataManager.getInstance().getCurrentUser();
+        ansMgr = DataManager.getInstance().getAnsMgr();
 
         setComponent();
     }
@@ -111,9 +115,8 @@ public class MarketScreen extends JPanel implements IScreen
     }
 
 
-    private JScrollPane createItemPanel()
+    private JScrollPane createItemPanel(final String[] itemList)
     {
-        String[] itemList = itemMgr.getItemNames();
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 
@@ -207,10 +210,52 @@ public class MarketScreen extends JPanel implements IScreen
         JOptionPane.showMessageDialog(this, "Not enough coin");
     }
 
+    private JPanel createSuggestedPanel()
+    {
+        JPanel suggestedPanel = new JPanel();
+
+        suggestedPanel.setLayout(new BorderLayout(10, 10));
+        suggestedPanel.setOpaque(false);
+        suggestedPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.CYAN),
+                "SUGGESTED ITEMS!!",
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                new Font("맑은 고딕", Font.BOLD, 14),
+                Color.CYAN
+        ));
+
+        final String[] itemList = ansMgr.getSuggestItems(user.getId());
+        String[] suggestedItems = {itemList[0], itemList[1], itemList[2]};
+
+        JScrollPane itemDisplayPanel = createItemPanel(suggestedItems);
+
+        JLabel messageL = new JLabel("사용자님은 이 아이템들을 자주 사용했습니다! 장착 또는 구매를 권장합니다.");
+        messageL.setForeground(Color.LIGHT_GRAY);
+        messageL.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        messageL.setHorizontalAlignment(JLabel.CENTER);
+
+        suggestedPanel.add(messageL, BorderLayout.NORTH);
+        suggestedPanel.add(itemDisplayPanel, BorderLayout.CENTER);
+
+        return suggestedPanel;
+    }
+
+
     private void setComponent()
     {
+        final String[] itemList = ansMgr.getSuggestItems(user.getId()).clone();
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setOpaque(false);
+
+        mainPanel.add(createSuggestedPanel());
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(createItemPanel(itemList));
+
         add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createItemPanel(), BorderLayout.CENTER);
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     @Override
