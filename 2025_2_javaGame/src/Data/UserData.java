@@ -126,6 +126,7 @@ public class UserData
         }
 
         userInfo.inventory += sb.toString();
+        storeUserData(id);
     }
 
     public void dropItem(final String id, String[] drops)
@@ -219,16 +220,18 @@ public class UserData
     {
         final String USER_FILE = PREFIX + id + SUFFIX;
 
+        Info userInfo = userHashMap.get(id);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE)))
         {
-            for(Map.Entry<String, Info> node : userHashMap.entrySet())
-            {
-                Info userInfo = node.getValue();
-
-                String data = String.format("%d,%d,%d,%s", userInfo.clearTime, userInfo.clearRank, userInfo.coin, userInfo.inventory);
-                writer.write(data);
-                writer.newLine();
-            }
+            String data = String.format("%d,%d,%d,%s",
+                    userInfo.clearTime,
+                    userInfo.clearRank,
+                    userInfo.coin,
+                    userInfo.inventory
+            );
+            writer.write(data);
+            writer.newLine();
         }
         catch(IOException e)
         {

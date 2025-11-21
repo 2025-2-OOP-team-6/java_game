@@ -9,21 +9,11 @@ import Util.Screen;
 import Logic.User;
 
 
-import javax.swing.SwingConstants;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Box;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 
 public class HomeScreen extends JPanel implements IScreen
@@ -91,6 +81,8 @@ public class HomeScreen extends JPanel implements IScreen
 
     private JPanel createHeaderPanel(ScreenManager scManager)
     {
+        Color darkWall = new Color(64, 64, 115);
+
         JPanel headerPanel =  new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
 
@@ -103,15 +95,34 @@ public class HomeScreen extends JPanel implements IScreen
         welcomeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         welcomeLabel.setForeground(Color.WHITE);
 
+
+        RoundPanel welcomBox = new RoundPanel(25);
+        welcomBox.setLayout(new FlowLayout(FlowLayout.CENTER));
+        welcomBox.setBackground(darkWall);
+        welcomBox.setBorder(
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        );
+        welcomBox.add(welcomeLabel);
+
         // - Set coin -
         String userCoin = String.valueOf(userData.getCoin(user.getId()));
         coinLabel = new JLabel(userCoin + " 코인");
         coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         coinLabel.setForeground(Color.YELLOW);
 
-        welcomeArea.add(welcomeLabel);
-        welcomeArea.add(Box.createHorizontalStrut(10));
-        welcomeArea.add(coinLabel);
+        RoundPanel coinBox = new RoundPanel(25);
+        coinBox.setLayout(new FlowLayout(FlowLayout.CENTER));
+        coinBox.setBackground(darkWall);
+        coinBox.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(Color.YELLOW, 1),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                )
+        );
+        coinBox.add(coinLabel);
+
+        welcomeArea.add(welcomBox, BorderLayout.EAST);
+        welcomeArea.add(coinBox, BorderLayout.WEST);
 
         logoutBtn = new GButton(LOGOUT_BTN, ()->{
             logoutLogic();
@@ -183,6 +194,7 @@ public class HomeScreen extends JPanel implements IScreen
            scManager.show(Screen.MYPAGE);
         });
 
+
         centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
         centerPanel.add(invenBtn);
@@ -196,12 +208,16 @@ public class HomeScreen extends JPanel implements IScreen
     }
 
 
+
+
     // -- Set Bottom Panel --
 
     private JPanel createBottomPanel(ScreenManager scManager)
     {
         JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 20, 20));
         bottomPanel.setOpaque(false);
+
+        Color darkWall = new Color(64, 64, 115);
 
         // - Set rank -
         String rank = String.valueOf(userData.getRank(user.getId()));
@@ -210,6 +226,21 @@ public class HomeScreen extends JPanel implements IScreen
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        RoundPanel rankBox  = new RoundPanel(25);
+        rankBox.setLayout(new BorderLayout());
+        rankBox.setBackground(darkWall);
+        rankBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "BEST RANK!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY
+                )
+        );
+        rankBox.add(rankLabel);
+
         // - Set rank -
         String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
@@ -217,8 +248,24 @@ public class HomeScreen extends JPanel implements IScreen
         timeLabel.setForeground(Color.WHITE);
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        bottomPanel.add(rankLabel);
-        bottomPanel.add(timeLabel);
+        RoundPanel timeBox = new RoundPanel(25);
+        timeBox.setLayout(new BorderLayout());
+        timeBox.setBackground(darkWall);
+        timeBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "TIME!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY
+                )
+        );
+
+        timeBox.add(timeLabel);
+
+        bottomPanel.add(rankBox);
+        bottomPanel.add(timeBox);
         bottomPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return bottomPanel;
@@ -235,7 +282,11 @@ public class HomeScreen extends JPanel implements IScreen
         User user = DataManager.getInstance().getCurrentUser();
 
         String coinString = String.valueOf(userMgr.getCoin(user.getId()));
-        coinLabel.setText(coinString);
+        String rankString = String.valueOf(userMgr.getRank(user.getId()));
+        String timeString = String.valueOf(userMgr.getTime(user.getId()));
+        coinLabel.setText(coinString + " coin");
+        timeLabel.setText(timeString + " sec");
+        rankLabel.setText(rankString + " rank");
 
         removeAll();
         setComponent();

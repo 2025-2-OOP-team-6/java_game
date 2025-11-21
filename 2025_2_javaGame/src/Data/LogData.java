@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -15,15 +20,15 @@ import java.util.ArrayList;
 public class LogData
 {
     public final class LogCon {
-        private final String date;
-        private final String time;
+        private final LocalDate date; // yyyy - mm - dd
+        private final LocalTime time; // hh : mm : ss
         private final String rank;
         private final String item;
         private final String character;
         private final String mob;
         private final String result;
 
-        public LogCon(String date, String time, String rank, String item, String character, String mob, String result) {
+        public LogCon(LocalDate date, LocalTime time, String rank, String item, String character, String mob, String result) {
             this.date = date;
             this.time = time;
             this.rank = rank;
@@ -34,16 +39,17 @@ public class LogData
         }
 
         public String getDate() {
-            return date;
+
+            String dateString = date.format(DATE_FORMAT);
+
+            return dateString;
         }
 
-        public String getTime() {
+        public LocalTime getTime() {
             return time;
         }
 
-        public String getRank() {
-            return rank;
-        }
+        public String getRank() {return rank;}
 
         public String getItem() {
             return item;
@@ -65,33 +71,37 @@ public class LogData
     private class Logs
     {
         ArrayList<LogCon> logList = new ArrayList<>();
+        ArrayList<String> dateList = new ArrayList<>();
     }
 
     //CONST
-    private final String SUFFIX = "_logData.csv";
-    private final String PREFIX = "..//assets//files//";
+    private final static String SUFFIX = "_logData.csv";
+    private final static String PREFIX = "..//assets//files//";
 
-    private final String DUMMY_LOG_ENTRY = "2000-01-01,00:00:00,0,DefaultItem,DefaultChar,DefaultMob,Win";
+    private final static String DUMMY_LOG_ENTRY = "2000-01-01,00:00:00,0,DefaultItem,DefaultChar,DefaultMob,Win";
 
-    private final int MINIUM_DATA_SIZE  = 7;
-    private final int DATE_IDX          = 0;
-    private final int TIME_IDX          = 1;
-    private final int RANK_IDX          = 2;
-    private final int ITEM_IDX          = 3;
-    private final int CHARACTER_IDX     = 4;
-    private final int MOB_IDX           = 5;
-    private final int RESULT_IDX        = 6;
+    private final static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final static DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    private final static int MINIUM_DATA_SIZE  = 7;
+    private final static int DATE_IDX          = 0;
+    private final static int TIME_IDX          = 1;
+    private final static int RANK_IDX          = 2;
+    private final static int ITEM_IDX          = 3;
+    private final static int CHARACTER_IDX     = 4;
+    private final static int MOB_IDX           = 5;
+    private final static int RESULT_IDX        = 6;
 
     //VARIABLES
     private HashMap<String, Logs> userLogsList;
 
     //DATA MANAGERS
-    private UserData userMgr;
-    private ItemData itemMgr;
-    private CharactorData charMgr;
+    private final UserData userMgr;
+    private final ItemData itemMgr;
+    private final CharactorData charMgr;
 
 
-    public LogData(UserData userMgr, CharactorData charMgr, ItemData itemMgr)
+    public LogData(UserData userMgr, CharactorData charMgr, ItemData itemMgr, final String[] userIdList)
     {
         userLogsList = new HashMap<>();
 
@@ -99,11 +109,55 @@ public class LogData
         this.charMgr = charMgr;
         this.itemMgr = itemMgr;
 
-        readLogData();
+        readLogData(userIdList);
     }
 
 
     // ------------- Getters ---------------
+
+    public String[] getDateArray(final String id)
+    {
+        Logs node = userLogsList.get(id);
+
+        if(node != null && !node.dateList.isEmpty())
+        {
+            return node.dateList.toArray(new String[0]);
+        }
+
+        return null;
+    }
+
+    public String getBestRank(final String id)
+    {
+        Logs node = userLogsList.get(id);
+
+        if(node == null || node.logList.isEmpty())
+        {
+            return "N/A";
+        }
+
+        int bestRank = Integer.MIN_VALUE;
+
+        for(LogCon log : node.logList)
+        {
+            int currentRank = Integer.parseInt(log.getRank());
+            if(currentRank > bestRank)
+            {
+                bestRank = currentRank;
+            }
+        }
+
+        return (bestRank == Integer.MIN_VALUE) ? "N/A" : String.valueOf(bestRank);
+    }
+
+    public int getPlayTime(final String id)
+    {
+        int playTime = 0;
+
+
+
+        return playTime;
+    }
 
     public LogCon getLatestLog(final String id)
     {
@@ -117,6 +171,24 @@ public class LogData
         return null;
     }
 
+    public List<LogCon> getLogByDate(final String id, final String date)
+    {
+        Logs node = userLogsList.get(id);
+        List<LogCon> todayLogs = new ArrayList<>();
+
+        if(node != null && !node.logList.isEmpty())
+        {
+            for(LogCon log : node.logList)
+            {
+                if(log.getDate().equals(date))
+                {
+                    todayLogs.add(log);
+                }
+            }
+        }
+
+        return todayLogs;
+    }
 
     public String[] getDataLogs(final String id)
     {
@@ -149,7 +221,8 @@ public class LogData
 
             for(int i = 0; i < LOG_LIST_SIZE; ++i)
             {
-                timeLogList[i] = node.logList.get(i).getTime();
+                String timeString = node.logList.get(i).getTime().format(TIME_FORMAT);
+                timeLogList[i] = timeString;
             }
 
             return timeLogList;
@@ -303,8 +376,8 @@ public class LogData
         String[] parts = DUMMY_LOG_ENTRY.split(",");
 
         LogCon newCon = new LogCon(
-                parts[DATE_IDX],
-                parts[TIME_IDX],
+                LocalDate.now(),
+                LocalTime.now(),
                 parts[RANK_IDX],
                 parts[ITEM_IDX],
                 parts[CHARACTER_IDX],
@@ -325,9 +398,10 @@ public class LogData
         assert(target != null) : "Error: Invalid user id" + id + "log insertion failure";
         assert(parts.length >= MINIUM_DATA_SIZE) : "Error: not enough parameters";
 
+
         LogCon newLog = new LogCon(
-                parts[DATE_IDX],
-                parts[TIME_IDX],
+                LocalDate.now(),
+                LocalTime.now(),
                 parts[RANK_IDX],
                 parts[ITEM_IDX],
                 parts[CHARACTER_IDX],
@@ -338,9 +412,9 @@ public class LogData
         target.logList.add(newLog);
     }
 
-    private void readLogData()
+    private void readLogData(final String[] userIdList)
     {
-        final String[] userIdList = DataManager.getInstance().getAccountMgr().getIDList();
+        String newDate = "";
 
         for(String userId : userIdList)
         {
@@ -365,9 +439,21 @@ public class LogData
 
                     assert(parts.length >= MINIUM_DATA_SIZE) : "Error: Invaild argument";
 
+                    LocalDate date;
+                    LocalTime time;
+
+                    time = LocalTime.parse(parts[TIME_IDX], TIME_FORMAT);
+                    date = LocalDate.parse(parts[DATE_IDX], DATE_FORMAT);
+
+                    if(!parts[DATE_IDX].equals(newDate))
+                    {
+                        newDate = parts[DATE_IDX];
+                        newLogs.dateList.add(parts[DATE_IDX]);
+                    }
+
                     LogCon newCon = new LogCon(
-                            parts[DATE_IDX],
-                            parts[TIME_IDX],
+                            date,
+                            time,
                             parts[RANK_IDX],
                             parts[ITEM_IDX],
                             parts[CHARACTER_IDX],

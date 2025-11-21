@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.Duration;
+import java.time.format.DateTimeFormatter;
+
 
 public class DataManager
 {
@@ -21,12 +26,12 @@ public class DataManager
     private static DataManager instance;
 
     //VARIABLES
-    private LogData       logMgr;
-    private UserData      userMgr;
-    private ItemData      itemMgr;
-    private AccountData   accountMgr;
-    private CharactorData characMgr;
-    private SuggestData   sugMgr;
+    private static AnalysisData  ansMgr;
+    private static LogData       logMgr;
+    private static UserData      userMgr;
+    private static ItemData      itemMgr;
+    private static AccountData   accountMgr;
+    private static CharactorData characMgr;
 
     private User currentUser;
     private String[] rankList;
@@ -44,8 +49,7 @@ public class DataManager
         userMgr.readUserData(accountMgr.getIDList());
         itemMgr.readItemData();
 
-        logMgr = new LogData(userMgr, characMgr, itemMgr);
-        sugMgr = new SuggestData(logMgr, itemMgr, characMgr);
+        logMgr = new LogData(userMgr, characMgr, itemMgr, accountMgr.getIDList());
     }
 
     public static DataManager getInstance()
@@ -86,9 +90,23 @@ public class DataManager
         return currentUser;
     }
 
-    public LogData getLogMgr() {return logMgr;}
 
-    public SuggestData getSugMgr() {return sugMgr;}
+    // NOTICE : USE THESE FUNCTIONS AFTER GENERATE OTHER MGR
+
+    public LogData getLogMgr()
+    {
+        return logMgr;
+    }
+
+    public AnalysisData getAnsMgr()
+    {
+        if(ansMgr == null)
+        {
+            ansMgr = new AnalysisData(logMgr, itemMgr, characMgr, currentUser.getId());
+        }
+
+        return ansMgr;
+    }
 
     public String[] getTotalRanks()
     {
@@ -110,8 +128,9 @@ public class DataManager
                 return Integer.compare(rank1, rank2);
             }
 
-            int time1 = Integer.parseInt(log1.getTime());
-            int time2 = Integer.parseInt(log2.getTime());
+
+            int time1 = log1.getTime().toSecondOfDay();
+            int time2 = log2.getTime().toSecondOfDay();
 
             return Integer.compare(time1, time2);
         });

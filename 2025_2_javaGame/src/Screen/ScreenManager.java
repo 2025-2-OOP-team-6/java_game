@@ -34,6 +34,7 @@ public class ScreenManager
         initScreen(new InventoryScreenFactory());
         initScreen(new SelectScreenFactory());
         initScreen(new RankScreenFactory());
+        initScreen(new StatisticScreenFactory());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -98,4 +99,8 @@ class SelectScreenFactory implements IScreenFactory
 class RankScreenFactory implements IScreenFactory
 {
     public IScreen create() {return new RankScreen();}
+}
+class StatisticScreenFactory implements  IScreenFactory
+{
+    public IScreen create() {return new StatisticScreen();}
 }
