@@ -1,13 +1,11 @@
 package Screen;
 
-
 import Data.DataManager;
 import Action.GButton;
 import Util.Constant;
 import Data.UserData;
 import Util.Screen;
 import Logic.User;
-
 
 import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
@@ -16,25 +14,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Box;
 
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+public class HomeScreen extends JPanel implements IScreen {
+    // CONST
+    private final String START_BTN = "assets//buttons//startBtn.png";
+    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
+    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
+    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
+    private final String INVEN_BTN = "assets//buttons//invenBtn.png";
+    private final String RANK_BTN = "assets//buttons//rankBtn.png";
+    private final String MYPAGE_BTN = "assets//buttons//mypageBtn.png";
 
-public class HomeScreen extends JPanel implements IScreen
-{
-    //CONST
-    private final String START_BTN  = "..//assets//buttons//startBtn.png";
-    private final String LOGOUT_BTN = "..//assets//buttons//logoutBtn.png";
-    private final String MARKET_BTN = "..//assets//buttons//marketBtn.png";
-    private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
-    private final String INVEN_BTN  = "..//assets//buttons//invenBtn.png";
-    private final String RANK_BTN   = "..//assets//buttons//rankBtn.png";
-
-    //VARIABLES
+    // VARIABLES
     private JLabel coinLabel;
     private JLabel rankLabel;
     private JLabel timeLabel;
@@ -54,12 +51,8 @@ public class HomeScreen extends JPanel implements IScreen
     private Constant constant;
     private ScreenManager screenMgr;
 
-
-
-
     @Override
-    public void init(ScreenManager scManager)
-    {
+    public void init(ScreenManager scManager) {
         setLayout(new BorderLayout(20, 20));
         setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50)); // 여백
 
@@ -73,19 +66,16 @@ public class HomeScreen extends JPanel implements IScreen
         setComponent();
     }
 
-    private void setComponent()
-    {
+    private void setComponent() {
         add(createHeaderPanel(screenMgr), BorderLayout.NORTH);
         add(createCenterPanel(screenMgr), BorderLayout.CENTER);
         add(createBottomPanel(screenMgr), BorderLayout.SOUTH);
     }
 
-
     // -- Set Header Panel --
 
-    private JPanel createHeaderPanel(ScreenManager scManager)
-    {
-        JPanel headerPanel =  new JPanel(new BorderLayout());
+    private JPanel createHeaderPanel(ScreenManager scManager) {
+        JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
 
         JPanel welcomeArea = new JPanel();
@@ -107,49 +97,57 @@ public class HomeScreen extends JPanel implements IScreen
         welcomeArea.add(Box.createHorizontalStrut(10));
         welcomeArea.add(coinLabel);
 
-        logoutBtn = new GButton(LOGOUT_BTN, ()->{
+        // - MyPage Button -
+        JPanel buttonArea = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonArea.setOpaque(false);
+
+        logoutBtn = new GButton(LOGOUT_BTN, () -> {
             logoutLogic();
             scManager.show(Screen.LOGIN);
         });
 
+        GButton myPageBtn = new GButton(MYPAGE_BTN, () -> {
+            scManager.show(Screen.MYPAGE);
+        });
+
+        buttonArea.add(myPageBtn);
+        buttonArea.add(logoutBtn);
+
         headerPanel.add(welcomeArea, BorderLayout.WEST);
-        headerPanel.add(logoutBtn, BorderLayout.EAST);
+        headerPanel.add(buttonArea, BorderLayout.EAST);
 
         return headerPanel;
     }
 
-    private void logoutLogic()
-    {
+    private void logoutLogic() {
         DataManager.getInstance().getAccountMgr().storeAccountData();
         userData.storeUserData(user.getId());
     }
 
-
     // -- Set Center Panel --
 
-    private JPanel createCenterPanel(ScreenManager scManager)
-    {
+    private JPanel createCenterPanel(ScreenManager scManager) {
         JPanel centerPanel = new JPanel(new GridLayout(1, 5, 20, 20));
         centerPanel.setOpaque(false);
 
-        startBtn = new GButton(START_BTN, ()->{
-           scManager.show(Screen.START);
+        startBtn = new GButton(START_BTN, () -> {
+            scManager.show(Screen.START);
         });
 
-        marketBtn = new GButton(MARKET_BTN, ()->{
-           scManager.show(Screen.MARKET);
+        marketBtn = new GButton(MARKET_BTN, () -> {
+            scManager.show(Screen.MARKET);
         });
 
-        selectChrBtn = new GButton(SELECT_BTN, ()->{
-           scManager.show(Screen.SELECT);
+        selectChrBtn = new GButton(SELECT_BTN, () -> {
+            scManager.show(Screen.SELECT);
         });
 
-        invenBtn = new GButton(INVEN_BTN, ()->{
+        invenBtn = new GButton(INVEN_BTN, () -> {
             scManager.show(Screen.INVEN);
         });
 
-        rankBtn = new GButton(RANK_BTN, ()->{
-           scManager.show(Screen.RANK);
+        rankBtn = new GButton(RANK_BTN, () -> {
+            scManager.show(Screen.RANK);
         });
 
         centerPanel.add(rankBtn);
@@ -162,11 +160,9 @@ public class HomeScreen extends JPanel implements IScreen
         return centerPanel;
     }
 
-
     // -- Set Bottom Panel --
 
-    private JPanel createBottomPanel(ScreenManager scManager)
-    {
+    private JPanel createBottomPanel(ScreenManager scManager) {
         JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 20, 20));
         bottomPanel.setOpaque(false);
 
@@ -177,7 +173,7 @@ public class HomeScreen extends JPanel implements IScreen
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // - Set rank -
+        // - Set time -
         String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
         timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -191,13 +187,13 @@ public class HomeScreen extends JPanel implements IScreen
         return bottomPanel;
     }
 
+    @Override
+    public Screen getScreenType() {
+        return Screen.HOME;
+    }
 
     @Override
-    public Screen getScreenType() {return Screen.HOME;}
-
-    @Override
-    public void onShow()
-    {
+    public void onShow() {
         UserData userMgr = DataManager.getInstance().getUserMgr();
         User user = DataManager.getInstance().getCurrentUser();
 

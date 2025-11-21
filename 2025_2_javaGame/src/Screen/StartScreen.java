@@ -26,11 +26,11 @@ public class StartScreen extends JPanel implements IScreen{
 
     //CONST
     private final String SUFFIX                  = ".png";
-    private final String GOBACK_BTN              = "..//assets//buttons//gobackBtn.png";
-    private final String CHARACTOR_IMAGE         = "..//assets//images//";
-    private final String START_ADVENTURE_BTN     = "..//assets//buttons//startAdventureBtn.png";
-    private final String CHANGE_CHARACTOR_BTN    = "..//assets//buttons//changeCharactorBtn.png";
-    private final String CHOOSED_CHARACTOR_IMAGE = "..//assets//images//chooseCharactor.png";
+    private final String GOBACK_BTN              = "assets//buttons//gobackBtn.png";
+    private final String CHARACTOR_IMAGE         = "assets//images//";
+    private final String START_ADVENTURE_BTN     = "assets//buttons//startAdventureBtn.png";
+    private final String CHANGE_CHARACTOR_BTN    = "assets//buttons//changeCharactorBtn.png";
+    private final String CHOOSED_CHARACTOR_IMAGE = "assets//images//chooseCharactor.png";
 
     //VARIABLES
     private UserData usrMgr;

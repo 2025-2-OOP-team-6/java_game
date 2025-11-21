@@ -12,42 +12,44 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class UserData
-{
+/*
+ * User user
+ * user.hashMap<enemy, Integer> //적, 조우횟수
+ * user.hashMap<enemy, Integer> //stage, 횟수
+ * 
+ */
+public class UserData {
     // INNER CLASS
-    private class Info
-    {
+    private class Info {
         int clearTime = 0;
         int clearRank = 0;
         int coin = 0;
         String inventory = "";
+        String profileImage = "default_profile.png";
     }
 
-    //CONST
+    // CONST
     private final int TIME_IDX = 0;
     private final int RANK_IDX = 1;
     private final int COIN_IDX = 2;
     private final int INVEN_IDX = 3;
+    private final int PROFILE_IDX = 4;
     private final int MAX_CHOOSE_SIZE = 3;
-    private final String PREFIX = "..//assets//files//";
+    private final String PREFIX = "assets//files//";
     private final String SUFFIX = "_file.csv";
-
 
     // VARIABLES
     private String[] choosedCharactor;
     private HashMap<String, Info> userHashMap;
 
-
     // FUNCTIONS
 
     // ------------------ Getters -----------------
-    public String[] getInventory(final String id)
-    {
+    public String[] getInventory(final String id) {
         String[] inventory;
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.inventory != null)
-        {
+        if (userInfo != null && userInfo.inventory != null) {
             String invenString = userInfo.inventory;
             String[] parts = invenString.split(" ");
 
@@ -59,124 +61,116 @@ public class UserData
         return null;
     }
 
-    public String[] getChoosedCharactor()
-    {
+    public String[] getChoosedCharactor() {
         return choosedCharactor;
     }
 
-    public int getCoin(final String id)
-    {
+    public int getCoin(final String id) {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.coin != 0)
-        {
+        if (userInfo != null && userInfo.coin != 0) {
             return userInfo.coin;
         }
 
         return 0;
     }
 
-    public int getTime(final String id)
-    {
+    public int getTime(final String id) {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.clearTime != 0)
-        {
+        if (userInfo != null && userInfo.clearTime != 0) {
             return userInfo.clearTime;
         }
 
         return 0;
     }
 
-    public int getRank(final String id)
-    {
+    public int getRank(final String id) {
         Info userInfo = userHashMap.get(id);
 
-        if(userInfo != null && userInfo.clearRank != 0)
-        {
+        if (userInfo != null && userInfo.clearRank != 0) {
             return userInfo.clearRank;
         }
 
         return 0;
     }
 
+    public String getProfileImage(String id) {
+        Info userInfo = userHashMap.get(id);
+
+        if (userInfo != null && userInfo.profileImage != null) {
+            return "assets/images/userProfiles/" + userInfo.profileImage;
+        }
+        return "assets/images/userProfiles/default.png";
+    }
+
     // ----------------------- Setters -------------------------
 
-    public void updateChoosedCharactor(final String[] list)
-    {
-        if(list != null)
+    public void updateChoosedCharactor(final String[] list) {
+        if (list != null)
             choosedCharactor = list;
     }
 
-    public void addNewUser(final String id)
-    {
+    public void addNewUser(final String id) {
         Info newUser = new Info();
         userHashMap.put(id, newUser);
         storeUserData(id);
     }
 
-    public void addNewItem(final String id, final String[] items)
-    {
+    public void addNewItem(final String id, final String[] items) {
         Info userInfo = userHashMap.get(id);
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < items.length; ++i)
-        {
+        for (int i = 0; i < items.length; ++i) {
             sb.append(" ").append(items[i]);
         }
 
         userInfo.inventory += sb.toString();
     }
 
-    public void dropItem(final String id, String[] drops)
-    {
+    public void dropItem(final String id, String[] drops) {
         Info userInfo = userHashMap.get(id);
         String invenList = userInfo.inventory;
 
-        for(int i = 0; i < drops.length; ++i)
-        {
+        for (int i = 0; i < drops.length; ++i) {
             invenList = invenList.replace((drops[i] + " "), "");
         }
 
         userInfo.inventory = invenList;
     }
 
-    public void updateTime(final String id, final int time)
-    {
+    public void updateTime(final String id, final int time) {
         Info userInfo = userHashMap.get(id);
         userInfo.clearTime = time;
     }
 
-    public void updateRank(final String id, final int rank)
-    {
+    public void updateRank(final String id, final int rank) {
         Info userInfo = userHashMap.get(id);
         userInfo.clearRank = rank;
     }
 
-    public void updateCoin(final String id, final int coin)
-    {
+    public void updateCoin(final String id, final int coin) {
         Info userInfo = userHashMap.get(id);
         userInfo.coin = coin;
     }
 
-
+    public void updateProfileImage(String id, String fileName) {
+        Info userInfo = userHashMap.get(id);
+        userInfo.profileImage = fileName;
+    }
 
     // - File I/O -
 
-    public void readUserData(final String[] userIDList)
-    {
-        final int MINIUM_DATA_SIZE = 3;
+    public void readUserData(final String[] userIDList) {
+        final int MINIUM_DATA_SIZE = 3; // add userProfile
 
         userHashMap = new HashMap<>();
 
-
-        for(String id : userIDList)
-        {
+        for (String id : userIDList) {
             final String USER_FILE = PREFIX + id + SUFFIX;
             File userFile = new File(USER_FILE);
 
-            if(!userFile.exists())
-            {
+            if (!userFile.exists()) {
                 System.out.println("File not found" + USER_FILE + "creating new file..");
                 addNewUser(id);
                 continue;
@@ -187,58 +181,53 @@ public class UserData
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split(",");
 
-                    if(parts.length >= MINIUM_DATA_SIZE)
-                    {
+                    if (parts.length >= MINIUM_DATA_SIZE) {
                         Info infoNode = new Info();
 
                         infoNode.clearTime = Integer.parseInt(parts[TIME_IDX]);
                         infoNode.clearRank = Integer.parseInt(parts[RANK_IDX]);
-                        infoNode.coin      = Integer.parseInt(parts[COIN_IDX]);
+                        infoNode.coin = Integer.parseInt(parts[COIN_IDX]);
                         infoNode.inventory = parts[INVEN_IDX];
+
+                        // add userprofile
+                        if (parts.length > PROFILE_IDX) {
+                            infoNode.profileImage = parts[PROFILE_IDX];
+                        } else {
+                            infoNode.profileImage = "default_profile.png";
+                        }
 
                         userHashMap.put(id, infoNode);
                     }
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Error: can not open this file (" + USER_FILE + ")" );
-            }
-            catch(NullPointerException e)
-            {
+                System.err.println("Error: can not open this file (" + USER_FILE + ")");
+            } catch (NullPointerException e) {
                 System.err.println("Error: Invailed file data format");
             }
         }
     }
 
-
-
-    public void storeUserData(final String id)
-    {
+    public void storeUserData(final String id) {
         final String USER_FILE = PREFIX + id + SUFFIX;
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE)))
-        {
-            for(Map.Entry<String, Info> node : userHashMap.entrySet())
-            {
-                Info userInfo = node.getValue();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
 
-                String data = String.format("%d,%d,%d,%s", userInfo.clearTime, userInfo.clearRank, userInfo.coin, userInfo.inventory);
+            Info userInfo = userHashMap.get(id);
+            if (userInfo != null) {
+                String data = String.format("%d,%d,%d,%s,%s", userInfo.clearTime, userInfo.clearRank, userInfo.coin,
+                        userInfo.inventory, userInfo.profileImage);
                 writer.write(data);
-                writer.newLine();
             }
-        }
-        catch(IOException e)
-        {
+
+        } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error: Can not write data (" + USER_FILE + ")");
         }
     }
 
-    public void storeAllUserData()
-    {
-        for(String id : userHashMap.keySet())
-        {
+    public void storeAllUserData() {
+        for (String id : userHashMap.keySet()) {
             storeUserData(id);
         }
     }

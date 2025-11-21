@@ -36,9 +36,9 @@ public class SelectScreen extends JPanel implements IScreen
 {
     //CONST
     private final int MAX_CHOOSE_SIZE = 3;
-    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
-    private final String CHOOSE_BTN   = "..//assets//buttons//chooseBtn.png";
+    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
+    private final String CHOOSE_BTN   = "assets//buttons//chooseBtn.png";
 
     //VARIABLES
     private JLabel titleL;

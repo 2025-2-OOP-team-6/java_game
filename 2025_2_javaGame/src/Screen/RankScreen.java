@@ -34,11 +34,11 @@ import java.util.ArrayList;
 public class RankScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String GOBACK_BTN           = "..//assets//buttons//gobackBtn.png";
-    private final String RANKING1_IMAGE      = "..//assets//images//ranking1.png";
-    private final String RANKING2_IMAGE      = "..//assets//images//ranking2.png";
-    private final String RANKING3_IMAGE      = "..//assets//images//ranking3.png";
-    private final String RANKING_TITLE_IMAGE = "..//assets//images//rankingTitle.png";
+    private final String GOBACK_BTN           = "assets//buttons//gobackBtn.png";
+    private final String RANKING1_IMAGE      = "assets//images//ranking1.png";
+    private final String RANKING2_IMAGE      = "assets//images//ranking2.png";
+    private final String RANKING3_IMAGE      = "assets//images//ranking3.png";
+    private final String RANKING_TITLE_IMAGE = "assets//images//rankingTitle.png";
 
     //VARIABLES
     private Color wallpaper;

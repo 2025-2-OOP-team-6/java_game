@@ -18,7 +18,7 @@ public class CharactorData
     }
 
     //CONST
-    private final String CHARACTOR_FILE = "..//assets//files//charactor_class.csv";
+    private final String CHARACTOR_FILE = "assets//files//charactor_class.csv";
     private final int CLASS_IDX = 0;
     private final int TRAIT1_IDX = 1;
     private final int TRAIT2_IDX = 2;

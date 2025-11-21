@@ -4,6 +4,12 @@ import Logic.User;
 
 import java.util.Currency;
 
+/*
+ * /*
+ * hashMap<enemy, Integer> //적, 조우횟수
+ * 
+ */
+ 
 public class DataManager
 {
     //ENUM

@@ -17,7 +17,7 @@ public class ItemData
     }
 
     //CONST
-    private final String ITEM_FILE = "..//assets//files//item_file.csv";
+    private final String ITEM_FILE = "assets//files//item_file.csv";
     private final int ITEM_IDX   = 0;
     private final int ATTACK_IDX = 1;
     private final int PRICE_IDX  = 2;

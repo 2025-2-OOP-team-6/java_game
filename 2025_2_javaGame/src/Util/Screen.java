@@ -6,6 +6,7 @@ public enum Screen
     LOGIN,
     SIGNUP,
     HOME,
+    MYPAGE,
     MARKET,
     SELECT,
     INVEN,
