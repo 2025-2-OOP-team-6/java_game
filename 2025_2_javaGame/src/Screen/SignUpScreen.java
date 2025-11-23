@@ -120,8 +120,15 @@ public class SignUpScreen extends JPanel implements IScreen
                 "Wrong password please retype your password");
             return false;
         }
-        
-        
+
+        else if(!accountData.insertData(ID, PW1))
+        {
+            JOptionPane.showMessageDialog(this, "Duplicate ID please retype your ID and PW");
+            return false;
+        }
+
+        accountData.insertData(ID, PW1);
+
         UserData userMgr = DataManager.getInstance().getUserMgr();
         userMgr.addUserData(ID, PW2);
         DataManager.getInstance().loadUser(ID);
@@ -176,14 +183,15 @@ public class SignUpScreen extends JPanel implements IScreen
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         add(title);
-        add(Box.createVerticalStrut(20));
+
+        add(Box.createVerticalStrut(40)); // 간격
         add(label);
         add(setIdPanel());
-        add(Box.createVerticalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(setPWPanle1());
-        add(Box.createVerticalStrut(5));
+        add(Box.createVerticalStrut(10));
         add(setPWPanel2());
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(40));
         add(buttonPanel);
     }
 

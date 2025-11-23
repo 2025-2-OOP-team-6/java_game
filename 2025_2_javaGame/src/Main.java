@@ -7,5 +7,6 @@ public class Main {
 
         core.initCore();
         core.run();
+
     }
 }

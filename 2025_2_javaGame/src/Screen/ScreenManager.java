@@ -45,6 +45,7 @@ public class ScreenManager
 //        initScreen(new SelectScreenFactory());
         initScreen(new RankScreenFactory());
         initScreen(new BattleScreenFactory());
+        initScreen(new StatisticScreenFactory());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -110,6 +111,7 @@ class RankScreenFactory implements IScreenFactory
 {
     public IScreen create() {return new RankScreen();}
 }
+
 class BattleScreenFactory implements IScreenFactory
 {
     @Override
@@ -117,5 +119,9 @@ class BattleScreenFactory implements IScreenFactory
     {
         return new BattleScreen();
     }
+}
+class StatisticScreenFactory implements  IScreenFactory
+{
+    public IScreen create() {return new StatisticScreen();}
 }
 

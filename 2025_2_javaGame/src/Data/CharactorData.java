@@ -59,7 +59,7 @@ public class CharactorData
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
 
-                if(parts.length >= 3)
+                if(parts.length >= 4)
                 {
                     Traits node = new Traits();
                     String job = parts[CLASS_IDX];

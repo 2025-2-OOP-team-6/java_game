@@ -12,4 +12,6 @@ public enum Screen
     RANK,
     BATTLE, 
     GAME,
+    STATISTIC,
+    MYPAGE,
 }
