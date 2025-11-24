@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Box;
 
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Component;
@@ -202,7 +203,22 @@ public class StartScreen extends JPanel implements IScreen{
             add(createHeaderPanel(), BorderLayout.NORTH);
             add(createCenterPanel(), BorderLayout.CENTER);
 
-            add(createBottomButtonPanel(), BorderLayout.SOUTH);
+            JPanel btnPanel = new JPanel(new GridLayout(0, 3, 10, 10));
+
+
+            GButton adventureBtn = new GButton(START_ADVENTURE_BTN, ()->{
+                screenMgr.show(Screen.GAMEOVER);
+            });
+
+            GButton chooseBtn = new GButton(CHANGE_CHARACTOR_BTN, ()->{
+                screenMgr.show(Screen.SELECT);
+            });
+
+            btnPanel.add(adventureBtn);
+            btnPanel.add(chooseBtn);
+            btnPanel.setOpaque(false);
+
+            add(btnPanel, BorderLayout.SOUTH);
             return;
         }
         add(createRejectPanel(), BorderLayout.CENTER);

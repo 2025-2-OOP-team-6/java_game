@@ -10,6 +10,11 @@ public enum Screen
     SELECT,
     INVEN,
     RANK,
+
     STATISTIC,
-    MYPAGE
+    MYPAGE,
+
+    GAMEOVER,
+    CREDIT,
+
 }
