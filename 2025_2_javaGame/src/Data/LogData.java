@@ -76,7 +76,7 @@ public class LogData
 
     //CONST
     private final static String SUFFIX = "_logData.csv";
-    private final static String PREFIX = "..//assets//files//";
+    private final static String PREFIX = "assets//files//";
 
     private final static String DUMMY_LOG_ENTRY = "2000-01-01,00:00:00,0,DefaultItem,DefaultChar,DefaultMob,Win";
 
@@ -365,6 +365,41 @@ public class LogData
         return null;
     }
 
+    public int getBattleCnt(final String id) {
+        return getResultLogs(id).length;
+    }
+
+    public int getWinCnt(final String id) {
+        String[] results = getResultLogs(id);
+        int winCnt = 0;
+
+        for (String r : results) {
+            if (r.equals("WIN")) {
+                winCnt++;
+            }
+        }
+        return winCnt;
+    }
+
+    public int getLoseCnt(final String id) {
+        String[] results = getResultLogs(id);
+        int loseCnt = 0;
+
+        for (String r : results) {
+            if (r.equals("LOSE")) {
+                loseCnt++;
+            }
+        }
+        return loseCnt;
+    }
+
+    public double getWinRate(String userId) {
+        int wins = getWinCnt(userId);
+        int battles = getBattleCnt(userId);
+
+        if (battles == 0) return 0;
+        return (int)((wins / (double)battles) * 100);
+    }
 
 
     // ----------------- Functions ---------------------

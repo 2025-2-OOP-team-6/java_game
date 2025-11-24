@@ -218,7 +218,6 @@ public class UserData {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
 
-            Info userInfo = userHashMap.get(id);
             if (userInfo != null) {
                 String data = String.format("%d,%d,%d,%s,%s", userInfo.clearTime, userInfo.clearRank, userInfo.coin,
                         userInfo.inventory, userInfo.profileImage);

@@ -2,10 +2,10 @@ package Screen;
 
 import Data.AccountData;
 import Data.DataManager;
-import Data.UserData;
 import Action.GButton;
 import Util.Screen;
 import Util.Constant;
+
 
 import javax.swing.JPasswordField;
 import javax.swing.BorderFactory;
@@ -16,14 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Box;
 
+
 import java.awt.*;
 
 
-public class LoginScreen extends JPanel implements IScreen {
+public class LoginScreen extends JPanel implements IScreen
+{
     // CONSTANTS & DIMENSIONS
     private final int MAX_INPUT_SIZE = 15;
-    private final String LOGIN_BTN = "assets//buttons//loginBtn.png";
-    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
 
     private final int FIELD_WIDTH = 300;
     private final int LABEL_WIDTH = 80;
@@ -35,8 +35,8 @@ public class LoginScreen extends JPanel implements IScreen {
     private final Color WALLPAPER_COLOR = new Color(constant.WALL_RED, constant.WALL_GREEN, constant.WALL_BLUE); // 임시 하드코딩
     private final Color ROUND_PANEL_COLOR = new Color(67, 46, 129);
 
-    private final String LOGIN_BTN = "..//assets//buttons//loginBtn.png";
-    private final String SIGNUP_BTN = "..//assets//buttons//signUpBtn.png";
+    private final String LOGIN_BTN = "assets//buttons//loginBtn.png";
+    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
 
     private AccountData accountData = DataManager.getInstance().getAccountMgr();
     private JLabel title = new JLabel("LOGIN");
@@ -48,8 +48,8 @@ public class LoginScreen extends JPanel implements IScreen {
 
 
     private JPanel buttonPanel = null;
-    private GButton loginBtn = null;
-    private GButton signUpBtn = null;
+    private GButton loginBtn   = null;
+    private GButton signUpBtn  = null;
     private Color wallpaper;
 
     @Override
@@ -64,31 +64,28 @@ public class LoginScreen extends JPanel implements IScreen {
 
         loginBtn = new GButton(LOGIN_BTN, () -> {
             boolean loginSuccess = loginLogic();
-            if (loginSuccess) {
+            if (loginSuccess)
+            {
                 scManager.initAllScreens();
                 scManager.show(Screen.HOME);
             }
         });
 
-        signUpBtn = new GButton(SIGNUP_BTN, () -> {
+        signUpBtn = new GButton(SIGNUP_BTN, ()-> {
             scManager.show(Screen.SIGNUP);
         });
 
         setComponent();
     }
 
-    private boolean loginLogic() {
+    private boolean loginLogic()
+    {
         final String ID = idField.getText();
-        final String PW = new String(pwField.getPassword());
+        final String PW = new String (pwField.getPassword());
 
-        if (accountData.matches(ID, PW)) {
+        if(accountData.matches(ID, PW))
+        {
             DataManager.getInstance().loadUser(ID);
-            UserData userData = DataManager.getInstance().getUserMgr();
-
-            if (ID.equals("amaii135")) {
-                userData.updateProfileImage("amaii135", "amaii135_profile.png");
-                userData.storeUserData("amaii135");
-            }
 
             JOptionPane.showMessageDialog(this, "Login Successful");
             return true;
@@ -131,21 +128,44 @@ public class LoginScreen extends JPanel implements IScreen {
         buttonPanel.setOpaque(false);
     }
 
-    private void setComponent() {
+    private void setComponent()
+    {
         buttonPanel.add(loginBtn);
         buttonPanel.add(signUpBtn);
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // 컴포넌트 순서대로 추가
-        add(title);
-        add(Box.createVerticalStrut(20)); // 간격
-        add(label);
-        add(Box.createVerticalStrut(5));
-        add(setIdPanel());
-        add(Box.createVerticalStrut(5));
-        add(setPWPanle1());
-        add(Box.createVerticalStrut(20));
-        add(buttonPanel);
+        RoundPanel panel = new RoundPanel(25);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(ROUND_PANEL_COLOR);
+
+        final int MAX_PANEL_WIDTH = PANEL_INNER_WIDTH + 60;
+        final int MAX_PANEL_HEIGHT = 500;
+        panel.setMaximumSize(new Dimension(MAX_PANEL_WIDTH, MAX_PANEL_HEIGHT));
+
+
+        panel.add(Box.createVerticalGlue());
+
+        panel.add(Box.createVerticalStrut(30));
+        panel.add(title);
+        panel.add(Box.createVerticalStrut(40));
+        panel.add(label);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(setIdPanel());
+        panel.add(Box.createVerticalStrut(15));
+        panel.add(setPWPanle1());
+        panel.add(Box.createVerticalStrut(40));
+        panel.add(buttonPanel);
+        panel.add(Box.createVerticalStrut(30));
+
+        panel.add(Box.createVerticalGlue()); // 하단 Glue
+
+
+        JPanel centerWrapper = new JPanel(new GridBagLayout());
+        centerWrapper.setOpaque(false);
+
+        centerWrapper.add(panel, new GridBagConstraints());
+
+        add(centerWrapper, BorderLayout.CENTER);
     }
 
     private JPanel setIdPanel()
@@ -168,7 +188,8 @@ public class LoginScreen extends JPanel implements IScreen {
         return idPanel;
     }
 
-    private JPanel setPWPanle1() {
+    private JPanel setPWPanle1()
+    {
         JPanel pwPanel1 = new JPanel();
 
         pwPanel1.setLayout(new BoxLayout(pwPanel1, BoxLayout.X_AXIS));
@@ -187,6 +208,7 @@ public class LoginScreen extends JPanel implements IScreen {
 
         return pwPanel1;
     }
+
 
     @Override
     public Screen getScreenType() {
