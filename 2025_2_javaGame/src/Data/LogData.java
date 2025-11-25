@@ -98,15 +98,15 @@ public class LogData
     //DATA MANAGERS
     private final UserData userMgr;
     private final ItemData itemMgr;
-    private final CharactorData charMgr;
+ 
 
 
-    public LogData(UserData userMgr, CharactorData charMgr, ItemData itemMgr, final String[] userIdList)
+    public LogData(UserData userMgr, ItemData itemMgr, final String[] userIdList)
     {
         userLogsList = new HashMap<>();
 
         this.userMgr = userMgr;
-        this.charMgr = charMgr;
+        
         this.itemMgr = itemMgr;
 
         readLogData(userIdList);
@@ -250,68 +250,68 @@ public class LogData
 
         return null;
     }
+//
+//    public int[] getItemGraphData(final String id)
+//    {
+//        Logs node = userLogsList.get(id);
+//
+//        if(node != null && !node.logList.isEmpty())
+//        {
+//            //final int ITEM_LIST_LENGTH = itemMgr.getItemNames().length;
+//            final int ITEM_LOG_LENGTH = node.logList.size();
+//
+//            final String[] itemList = itemMgr.getItemNames();
+//            int[] itemUseCount = new int[ITEM_LIST_LENGTH];
+//
+//            for(int i = 0; i < ITEM_LIST_LENGTH; ++i)
+//            {
+//                itemUseCount[i] = 0;
+//
+//                for(int j = 0; j < ITEM_LOG_LENGTH; ++j)
+//                {
+//                    if(itemList[i].equals(node.logList.get(j).getItem()))
+//                    {
+//                        itemUseCount[i] += 1;
+//                    }
+//                }
+//            }
+//
+//            return itemUseCount;
+//        }
+//
+//        return null;
+//    }
 
-    public int[] getItemGraphData(final String id)
-    {
-        Logs node = userLogsList.get(id);
-
-        if(node != null && !node.logList.isEmpty())
-        {
-            final int ITEM_LIST_LENGTH = itemMgr.getItemNames().length;
-            final int ITEM_LOG_LENGTH = node.logList.size();
-
-            final String[] itemList = itemMgr.getItemNames();
-            int[] itemUseCount = new int[ITEM_LIST_LENGTH];
-
-            for(int i = 0; i < ITEM_LIST_LENGTH; ++i)
-            {
-                itemUseCount[i] = 0;
-
-                for(int j = 0; j < ITEM_LOG_LENGTH; ++j)
-                {
-                    if(itemList[i].equals(node.logList.get(j).getItem()))
-                    {
-                        itemUseCount[i] += 1;
-                    }
-                }
-            }
-
-            return itemUseCount;
-        }
-
-        return null;
-    }
-
-    public int[] getCharGraphData(final String id)
-    {
-        Logs node = userLogsList.get(id);
-
-        if(node != null && !node.logList.isEmpty())
-        {
-            final String[] charList = charMgr.getjobList();
-            final int CHARACTER_LIST_LENGTH = charList.length;
-            final int CHARACTER_LOG_LENGTH = node.logList.size();
-
-            int[] charUseCount = new int[CHARACTER_LIST_LENGTH];
-
-            for(int i = 0; i < CHARACTER_LIST_LENGTH; ++i)
-            {
-                charUseCount[i] = 0;
-
-                for(int j = 0; j < CHARACTER_LOG_LENGTH; ++j)
-                {
-                    if(charList[i].equals(node.logList.get(j).getCharacter()))
-                    {
-                        charUseCount[i] += 1;
-                    }
-                }
-            }
-
-            return charUseCount;
-        }
-
-        return null;
-    }
+//    public int[] getCharGraphData(final String id)
+//    {
+//        Logs node = userLogsList.get(id);
+//
+//        if(node != null && !node.logList.isEmpty())
+//        {
+//            final String[] charList = charMgr.getjobList();
+//            final int CHARACTER_LIST_LENGTH = charList.length;
+//            final int CHARACTER_LOG_LENGTH = node.logList.size();
+//
+//            int[] charUseCount = new int[CHARACTER_LIST_LENGTH];
+//
+//            for(int i = 0; i < CHARACTER_LIST_LENGTH; ++i)
+//            {
+//                charUseCount[i] = 0;
+//
+//                for(int j = 0; j < CHARACTER_LOG_LENGTH; ++j)
+//                {
+//                    if(charList[i].equals(node.logList.get(j).getCharacter()))
+//                    {
+//                        charUseCount[i] += 1;
+//                    }
+//                }
+//            }
+//
+//            return charUseCount;
+//        }
+//
+//        return null;
+//    }
 
     public int[] getMobGraphData(final String id)
     {

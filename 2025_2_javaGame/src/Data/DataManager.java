@@ -38,9 +38,10 @@ public class DataManager
     private UserData    userMgr;
     private DiceData 	diceMgr;
     private ItemData    itemMgr;
-    private CharactorData characMgr;
     private EnemyData 	enemyMgr;
     private EventListener eventListener;
+    private LogData 	logMgr;
+    private AnalysisData 	ansMgr;
     private User currentUser;
     private String[] rankList;
 
@@ -51,7 +52,7 @@ public class DataManager
         diceMgr = new DiceData();
         itemMgr = new ItemData(diceMgr);
         enemyMgr = new EnemyData(diceMgr, itemMgr);
-        characMgr = new CharactorData();
+        
         
         
         final Player player = new Player("player", 5, diceMgr.get("first"));
@@ -60,7 +61,7 @@ public class DataManager
 
         userMgr.readUserData();
 
-        logMgr = new LogData(userMgr, characMgr, itemMgr, accountMgr.getIDList());
+        logMgr = new LogData(userMgr, itemMgr, userMgr.getIDList());
     }
 
     public static DataManager getInstance()
@@ -99,10 +100,6 @@ public class DataManager
         return userMgr;
     }
     
-    public CharactorData getCharactorMgr()
-    {
-        return characMgr;
-    }
 
     public User getCurrentUser()
     {

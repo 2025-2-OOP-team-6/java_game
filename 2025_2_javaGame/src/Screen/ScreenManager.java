@@ -125,11 +125,9 @@ class StatisticScreenFactory implements  IScreenFactory
 {
     public IScreen create() {return new StatisticScreen();}
 }
-<<<<<<< HEAD
 
-=======
 class MyPageScreenFacotry implements IScreenFactory
 {
     public IScreen create() {return new MyPageScreen();}
 }
->>>>>>> refs/remotes/origin/MyPage
+
