@@ -374,7 +374,7 @@ public class LogData
         int winCnt = 0;
 
         for (String r : results) {
-            if (r.equals("WIN")) {
+            if (r.equals("Win")) {
                 winCnt++;
             }
         }
@@ -386,7 +386,7 @@ public class LogData
         int loseCnt = 0;
 
         for (String r : results) {
-            if (r.equals("LOSE")) {
+            if (r.equals("Lose")) {
                 loseCnt++;
             }
         }
