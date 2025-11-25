@@ -15,6 +15,11 @@ import java.time.format.DateTimeFormatter;
 import GameLogic.EventListener;
 import GameLogic.GameManager;
 import GameLogic.Player;
+/*
+ * /*
+ * hashMap<enemy, Integer> //적, 조우횟수
+ * 
+ */
 
 public class DataManager
 {

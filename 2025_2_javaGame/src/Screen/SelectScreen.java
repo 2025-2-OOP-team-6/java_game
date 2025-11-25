@@ -39,12 +39,12 @@ public class SelectScreen extends JPanel implements IScreen
 {
     //CONST
     private final int MAX_CHOOSE_SIZE = 3;
-    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
-    private final String CHOOSE_BTN   = "..//assets//buttons//chooseBtn.png";
-    private final String DELETE_BTN   = "..//assets//buttons//deleteBtn.png";
+    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
+    private final String CHOOSE_BTN   = "assets//buttons//chooseBtn.png";
+    private final String DELETE_BTN   = "assets//buttons//deleteBtn.png";
 
-    private final String CHAR_PREFIX = "..//assets//images//";
+    private final String CHAR_PREFIX = "assets//images//";
 
     private final Color CHAR_BOX_BG_COLOR = new Color(40, 0, 70);
     private final Color SELECTION_BG_COLOR = new Color(40, 0, 70, 180);

@@ -46,6 +46,7 @@ public class ScreenManager
         initScreen(new RankScreenFactory());
         initScreen(new BattleScreenFactory());
         initScreen(new StatisticScreenFactory());
+        initScreen(new MyPageScreenFacotry());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -124,4 +125,11 @@ class StatisticScreenFactory implements  IScreenFactory
 {
     public IScreen create() {return new StatisticScreen();}
 }
+<<<<<<< HEAD
 
+=======
+class MyPageScreenFacotry implements IScreenFactory
+{
+    public IScreen create() {return new MyPageScreen();}
+}
+>>>>>>> refs/remotes/origin/MyPage

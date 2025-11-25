@@ -1,6 +1,5 @@
 package Screen;
 
-
 import Data.DataManager;
 import Action.GButton;
 import Util.Constant;
@@ -8,26 +7,23 @@ import Data.UserData;
 import Util.Screen;
 import Logic.User;
 
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-
 import java.awt.*;
 
-public class HomeScreen extends JPanel implements IScreen
-{
-    //CONST
-    private final String START_BTN  = "assets//buttons//startBtn.png";
+public class HomeScreen extends JPanel implements IScreen {
+    // CONST
+    private final String START_BTN = "assets//buttons//startBtn.png";
     private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
     private final String MARKET_BTN = "assets//buttons//marketBtn.png";
     private final String SELECT_BTN = "assets//buttons//selectBtn.png";
-    private final String INVEN_BTN  = "assets//buttons//invenBtn.png";
-    private final String RANK_BTN   = "assets//buttons//rankBtn.png";
+    private final String INVEN_BTN = "assets//buttons//invenBtn.png";
+    private final String RANK_BTN = "assets//buttons//rankBtn.png";
     private final String MYPAGE_BTN = "assets//buttons//myPageBtn.png";
     private final String STATISTIC_BTN = "assets//buttons//statisticBtn.png";
 
-    //VARIABLES
+    // VARIABLES
     private JLabel coinLabel;
     private JLabel rankLabel;
     private JLabel timeLabel;
@@ -50,11 +46,8 @@ public class HomeScreen extends JPanel implements IScreen
 
     private ScreenManager screenMgr;
 
-
-
     @Override
-    public void init(ScreenManager scManager)
-    {
+    public void init(ScreenManager scManager) {
         setLayout(new BorderLayout(20, 20));
         setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50)); // 여백
 
@@ -68,21 +61,18 @@ public class HomeScreen extends JPanel implements IScreen
         setComponent();
     }
 
-    private void setComponent()
-    {
+    private void setComponent() {
         add(createHeaderPanel(screenMgr), BorderLayout.NORTH);
         add(createCenterPanel(screenMgr), BorderLayout.CENTER);
         add(createBottomPanel(screenMgr), BorderLayout.SOUTH);
     }
 
-
     // -- Set Header Panel --
 
-    private JPanel createHeaderPanel(ScreenManager scManager)
-    {
+    private JPanel createHeaderPanel(ScreenManager scManager) {
         Color darkWall = new Color(64, 64, 115);
 
-        JPanel headerPanel =  new JPanel(new BorderLayout());
+        JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
 
         JPanel welcomeArea = new JPanel();
@@ -94,13 +84,11 @@ public class HomeScreen extends JPanel implements IScreen
         welcomeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         welcomeLabel.setForeground(Color.WHITE);
 
-
         RoundPanel welcomBox = new RoundPanel(25);
         welcomBox.setLayout(new FlowLayout(FlowLayout.CENTER));
         welcomBox.setBackground(darkWall);
         welcomBox.setBorder(
-                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        );
+                BorderFactory.createEmptyBorder(5, 10, 5, 10));
         welcomBox.add(welcomeLabel);
 
         // - Set coin -
@@ -116,15 +104,16 @@ public class HomeScreen extends JPanel implements IScreen
         coinBox.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.YELLOW, 1),
-                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
-                )
-        );
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         coinBox.add(coinLabel);
 
         welcomeArea.add(welcomBox, BorderLayout.EAST);
         welcomeArea.add(coinBox, BorderLayout.WEST);
 
-        logoutBtn = new GButton(LOGOUT_BTN, ()->{
+        welcomeArea.add(welcomBox, BorderLayout.EAST);
+        welcomeArea.add(coinBox, BorderLayout.WEST);
+
+        logoutBtn = new GButton(LOGOUT_BTN, () -> {
             logoutLogic();
             scManager.show(Screen.LOGIN);
         });
@@ -135,65 +124,79 @@ public class HomeScreen extends JPanel implements IScreen
         return headerPanel;
     }
 
+<<<<<<< HEAD
     private void logoutLogic()
     {
         DataManager.getInstance().getUserMgr().storeUserData();
+=======
+    private void logoutLogic() {
+        DataManager.getInstance().getAccountMgr().storeAccountData();
+        userData.storeUserData(user.getId());
+>>>>>>> refs/remotes/origin/MyPage
     }
-
 
     // -- Set Center Panel --
 
-    private JPanel createCenterPanel(ScreenManager scManager)
-    {
-        JPanel centerPanel = new JPanel(new GridLayout(1, 7, 20, 20));
+    private JPanel createCenterPanel(ScreenManager scManager) {
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        // 패널 위쪽에 여백을 넣어서 헤더와 떨어트림
+        centerPanel.add(Box.createVerticalStrut(40));
         centerPanel.setOpaque(false);
 
-        final int BTN_WIDTH = 100;
-        final int BTN_HEIGHT = 100;
+        final int BTN_WIDTH = 150;
+        final int BTN_HEIGHT = 150;
 
         Image original = new ImageIcon(STATISTIC_BTN).getImage();
         Image scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        statisticBtn = new GButton(new ImageIcon(scaled), ()->{
+        statisticBtn = new GButton(new ImageIcon(scaled), () -> {
             scManager.show(Screen.STATISTIC);
         });
 
         original = new ImageIcon(START_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        startBtn = new GButton(new ImageIcon(scaled), ()->{
-           scManager.show(Screen.START);
+        startBtn = new GButton(new ImageIcon(scaled), () -> {
+            scManager.show(Screen.START);
         });
 
         original = new ImageIcon(MARKET_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        marketBtn = new GButton(new ImageIcon(scaled), ()->{
-           scManager.show(Screen.MARKET);
+        marketBtn = new GButton(new ImageIcon(scaled), () -> {
+            scManager.show(Screen.MARKET);
         });
 
         original = new ImageIcon(SELECT_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        selectChrBtn = new GButton(new ImageIcon(scaled), ()->{
-           scManager.show(Screen.SELECT);
+        selectChrBtn = new GButton(new ImageIcon(scaled), () -> {
+            scManager.show(Screen.SELECT);
         });
 
         original = new ImageIcon(INVEN_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        invenBtn = new GButton(new ImageIcon(scaled), ()->{
+        invenBtn = new GButton(new ImageIcon(scaled), () -> {
             scManager.show(Screen.INVEN);
         });
 
         original = new ImageIcon(RANK_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        rankBtn = new GButton(new ImageIcon(scaled), ()->{
-           scManager.show(Screen.RANK);
+        rankBtn = new GButton(new ImageIcon(scaled), () -> {
+            scManager.show(Screen.RANK);
         });
 
         original = new ImageIcon(MYPAGE_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        mypageBtn = new GButton(new ImageIcon(scaled), ()->{
-           scManager.show(Screen.MYPAGE);
+        mypageBtn = new GButton(new ImageIcon(scaled), () -> {
+            scManager.show(Screen.MYPAGE);
         });
 
+        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        row1.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
+        row1.setOpaque(false);
+        row1.add(invenBtn);
+        row1.add(startBtn);
+        row1.add(selectChrBtn);
 
+<<<<<<< HEAD
         centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
         //centerPanel.add(invenBtn);
@@ -202,18 +205,27 @@ public class HomeScreen extends JPanel implements IScreen
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
         centerPanel.add(mypageBtn);
+=======
+        JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        row2.setBorder(BorderFactory.createEmptyBorder(0, 0, 40, 0));
+        row2.setOpaque(false);
+        row2.add(statisticBtn);
+        row2.add(rankBtn);
+        row2.add(marketBtn);
+        row2.add(mypageBtn);
+
+        centerPanel.add(row1);
+        centerPanel.add(row2);
+
+>>>>>>> refs/remotes/origin/MyPage
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         return centerPanel;
     }
 
-
-
-
     // -- Set Bottom Panel --
 
-    private JPanel createBottomPanel(ScreenManager scManager)
-    {
+    private JPanel createBottomPanel(ScreenManager scManager) {
         JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 20, 20));
         bottomPanel.setOpaque(false);
 
@@ -226,7 +238,7 @@ public class HomeScreen extends JPanel implements IScreen
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        RoundPanel rankBox  = new RoundPanel(25);
+        RoundPanel rankBox = new RoundPanel(25);
         rankBox.setLayout(new BorderLayout());
         rankBox.setBackground(darkWall);
         rankBox.setBorder(
@@ -236,17 +248,36 @@ public class HomeScreen extends JPanel implements IScreen
                         TitledBorder.CENTER,
                         TitledBorder.TOP,
                         new Font("맑은 고딕", Font.BOLD, 12),
-                        Color.LIGHT_GRAY
-                )
-        );
+                        Color.LIGHT_GRAY));
         rankBox.add(rankLabel);
 
+<<<<<<< HEAD
         // - Set rank -
 //        String time = String.valueOf(userData.getTime(user.getId()));
 //        timeLabel = new JLabel(time + " 초");
 //        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 //        timeLabel.setForeground(Color.WHITE);
 //        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+=======
+        rankBox.setLayout(new BorderLayout());
+        rankBox.setBackground(darkWall);
+        rankBox.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEmptyBorder(),
+                        "BEST RANK!!",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP,
+                        new Font("맑은 고딕", Font.BOLD, 12),
+                        Color.LIGHT_GRAY));
+        rankBox.add(rankLabel);
+
+        // - Set time -
+        String time = String.valueOf(userData.getTime(user.getId()));
+        timeLabel = new JLabel(time + " 초");
+        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        timeLabel.setForeground(Color.WHITE);
+        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+>>>>>>> refs/remotes/origin/MyPage
 
         RoundPanel timeBox = new RoundPanel(25);
         timeBox.setLayout(new BorderLayout());
@@ -258,9 +289,7 @@ public class HomeScreen extends JPanel implements IScreen
                         TitledBorder.CENTER,
                         TitledBorder.TOP,
                         new Font("맑은 고딕", Font.BOLD, 12),
-                        Color.LIGHT_GRAY
-                )
-        );
+                        Color.LIGHT_GRAY));
 
         timeBox.add(timeLabel);
 
@@ -271,8 +300,13 @@ public class HomeScreen extends JPanel implements IScreen
         return bottomPanel;
     }
 
+    @Override
+    public Screen getScreenType() {
+        return Screen.HOME;
+    }
 
     @Override
+<<<<<<< HEAD
     public Screen getScreenType() {return Screen.HOME;}
 
     @Override
@@ -280,6 +314,11 @@ public class HomeScreen extends JPanel implements IScreen
     {
 //        UserData userMgr = DataManager.getInstance().getUserMgr();
 //        User user = DataManager.getInstance().getCurrentUser();
+=======
+    public void onShow() {
+        UserData userMgr = DataManager.getInstance().getUserMgr();
+        User user = DataManager.getInstance().getCurrentUser();
+>>>>>>> refs/remotes/origin/MyPage
 
         String coinString = String.valueOf(userMgr.getCoin(user.getId()));
         String rankString = String.valueOf(userMgr.getRank(user.getId()));

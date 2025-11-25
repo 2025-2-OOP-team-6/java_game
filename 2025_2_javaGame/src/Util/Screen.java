@@ -13,5 +13,5 @@ public enum Screen
     BATTLE, 
     GAME,
     STATISTIC,
-    MYPAGE,
+    MYPAGE
 }

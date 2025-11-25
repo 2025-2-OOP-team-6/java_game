@@ -30,9 +30,15 @@ import java.awt.FlowLayout;
 
 public class SignUpScreen extends JPanel implements IScreen
 {
+<<<<<<< HEAD
     private final int    MAX_INPUT_SIZE = 15;
     private final String CANCLE_BTN     = "assets//buttons//cancleBtn.png";
     private final String SIGNUP_BTN     = "assets//buttons//signUpBtn.png";
+=======
+    private final int MAX_INPUT_SIZE = 15;
+    private final String CANCLE_BTN = "assets//buttons//cancleBtn.png";
+    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
+>>>>>>> refs/remotes/origin/MyPage
 
     private UserData      	userData = DataManager.getInstance().getUserMgr();
     private JLabel           title       = new JLabel("Sign Up");

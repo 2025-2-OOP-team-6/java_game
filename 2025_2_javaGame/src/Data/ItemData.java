@@ -26,6 +26,7 @@ public class ItemData {
         readItemData();
     }
 
+<<<<<<< HEAD
     private void setEffectMap() {
     	effectMap.put("hpUp", (e, id) -> e.heal());
     	effectMap.put("diceChange", (e, id) -> e.changeDice(diceData.get(id)));
@@ -37,6 +38,22 @@ public class ItemData {
     		if (e.getDice().range.getRange()[0] > 2)
     			e.getDice().range.endChange(-1);	
     	});
+=======
+    //CONST
+    private final String ITEM_FILE = "assets//files//item_file.csv";
+    private final int ITEM_IDX   = 0;
+    private final int ATTACK_IDX = 1;
+    private final int PRICE_IDX  = 2;
+
+    //VARIABLE
+    private List<String> itemNames = new ArrayList<>();
+    private HashMap<String, ItemInfo> itemInfoList = new HashMap<>();
+
+    //FUNCTIONS
+    public String[] getItemNames()
+    {
+        return itemNames.toArray(new String[0]);
+>>>>>>> refs/remotes/origin/MyPage
     }
     private void readItemData()
     {
