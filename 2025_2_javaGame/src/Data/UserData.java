@@ -20,61 +20,36 @@ import java.util.ArrayList;
  */
 public class UserData {
     // INNER CLASS
-<<<<<<< HEAD
     private class Info
     {
     	String id = "";
     	String pw = "";
-        int clearStage = -1;
-        int clearRank = -1;
-=======
-    private class Info {
-        int clearTime = 0;
+        int clearStage = 0;
         int clearRank = 0;
         int coin = 0;
-        String inventory = "";
         String profileImage = "default_profile.png";
->>>>>>> refs/remotes/origin/MyPage
+
     }
 
-<<<<<<< HEAD
     //CONST
     private final int ID_IDX = 0;
     private final int PW_IDX = 1;
     private final int STAGE_IDX = 2;
     private final int RANK_IDX = 3;
-    private final String ACCOUNT_FILE = "assets//files//account_file.csv";
-=======
-    // CONST
-    private final int TIME_IDX = 0;
-    private final int RANK_IDX = 1;
     private final int COIN_IDX = 2;
-    private final int INVEN_IDX = 3;
     private final int PROFILE_IDX = 4;
-    private final int MAX_CHOOSE_SIZE = 3;
-    private final String PREFIX = "assets//files//";
-    private final String SUFFIX = "_file.csv";
->>>>>>> refs/remotes/origin/MyPage
+    
+    private final String ACCOUNT_FILE = "assets//files//account_file.csv";
 
     // VARIABLES
     private HashMap<String, Info> userHashMap;
     
 
-<<<<<<< HEAD
     public String[] getIDList()
     {
         Set<String> keyList = userHashMap.keySet();
         String[] idList = keyList.toArray(new String[2]);
-=======
-    // FUNCTIONS
 
-    // ------------------ Getters -----------------
-    public String[] getInventory(final String id) {
-        String[] inventory;
-        Info userInfo = userHashMap.get(id);
->>>>>>> refs/remotes/origin/MyPage
-
-<<<<<<< HEAD
         return idList;
     }
 
@@ -87,77 +62,62 @@ public class UserData {
         if(storedUser != null && storedUser.pw.equals(pw))
         {
             return true;
-=======
-        if (userInfo != null && userInfo.inventory != null) {
-            String invenString = userInfo.inventory;
-            String[] parts = invenString.split(" ");
+//        if (userInfo != null && userInfo.inventory != null) {
+//            String invenString = userInfo.inventory;
+//            String[] parts = invenString.split(" ");
+//
+//            inventory = parts;
+//
+//            return inventory;
 
-            inventory = parts;
-
-            return inventory;
->>>>>>> refs/remotes/origin/MyPage
         }
 
         return false;
     }
-<<<<<<< HEAD
     
     public int getStage(final String id)
     {
-=======
-
-    public String[] getChoosedCharactor() {
-        return choosedCharactor;
-    }
-
-    public int getCoin(final String id) {
->>>>>>> refs/remotes/origin/MyPage
-        Info userInfo = userHashMap.get(id);
-
-<<<<<<< HEAD
-        if(userInfo != null && userInfo.clearStage != -1)
+		Info userInfo = userHashMap.get(id);
+        if(userInfo != null && userInfo.clearStage != 0)
         {
             return userInfo.clearStage;
-=======
-        if (userInfo != null && userInfo.coin != 0) {
-            return userInfo.coin;
->>>>>>> refs/remotes/origin/MyPage
-        }
-
-<<<<<<< HEAD
-        return -1;
-=======
-        return 0;
-    }
-
-    public int getTime(final String id) {
+        } 
+    }	
+    public int getCoin(final String id) {
         Info userInfo = userHashMap.get(id);
 
-        if (userInfo != null && userInfo.clearTime != 0) {
-            return userInfo.clearTime;
+        if (userInfo != null && userInfo.coin != 0) {
+            return userInfo.coin;
         }
-
-        return 0;
->>>>>>> refs/remotes/origin/MyPage
-    }
+    }     
+//        return -1;
+//        return 0;
+//
+//    public int getTime(final String id) {
+//        Info userInfo = userHashMap.get(id);
+//
+//        if (userInfo != null && userInfo.clearTime != 0) {
+//            return userInfo.clearTime;
+//        }
+//
+//        return 0;
+//	}
 
     public int getRank(final String id) {
         Info userInfo = userHashMap.get(id);
 
-<<<<<<< HEAD
-        if(userInfo != null && userInfo.clearRank != -1)
-        {
-=======
+//<<<<<<< HEAD
+//        if(userInfo != null && userInfo.clearRank != -1)
+//        {
+//=======
         if (userInfo != null && userInfo.clearRank != 0) {
->>>>>>> refs/remotes/origin/MyPage
+//>>>>>>> refs/remotes/origin/MyPage
             return userInfo.clearRank;
         }
-
         return -1;
     }
 
-<<<<<<< HEAD
-=======
+
     public String getProfileImage(String id) {
         Info userInfo = userHashMap.get(id);
 
@@ -168,16 +128,15 @@ public class UserData {
     }
 
     // ----------------------- Setters -------------------------
->>>>>>> refs/remotes/origin/MyPage
 
-<<<<<<< HEAD
+
     public void updateStage(final String id, final int stage)
     {
-=======
-    public void updateChoosedCharactor(final String[] list) {
-        if (list != null)
-            choosedCharactor = list;
-    }
+
+//    public void updateChoosedCharactor(final String[] list) {
+//        if (list != null)
+//            choosedCharactor = list;
+//    }
 
     public void addNewUser(final String id) {
         Info newUser = new Info();
@@ -186,7 +145,7 @@ public class UserData {
     }
 
     public void addNewItem(final String id, final String[] items) {
->>>>>>> refs/remotes/origin/MyPage
+
         Info userInfo = userHashMap.get(id);
 <<<<<<< HEAD
         userInfo.clearStage = stage;

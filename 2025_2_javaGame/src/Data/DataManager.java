@@ -52,7 +52,7 @@ public class DataManager
         itemMgr = new ItemData(diceMgr);
         enemyMgr = new EnemyData(diceMgr, itemMgr);
         characMgr = new CharactorData();
-         
+        
         
         final Player player = new Player("player", 5, diceMgr.get("first"));
         eventListener = new EventListener(player);
