@@ -108,13 +108,21 @@ public class HomeScreen extends JPanel implements IScreen {
         welcomeArea.add(welcomBox, BorderLayout.EAST);
         welcomeArea.add(coinBox, BorderLayout.WEST);
 
-        welcomeArea.add(welcomBox, BorderLayout.EAST);
-        welcomeArea.add(coinBox, BorderLayout.WEST);
+        // - MyPage Button -
+        JPanel buttonArea = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        buttonArea.setOpaque(false);
 
         logoutBtn = new GButton(LOGOUT_BTN, () -> {
             logoutLogic();
             scManager.show(Screen.LOGIN);
         });
+
+        GButton myPageBtn = new GButton(MYPAGE_BTN, () -> {
+            scManager.show(Screen.MYPAGE);
+        });
+
+        buttonArea.add(myPageBtn);
+        buttonArea.add(logoutBtn);
 
         headerPanel.add(welcomeArea, BorderLayout.WEST);
         headerPanel.add(logoutBtn, BorderLayout.EAST);
@@ -129,57 +137,30 @@ public class HomeScreen extends JPanel implements IScreen {
 
     // -- Set Center Panel --
 
+    // -- Image Scaling and make Button --
+    private GButton createButton(String imgPath, int w, int h, ScreenManager scManager, Screen screenToShow) {
+        Image original = new ImageIcon(imgPath).getImage();
+        Image scaled = original.getScaledInstance(w, h, Image.SCALE_SMOOTH);      
+            
+        return new GButton(new ImageIcon(scaled), () -> scManager.show(screenToShow));          
+    }
+
     private JPanel createCenterPanel(ScreenManager scManager) {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        // 패널 위쪽에 여백을 넣어서 헤더와 떨어트림
-        centerPanel.add(Box.createVerticalStrut(40));
+        centerPanel.add(Box.createVerticalStrut(40)); // 패널 위쪽에 여백을 넣어서 헤더와 떨어트림
         centerPanel.setOpaque(false);
 
-        final int BTN_WIDTH = 150;
-        final int BTN_HEIGHT = 150;
+        final int BTN_WIDTH = 170;
+        final int BTN_HEIGHT = 170;
 
-        Image original = new ImageIcon(STATISTIC_BTN).getImage();
-        Image scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        statisticBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.STATISTIC);
-        });
-
-        original = new ImageIcon(START_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        startBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.START);
-        });
-
-        original = new ImageIcon(MARKET_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        marketBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.MARKET);
-        });
-
-        original = new ImageIcon(SELECT_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        selectChrBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.SELECT);
-        });
-
-        original = new ImageIcon(INVEN_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        invenBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.INVEN);
-        });
-
-        original = new ImageIcon(RANK_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        rankBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.RANK);
-        });
-
-        original = new ImageIcon(MYPAGE_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
-        mypageBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.MYPAGE);
-        });
+        statisticBtn = createButton(STATISTIC_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.STATISTIC);
+        startBtn = createButton(START_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.START);
+        marketBtn = createButton(MARKET_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.MARKET);
+        selectChrBtn = createButton(SELECT_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.SELECT);
+        invenBtn = createButton(INVEN_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.INVEN);
+        rankBtn = createButton(RANK_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.RANK);
+        mypageBtn = createButton(MYPAGE_BTN, BTN_WIDTH, BTN_HEIGHT, scManager, Screen.MYPAGE);
 
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         row1.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
@@ -219,7 +200,7 @@ public class HomeScreen extends JPanel implements IScreen {
         rankLabel.setForeground(Color.WHITE);
         rankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        RoundPanel rankBox = new RoundPanel(25);
+        RoundPanel rankBox  = new RoundPanel(25);
         rankBox.setLayout(new BorderLayout());
         rankBox.setBackground(darkWall);
         rankBox.setBorder(
@@ -229,19 +210,9 @@ public class HomeScreen extends JPanel implements IScreen {
                         TitledBorder.CENTER,
                         TitledBorder.TOP,
                         new Font("맑은 고딕", Font.BOLD, 12),
-                        Color.LIGHT_GRAY));
-        rankBox.add(rankLabel);
-
-        rankBox.setLayout(new BorderLayout());
-        rankBox.setBackground(darkWall);
-        rankBox.setBorder(
-                BorderFactory.createTitledBorder(
-                        BorderFactory.createEmptyBorder(),
-                        "BEST RANK!!",
-                        TitledBorder.CENTER,
-                        TitledBorder.TOP,
-                        new Font("맑은 고딕", Font.BOLD, 12),
-                        Color.LIGHT_GRAY));
+                        Color.LIGHT_GRAY
+                )
+        );
         rankBox.add(rankLabel);
 
         // - Set time -
