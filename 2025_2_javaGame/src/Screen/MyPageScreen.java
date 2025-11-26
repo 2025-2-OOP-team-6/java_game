@@ -78,6 +78,7 @@ public class MyPageScreen extends JPanel implements IScreen {
 
     private JPanel createHeaderPanel(ScreenManager scManager) {
 
+<<<<<<< Updated upstream
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         headerPanel.setBackground(new Color(15, 23, 42, 128));
@@ -90,6 +91,16 @@ public class MyPageScreen extends JPanel implements IScreen {
 
         headerPanel.add(myPageLabel);
         headerPanel.add(myPageTitle);
+=======
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        headerPanel.setBackground(new Color(15, 23, 42, 128));
+        headerPanel.setOpaque(true);
+
+    
+        JLabel myPageIcon = new JLabel(new ImageIcon(MYPAGE));
+        headerPanel.add(myPageIcon);
+>>>>>>> Stashed changes
 
         return headerPanel;
     }

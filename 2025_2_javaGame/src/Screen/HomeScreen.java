@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 
+<<<<<<< Updated upstream
 public class HomeScreen extends JPanel implements IScreen {
     // CONST
     private final String START_BTN = "assets//buttons//startBtn.png";
@@ -20,6 +21,18 @@ public class HomeScreen extends JPanel implements IScreen {
     private final String SELECT_BTN = "assets//buttons//selectBtn.png";
     private final String INVEN_BTN = "assets//buttons//invenBtn.png";
     private final String RANK_BTN = "assets//buttons//rankBtn.png";
+=======
+
+public class HomeScreen extends JPanel implements IScreen
+{
+    //CONST
+    private final String START_BTN  = "assets//buttons//startBtn.png";
+    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
+    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
+    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
+    private final String INVEN_BTN  = "assets//buttons//invenBtn.png";
+    private final String RANK_BTN   = "assets//buttons//rankBtn.png";
+>>>>>>> Stashed changes
     private final String MYPAGE_BTN = "assets//buttons//myPageBtn.png";
     private final String STATISTIC_BTN = "assets//buttons//statisticBtn.png";
 
@@ -108,11 +121,7 @@ public class HomeScreen extends JPanel implements IScreen {
         welcomeArea.add(welcomBox, BorderLayout.EAST);
         welcomeArea.add(coinBox, BorderLayout.WEST);
 
-        // - MyPage Button -
-        JPanel buttonArea = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
-        buttonArea.setOpaque(false);
-
-        logoutBtn = new GButton(LOGOUT_BTN, () -> {
+        logoutBtn = new GButton(LOGOUT_BTN, ()->{
             logoutLogic();
             scManager.show(Screen.LOGIN);
         });
@@ -120,7 +129,9 @@ public class HomeScreen extends JPanel implements IScreen {
         GButton myPageBtn = new GButton(MYPAGE_BTN, () -> {
             scManager.show(Screen.MYPAGE);
         });
-
+        JPanel buttonArea = new JPanel();
+        buttonArea.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        buttonArea.setOpaque(false);
         buttonArea.add(myPageBtn);
         buttonArea.add(logoutBtn);
 
@@ -215,7 +226,11 @@ public class HomeScreen extends JPanel implements IScreen {
         );
         rankBox.add(rankLabel);
 
+<<<<<<< Updated upstream
         // - Set time -
+=======
+        // - Set rank -
+>>>>>>> Stashed changes
         String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
         timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
