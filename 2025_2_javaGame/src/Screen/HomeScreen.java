@@ -12,7 +12,6 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 
-<<<<<<< Updated upstream
 public class HomeScreen extends JPanel implements IScreen {
     // CONST
     private final String START_BTN = "assets//buttons//startBtn.png";
@@ -21,18 +20,6 @@ public class HomeScreen extends JPanel implements IScreen {
     private final String SELECT_BTN = "assets//buttons//selectBtn.png";
     private final String INVEN_BTN = "assets//buttons//invenBtn.png";
     private final String RANK_BTN = "assets//buttons//rankBtn.png";
-=======
-
-public class HomeScreen extends JPanel implements IScreen
-{
-    //CONST
-    private final String START_BTN  = "assets//buttons//startBtn.png";
-    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
-    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
-    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
-    private final String INVEN_BTN  = "assets//buttons//invenBtn.png";
-    private final String RANK_BTN   = "assets//buttons//rankBtn.png";
->>>>>>> Stashed changes
     private final String MYPAGE_BTN = "assets//buttons//myPageBtn.png";
     private final String STATISTIC_BTN = "assets//buttons//statisticBtn.png";
 
@@ -226,11 +213,7 @@ public class HomeScreen extends JPanel implements IScreen
         );
         rankBox.add(rankLabel);
 
-<<<<<<< Updated upstream
         // - Set time -
-=======
-        // - Set rank -
->>>>>>> Stashed changes
         String time = String.valueOf(userData.getTime(user.getId()));
         timeLabel = new JLabel(time + " 초");
         timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
