@@ -13,11 +13,13 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.Box;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -31,8 +33,7 @@ public class MyPageScreen extends JPanel implements IScreen {
     private final String WIN_CNT = "assets//images//winCnt.png";
     private final String LOSE_CNT = "assets//images//loseCnt.png";
     private final String WIN_RATE = "assets//images//winRate.png";
-    
-    private CardPanel infoCard;
+
     private CardPanel profileCard;
     private CardPanel userCard;
     private CardPanel coinCard;
@@ -40,8 +41,8 @@ public class MyPageScreen extends JPanel implements IScreen {
     private CardPanel battleCntCard;
     private CardPanel winCntCard;
     private CardPanel loseCntCard;
-    private CardPanel winRateCard;   
-    
+    private CardPanel winRateCard;
+
     private GButton gobackBtn;
 
     private Color wallpaper;
@@ -67,7 +68,7 @@ public class MyPageScreen extends JPanel implements IScreen {
         screenMgr = scManager;
 
         setComponent();
-    }   
+    }
 
     private void setComponent() {
         add(createHeaderPanel(screenMgr), BorderLayout.NORTH);
@@ -83,10 +84,10 @@ public class MyPageScreen extends JPanel implements IScreen {
         headerPanel.setOpaque(true);
 
         JLabel myPageLabel = new JLabel(new ImageIcon(MYPAGE_IMG));
-        JLabel myPageTitle=new JLabel("마이페이지"); 
+        JLabel myPageTitle = new JLabel("마이페이지");
         myPageTitle.setFont(new Font("맑은고딕", Font.PLAIN, 15));
         myPageTitle.setForeground(Color.WHITE);
-        
+
         headerPanel.add(myPageLabel);
         headerPanel.add(myPageTitle);
 
@@ -100,12 +101,10 @@ public class MyPageScreen extends JPanel implements IScreen {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         centerPanel.setOpaque(false);
 
-        // - user info -
-        infoCard = new CardPanel(0);
-        infoCard.setOpaque(true); 
-        infoCard.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        infoCard.setBackground(new Color(15, 23, 42, 128));
-        infoCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        infoPanel.setOpaque(true);
+        infoPanel.setBackground(new Color(15, 23, 42, 128));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20,10, 20, 20));
 
         // - set profile -
         String profile = userData.getProfileImage(user.getId());
@@ -113,22 +112,24 @@ public class MyPageScreen extends JPanel implements IScreen {
         profileCard.addScaledImage(profile, 120, 120);
         profileCard.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        infoCard.add(profileCard);
-        infoCard.add(Box.createHorizontalStrut(20));
+
+        // - add profile wrapper -
+        JPanel profileWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        profileWrapper.setOpaque(false);
+        profileWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        profileWrapper.add(profileCard);
+        infoPanel.add(profileWrapper, BorderLayout.WEST);
 
         // - userCard(set id with achievement, set rank, set coin) -
         final Font USER_INFO_FONT = new Font("맑은고딕", Font.BOLD, 20);
         userCard = new CardPanel();
         userCard.setAlignmentY(Component.LEFT_ALIGNMENT);
-        
         userCard.addText("ID: " + user.getId(), USER_INFO_FONT, Color.WHITE); // set id
-        userCard.add(Box.createVerticalStrut(10));
-        userCard.addText("랭크: " + userData.getRank(user.getId()), USER_INFO_FONT, Color.WHITE); // set rank
-        userCard.setAlignmentY(Component.CENTER_ALIGNMENT);
+        userCard.add(Box.createVerticalStrut(10)); // set rank
+        userCard.addText("랭크: " + userData.getRank(user.getId()), USER_INFO_FONT, Color.WHITE);
 
         // set coin
         int userCoin = userData.getCoin(user.getId());
-        
         coinCard = new CardPanel(0);
         coinCard.setAlignmentX(Component.LEFT_ALIGNMENT);
         coinCard.addScaledImage(COIN_IMG, 30, 30);
@@ -136,78 +137,199 @@ public class MyPageScreen extends JPanel implements IScreen {
 
         userCard.add(Box.createVerticalStrut(10));
         userCard.add(coinCard);
+        userCard.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        infoCard.add(userCard);
-       
+        infoPanel.add(userCard);
+
         // Battle Log Data
-        int battle = logMgr.getBattleCnt(user.getId());   
-        int win   = logMgr.getWinCnt(user.getId());      
-        int lose  = logMgr.getLoseCnt(user.getId());      
-        double rate  = logMgr.getWinRate(user.getId());   
-        
-        // - set Battle Log - 
-        JPanel battleLog = new JPanel(new BorderLayout(10, 10));
-        battleLog.setOpaque(true);
+        int battle = logMgr.getBattleCnt(user.getId());
+        int win = logMgr.getWinCnt(user.getId());
+        int lose = logMgr.getLoseCnt(user.getId());
+        double rate = logMgr.getWinRate(user.getId());
+
+        // - set Battle Log -
+        JPanel battleLog = new JPanel();
+        battleLog.setLayout(new BoxLayout(battleLog, BoxLayout.Y_AXIS));
         battleLog.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.CYAN, 5),
                         BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         battleLog.setBackground(new Color(15, 23, 42, 128));
-        
+
         logCard = new CardPanel();
-        logCard.addText("전투 로그", new Font("맑은 고딕", Font.BOLD, 30), Color.WHITE);
-        logCard.setAlignmentX(Component.LEFT_ALIGNMENT);
-        logCard.add(Box.createVerticalStrut(20));
-        
+        logCard.addCenteredText("전투 로그", new Font("맑은 고딕", Font.BOLD, 30), Color.WHITE);
+        logCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         // - Battle Info Card -
         final Font LOG_FONT = new Font("맑은고딕", Font.BOLD, 20);
         final Font TITLE_FONT = new Font("맑은고딕", Font.BOLD, 20);
 
         JPanel battleInfoCard = new JPanel(new GridLayout(1, 4, 20, 0));
-        
-        battleInfoCard.setOpaque(false);    
-        
-        battleCntCard= new CardPanel();
-        battleCntCard.addImage(BATTLE_CNT);
-        battleCntCard.addText("총 전투", TITLE_FONT, Color.GRAY);
-        battleCntCard.addText(String.valueOf(battle), LOG_FONT, Color.WHITE);
+        battleInfoCard.setOpaque(false);
+        battleInfoCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        battleCntCard = new CardPanel();
+        battleCntCard.addCenteredImage(BATTLE_CNT);
+        battleCntCard.addCenteredText("총 전투", TITLE_FONT, Color.GRAY);
         battleCntCard.add(Box.createVerticalStrut(10));
+        battleCntCard.addCenteredText(String.valueOf(battle), LOG_FONT, Color.WHITE);
 
-        winCntCard= new CardPanel();
-        winCntCard.addImage(WIN_CNT);
-        winCntCard.addText("승리", TITLE_FONT, Color.GRAY);
-        winCntCard.addText(String.valueOf(win), LOG_FONT, Color.WHITE);
+        winCntCard = new CardPanel();
+        winCntCard.addCenteredImage(WIN_CNT);
+        winCntCard.addCenteredText("승리", TITLE_FONT, Color.GRAY);
         winCntCard.add(Box.createVerticalStrut(10));
+        winCntCard.addCenteredText(String.valueOf(win), LOG_FONT, Color.WHITE);
 
-        loseCntCard= new CardPanel();
-        loseCntCard.addImage(LOSE_CNT);
-        loseCntCard.addText("패배", TITLE_FONT, Color.GRAY);
-        loseCntCard.addText(String.valueOf(lose), LOG_FONT, Color.WHITE);
+        loseCntCard = new CardPanel();
+        loseCntCard.addCenteredImage(LOSE_CNT);
+        loseCntCard.addCenteredText("패배", TITLE_FONT, Color.GRAY);
         loseCntCard.add(Box.createVerticalStrut(10));
+        loseCntCard.addCenteredText(String.valueOf(lose), LOG_FONT, Color.WHITE);
 
-        winRateCard= new CardPanel();
-        winRateCard.addImage(WIN_RATE);
-        winRateCard.addText("전체 승률", TITLE_FONT, Color.GRAY);
-        winRateCard.addText(String.valueOf(rate)+"%", LOG_FONT, Color.WHITE);
+        winRateCard = new CardPanel();
+        winRateCard.addCenteredImage(WIN_RATE);
+        winRateCard.addCenteredText("전체 승률", TITLE_FONT, Color.GRAY);
         winRateCard.add(Box.createVerticalStrut(10));
+        winRateCard.addCenteredText(String.valueOf(rate) + "%", LOG_FONT, Color.WHITE);
 
         // - add battleInfo Component -
         battleInfoCard.add(battleCntCard);
         battleInfoCard.add(winCntCard);
         battleInfoCard.add(loseCntCard);
         battleInfoCard.add(winRateCard);
-        
+        battleInfoCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         // - add battleLog Component -
-        battleLog.add(logCard, BorderLayout.NORTH);
-        battleLog.add(battleInfoCard, BorderLayout.CENTER);        
-        
-        // - add centerPanel Component - 
-        centerPanel.add(infoCard, BorderLayout.NORTH);
-        centerPanel.add(Box.createVerticalStrut(20)); 
-        centerPanel.add(battleLog, BorderLayout.CENTER);
+        battleLog.add(logCard);
+        battleLog.add(Box.createVerticalStrut(20));
+        battleLog.add(battleInfoCard);
+
+        centerPanel.add(infoPanel);
+        centerPanel.add(Box.createVerticalStrut(20));
+        centerPanel.add(battleLog);
 
         return centerPanel;
     }
+    /*
+     * private JPanel createUserInfoPanel() {
+     * 
+     * JPanel infoPanel = new JPanel(new BorderLayout());
+     * infoPanel.setOpaque(true);
+     * infoPanel.setBackground(new Color(15, 23, 42, 128));
+     * infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+     * 
+     * // - set profile -
+     * String profile = userData.getProfileImage(user.getId());
+     * profileCard = new CardPanel();
+     * profileCard.addScaledImage(profile, 120, 120);
+     * profileCard.setAlignmentY(Component.CENTER_ALIGNMENT);
+     * 
+     * JPanel profileWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+     * profileWrapper.setOpaque(false);
+     * profileWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20)); //
+     * 오른쪽 여백
+     * profileWrapper.add(profileCard);
+     * 
+     * infoPanel.add(profileWrapper, BorderLayout.WEST);
+     * 
+     * // - userCard(set id with achievement, set rank, set coin) -
+     * final Font USER_INFO_FONT = new Font("맑은고딕", Font.BOLD, 20);
+     * userCard = new CardPanel();
+     * userCard.setAlignmentY(Component.LEFT_ALIGNMENT);
+     * 
+     * userCard.addText("ID: " + user.getId(), USER_INFO_FONT, Color.WHITE); // set
+     * id
+     * userCard.add(Box.createVerticalStrut(10));
+     * userCard.addText("랭크: " + userData.getRank(user.getId()), USER_INFO_FONT,
+     * Color.WHITE); // set rank
+     * 
+     * // set coin
+     * int userCoin = userData.getCoin(user.getId());
+     * 
+     * coinCard = new CardPanel(0);
+     * coinCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+     * coinCard.addScaledImage(COIN_IMG, 30, 30);
+     * coinCard.addText(String.valueOf(userCoin), USER_INFO_FONT, Color.YELLOW);
+     * 
+     * userCard.add(Box.createVerticalStrut(10));
+     * userCard.add(coinCard);
+     * userCard.setAlignmentY(Component.CENTER_ALIGNMENT);
+     * userCard.setMaximumSize(new Dimension(400, 140));
+     * 
+     * infoPanel.add(userCard, BorderLayout.CENTER);
+     * 
+     * return infoPanel;
+     * }
+     * 
+     * private JPanel createBattleLogPanel() {
+     * 
+     * // Battle Log Data
+     * int battle = logMgr.getBattleCnt(user.getId());
+     * int win = logMgr.getWinCnt(user.getId());
+     * int lose = logMgr.getLoseCnt(user.getId());
+     * double rate = logMgr.getWinRate(user.getId());
+     * 
+     * // - set Battle Log -
+     * JPanel battleLog = new JPanel();
+     * battleLog.setLayout(new BoxLayout(battleLog, BoxLayout.Y_AXIS));
+     * battleLog.setBorder(
+     * BorderFactory.createCompoundBorder(
+     * BorderFactory.createLineBorder(Color.CYAN, 5),
+     * BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+     * battleLog.setBackground(new Color(15, 23, 42, 128));
+     * 
+     * logCard = new CardPanel();
+     * logCard.addCenteredText("전투 로그", new Font("맑은 고딕", Font.BOLD, 30),
+     * Color.WHITE);
+     * logCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+     * 
+     * // - Battle Info Card -
+     * final Font LOG_FONT = new Font("맑은고딕", Font.BOLD, 20);
+     * final Font TITLE_FONT = new Font("맑은고딕", Font.BOLD, 20);
+     * 
+     * JPanel battleInfoCard = new JPanel(new GridLayout(1, 4, 20, 0));
+     * battleInfoCard.setOpaque(false);
+     * battleInfoCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+     * 
+     * battleCntCard= new CardPanel();
+     * battleCntCard.addCenteredImage(BATTLE_CNT);
+     * battleCntCard.addCenteredText("총 전투", TITLE_FONT, Color.GRAY);
+     * battleCntCard.addCenteredText(String.valueOf(battle), LOG_FONT, Color.WHITE);
+     * battleCntCard.add(Box.createVerticalStrut(10));
+     * 
+     * winCntCard= new CardPanel();
+     * winCntCard.addCenteredImage(WIN_CNT);
+     * winCntCard.addCenteredText("승리", TITLE_FONT, Color.GRAY);
+     * winCntCard.addCenteredText(String.valueOf(win), LOG_FONT, Color.WHITE);
+     * winCntCard.add(Box.createVerticalStrut(10));
+     * 
+     * loseCntCard= new CardPanel();
+     * loseCntCard.addCenteredImage(LOSE_CNT);
+     * loseCntCard.addCenteredText("패배", TITLE_FONT, Color.GRAY);
+     * loseCntCard.addCenteredText(String.valueOf(lose), LOG_FONT, Color.WHITE);
+     * loseCntCard.add(Box.createVerticalStrut(10));
+     * 
+     * winRateCard= new CardPanel();
+     * winRateCard.addCenteredImage(WIN_RATE);
+     * winRateCard.addCenteredText("전체 승률", TITLE_FONT, Color.GRAY);
+     * winRateCard.addCenteredText(String.valueOf(rate)+"%", LOG_FONT, Color.WHITE);
+     * winRateCard.add(Box.createVerticalStrut(10));
+     * 
+     * // - add battleInfo Component -
+     * battleInfoCard.add(battleCntCard);
+     * battleInfoCard.add(winCntCard);
+     * battleInfoCard.add(loseCntCard);
+     * battleInfoCard.add(winRateCard);
+     * battleInfoCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+     * 
+     * // - add battleLog Component -
+     * battleLog.add(logCard);
+     * battleLog.add(Box.createVerticalStrut(20));
+     * battleLog.add(battleInfoCard);
+     * 
+     * return battleLog;
+     * }
+     */
 
     private JPanel createBottomPanel(ScreenManager scManager) {
         JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -231,20 +353,20 @@ public class MyPageScreen extends JPanel implements IScreen {
     public void onShow() {
         System.out.println("Start: MyPageScreen is now Rendering");
     }
-    
-    /* 
-    @Override
-    public void onResize(int width, int height) {
 
-        int cardW = width / 12;
-        int cardH = height / 12;
-
-        for (CardPanel p : resizeTargets) {
-            p.setPreferredSize(new Dimension(cardW, cardH));
-            p.revalidate();
-        }
-
-        repaint();
-    }
-    */
+    /*
+     * @Override
+     * public void onResize(int width, int height) {
+     * 
+     * int cardW = width / 12;
+     * int cardH = height / 12;
+     * 
+     * for (CardPanel p : resizeTargets) {
+     * p.setPreferredSize(new Dimension(cardW, cardH));
+     * p.revalidate();
+     * }
+     * 
+     * repaint();
+     * }
+     */
 }
