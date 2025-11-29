@@ -36,7 +36,7 @@ public class Core
         DataManager.getInstance();
         
         gameManager = new GameManager();
-      screenManager = new ScreenManager();
+        screenManager = new ScreenManager();
 
         screenManager.setGameMgr(gameManager);
         screenManager.initPriorityScreen();

@@ -27,13 +27,13 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class MyPageScreen extends JPanel implements IScreen {
-    private final String MYPAGE = "assets//images//mypage.png";
-    private final String GOBACK_BTN = "assets//buttons//gobackBtn.png";
+    private final String MYPAGE = "..//assets//images//mypage.png";
+    private final String GOBACK_BTN = "..//assets//buttons//gobackBtn.png";
 
-    private final String BATTLE_CNT = "assets//images//battleCnt.png";
-    private final String WIN_CNT = "assets//images//winCnt.png";
-    private final String LOSE_CNT = "assets//images//loseCnt.png";
-    private final String WIN_RATE = "assets//images//winRate.png";
+    private final String BATTLE_CNT = "..//assets//images//battleCnt.png";
+    private final String WIN_CNT = "..//assets//images//winCnt.png";
+    private final String LOSE_CNT = "..//assets//images//loseCnt.png";
+    private final String WIN_RATE = "..//assets//images//winRate.png";
 
     private JLabel idLabel;
     private JLabel rankLabel;

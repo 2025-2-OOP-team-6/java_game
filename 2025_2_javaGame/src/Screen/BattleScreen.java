@@ -7,6 +7,7 @@ import Util.Screen;
 
 import javax.swing.JPanel;
 
+import GameLogic.GameObserver;
 import Action.BlackOverlay;
 import Action.GButton;
 import Action.GPanel;
@@ -31,16 +32,16 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BattleScreen extends JPanel implements IScreen {
+public class BattleScreen extends JPanel implements IScreen, GameObserver {
 	private final DataManager dataMgr = DataManager.getInstance();
 
-	private final GPanel background = new GPanel("assets//battle//background.png");
-	private final GPanel bottomBar = new GPanel("assets//battle//bottomBar.png");
-	private final GPanel defeat = new GPanel("assets//battle//defeat.png");
-	private final GPanel enemyImg = new GPanel("assets//battle//enemy1.png");
+	private final GPanel background = new GPanel("..//assets//battle//background.png");
+	private final GPanel bottomBar = new GPanel("..//assets//battle//bottomBar.png");
+	private final GPanel defeat = new GPanel("..//assets//battle//defeat.png");
+	private final GPanel enemyImg = new GPanel("..//assets//battle//enemy1.png");
 	
-	private final String blankImage = "assets//battle//blankHpBar.png";
-	private final String hpImage = "assets//battle//hpBar.png";
+	private final String blankImage = "..//assets//battle//blankHpBar.png";
+	private final String hpImage = "..//assets//battle//hpBar.png";
 
 	private final JLabel stageLabel = new JLabel();
 	private final JLabel coinLabel = new JLabel();
@@ -58,8 +59,8 @@ public class BattleScreen extends JPanel implements IScreen {
 	private BlackOverlay blackPanel;
 	
 
-	private final GPanel playerImg = new GPanel("assets//battle//warrior.png");
-	// private final GPanel wizard = new GPanel("assets//battle//wizard.png");
+	private final GPanel playerImg = new GPanel("..//assets//battle//warrior.png");
+	// private final GPanel wizard = new GPanel("..//assets//battle//wizard.png");
 
 	private final Position PLAYER_POS = new Position(176, 228);
 	private final Position ENEMY1_POS = new Position(772, 284);
@@ -91,7 +92,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		scMgr.getGameMgr().initGame();
 		
 		coin = dataMgr.getUserMgr().getCoin(dataMgr.getCurrentUser().getId());
-		
+		DataManager.getInstance().getEventListener().addGameOverListener(this);
 		
 
 		itemMap = new HashMap<>();
@@ -157,7 +158,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		switch (id) {
 		case 1: {
 			enemy = dataMgr.getEnemyMgr().get("enemy1").clone();
-			enemyImg.setImage("assets//battle//enemy1.png");
+			enemyImg.setImage("..//assets//battle//enemy1.png");
 			enemyImg.setBounds(ENEMY1_POS.x, ENEMY1_POS.y);
 			entityMap.put(enemy, enemyImg);
 			setBar(ENEMY1_POS, enemy);
@@ -166,7 +167,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		}
 		case 2: {
 			enemy = dataMgr.getEnemyMgr().get("enemy2").clone();
-			enemyImg.setImage("assets//battle//enemy2.png");
+			enemyImg.setImage("..//assets//battle//enemy2.png");
 			enemyImg.setBounds(ENEMY2_POS.x, ENEMY2_POS.y);
 			entityMap.put(enemy, enemyImg);
 			setBar(ENEMY2_POS, enemy);
@@ -175,7 +176,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		}
 		case 3: {
 			enemy = dataMgr.getEnemyMgr().get("enemy3").clone();
-			enemyImg.setImage("assets//battle//enemy3.png");
+			enemyImg.setImage("..//assets//battle//enemy3.png");
 			enemyImg.setBounds(ENEMY3_POS.x, ENEMY3_POS.y);
 			entityMap.put(enemy, enemyImg);
 			setBar(ENEMY3_POS, enemy);
@@ -192,7 +193,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 		RANGE_TEXT = String.format("%d - %d", enemy.getDice().range.getRange()[0], enemy.getDice().range.getRange()[1]);
 
-		fightBtn = new GButton("assets//battle//fightBtn.png", () -> {
+		fightBtn = new GButton("..//assets//battle//fightBtn.png", () -> {
 			dataMgr.getEventListener().call(EventEnum.TURN_MOVE, enemy);
 			refresh("fightBtn");
 		});
@@ -356,7 +357,11 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 
 		if (dataMgr.getEventListener().getClear()) {
-			//TODO: coin + 10
+			UserData userMgr = DataManager.getInstance().getUserMgr();
+            User user = DataManager.getInstance().getCurrentUser();
+
+            userMgr.updateCoin(user.getId(), coin + 100);
+
 			dtForMove = 0;
 			dtForOpacity = 0;
 			fightBtn.setEnabled(false);
@@ -373,7 +378,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		int firstPosX = pos.x + width / 2 - hp * 40 / 2;
 
 		for (int i = 0; i < hp; i++) {
-			g = new GPanel("assets//battle//hpBar.png");
+			g = new GPanel("..//assets//battle//hpBar.png");
 			g.setBounds(firstPosX + i * 40, pos.y - 47);
 			if (e instanceof Player)
 				playerBarList.add(g);
@@ -381,7 +386,7 @@ public class BattleScreen extends JPanel implements IScreen {
 				enemyBarList.add(g);
 		}
 
-		g = new GPanel("assets//battle//resultBar.png");
+		g = new GPanel("..//assets//battle//resultBar.png");
 
 		g.setBounds(pos.x + width / 2 - 27, pos.y - 135);
 		
@@ -392,7 +397,7 @@ public class BattleScreen extends JPanel implements IScreen {
 			enemyBarList.add(g);
 		}
 
-		g = new GPanel("assets//battle//rangeBar.png");
+		g = new GPanel("..//assets//battle//rangeBar.png");
 		
 		g.setBounds(pos.x + width / 2 + 45, pos.y - 120);
 		if (e instanceof Player) {
@@ -409,7 +414,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		GButton g;
 		for (int i = 0; i < 6; i++) {
 			int id = i;
-			g = new GButton("assets//battle//itemBtn.png", () -> {
+			g = new GButton("..//assets//battle//itemBtn.png", () -> {
 				clickItemButton(id);
 				
 				refresh("itemBtn");
@@ -439,7 +444,7 @@ public class BattleScreen extends JPanel implements IScreen {
 			}
 			else {
 				itemMap.replace(g, null);
-				g.setImageIcon("assets//battle//itemBtn.png");
+				g.setImageIcon("..//assets//battle//itemBtn.png");
 			}
 		
 			i++;
@@ -495,7 +500,7 @@ public class BattleScreen extends JPanel implements IScreen {
 
 		for (GPanel g : playerBarList) {
 			g.setLayout(null);
-			if (g.getImagePath() == "assets//battle//resultBar.png") {
+			if (g.getImagePath() == "..//assets//battle//resultBar.png") {
 				RESULT_TEXT = String.format("%d", player.getDice().getValue());
 				resultLabel.setText(RESULT_TEXT);
 				resultLabel.setBounds(21, 20,
@@ -503,7 +508,7 @@ public class BattleScreen extends JPanel implements IScreen {
 				g.add(resultLabel);
 				
 			}
-			if (g.getImagePath() == "assets//battle//rangeBar.png") {
+			if (g.getImagePath() == "..//assets//battle//rangeBar.png") {
 				RANGE_TEXT = String.format("%d - %d", player.getDice().range.getRange()[0], player.getDice().range.getRange()[1]);
 				rangeLabel.setText(RANGE_TEXT);
 				rangeLabel.setBounds(35, 10,
@@ -515,14 +520,14 @@ public class BattleScreen extends JPanel implements IScreen {
 		}
 		for (GPanel g : enemyBarList) {
 			g.setLayout(null);
-			if (g.getImagePath() == "assets//battle//resultBar.png") {
+			if (g.getImagePath() == "..//assets//battle//resultBar.png") {
 				RESULT_TEXT = String.format("%d", enemy.getDice().getValue());
 				resultLabel2.setText(RESULT_TEXT);
 				resultLabel2.setBounds(21, 20,
 						resultLabel2.getPreferredSize().width + 30, resultLabel2.getPreferredSize().height);
 				g.add(resultLabel2);
 			}
-			if (g.getImagePath() == "assets//battle//rangeBar.png") {
+			if (g.getImagePath() == "..//assets//battle//rangeBar.png") {
 			
 				RANGE_TEXT = String.format("%d - %d", enemy.getDice().range.getRange()[0], enemy.getDice().range.getRange()[1]);
 				rangeLabel2.setText(RANGE_TEXT);
@@ -558,15 +563,14 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 	}
 
-	public void showDefeat() {
+	private void showDefeat() {
 		UserData userMgr =dataMgr.getUserMgr();
         User user = DataManager.getInstance().getCurrentUser();
 
         userMgr.updateCoin(user.getId(),coin);
         userMgr.updateStage(user.getId(), dataMgr.getEventListener().getStage());
-      //TODO: show를 게임오버화면으로 변경
-		//scMgr.show(Screen.HOME);
-		
+        //TODO: show를 게임오버화면으로 변경
+		scMgr.show(Screen.GAMEOVER);
 	}
 
 	@Override
@@ -579,8 +583,13 @@ public class BattleScreen extends JPanel implements IScreen {
 		removeAll();
         revalidate();
         repaint();
-
 	}
+
+    @Override
+    public void onGameOver()
+    {
+        showDefeat();
+    }
 
 	public void setupButtonHover(GButton button) {
 

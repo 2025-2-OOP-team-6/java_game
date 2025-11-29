@@ -1,6 +1,7 @@
 
 package Screen;
 
+import GameLogic.EventListener;
 import Data.AnalysisData;
 import Data.DataManager;
 import Action.GButton;
@@ -38,9 +39,9 @@ import java.util.ArrayList;
 public class MarketScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
-    private final String PURCHASE_BTN = "assets//buttons//purchaseBtn.png";
+    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
+    private final String PURCHASE_BTN = "..//assets//buttons//purchaseBtn.png";
 
     //VARIABLES
     private JLabel titleL;
@@ -57,6 +58,7 @@ public class MarketScreen extends JPanel implements IScreen
     private Constant constant;
     private AnalysisData ansMgr;
     private ScreenManager scManager;
+    private EventListener eventMgr;
 
     @Override
     public void init(ScreenManager scManager)
@@ -74,6 +76,7 @@ public class MarketScreen extends JPanel implements IScreen
         userMgr = DataManager.getInstance().getUserMgr();
         user = DataManager.getInstance().getCurrentUser();
         ansMgr = DataManager.getInstance().getAnsMgr();
+        eventMgr = DataManager.getInstance().getEventListener();
 
         setComponent();
     }
@@ -160,13 +163,6 @@ public class MarketScreen extends JPanel implements IScreen
             priceL.setForeground(Color.YELLOW);
             priceL.setPreferredSize(new Dimension(280, 20));
 
-//            String attackData = String.valueOf(itemMgr.getAttack(itemName));
-//            JLabel attackL = new JLabel("ATTACK : " + attackData);
-//            attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-//            attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
-//            attackL.setForeground(Color.WHITE);
-//            attackL.setPreferredSize(new Dimension(280, 20));
-
             GButton purchaseBtn = new GButton(PURCHASE_BTN, ()->{
                 purchaseLogic(itemName);
             });
@@ -201,6 +197,7 @@ public class MarketScreen extends JPanel implements IScreen
 
         if((coin - price) >= 0)
         {
+            eventMgr.getPlayer().getBag().add(itemMgr.getItemObj(itemName));
             userMgr.updateCoin(user.getId(), coin - price);
             purchasedList.add(itemName);
             String coinString = String.valueOf(userMgr.getCoin(user.getId()));

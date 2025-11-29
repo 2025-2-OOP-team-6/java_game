@@ -15,7 +15,7 @@ import GameLogic.Item;
 
 public class EnemyData
 {
-    private static final String ENEMY_FILE = "assets//files//enemy_file.csv";
+    private static final String ENEMY_FILE = "..//assets//files//enemy_file.csv";
 
     private final HashMap<String, Enemy> enemyMap;
     private final DiceData diceData;

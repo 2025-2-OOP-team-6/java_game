@@ -48,6 +48,8 @@ public class ScreenManager
         initScreen(new StatisticScreenFactory());
         initScreen(new MyPageScreenFacotry());
         initScreen(new BattleScreenFacotry());
+        initScreen(new GameOverScreenFactory());
+        initScreen(new EndingCreditScreenFactory());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -135,5 +137,15 @@ class BattleScreenFacotry implements IScreenFactory
 class MyPageScreenFacotry implements IScreenFactory
 {
     public IScreen create() {return new MyPageScreen();}
+}
+
+class GameOverScreenFactory implements  IScreenFactory
+{
+    public IScreen create() {return new GameOverScreen();}
+}
+
+class EndingCreditScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new EndingCreditScreen();}
 }
 

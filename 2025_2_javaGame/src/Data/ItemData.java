@@ -12,7 +12,7 @@ import GameLogic.IGameRunnable;
 import GameLogic.Item;
 
 public class ItemData {
-	private static final String ITEM_FILE = "assets//files//item_file.csv";
+	private static final String ITEM_FILE = "..//assets//files//item_file.csv";
 
     private final HashMap<String, Item> itemMap;
     private final HashMap<String, IGameRunnable<Entity, String>> effectMap;
@@ -93,5 +93,10 @@ public class ItemData {
 		if (itemName == "null") return 0; 
         return itemMap.get(itemName).price;
 	}
-    
+
+    public Item getItemObj(final String itemName)
+    {
+        if(itemName == null) return null;
+        return itemMap.get(itemName);
+    }
 }

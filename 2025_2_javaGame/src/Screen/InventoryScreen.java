@@ -33,8 +33,8 @@ import java.awt.event.MouseEvent;
 public class InventoryScreen  extends JPanel implements IScreen
 {
     //CONST
-    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
+    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
 
     //VARIABLES
     private JLabel titleL;
@@ -143,18 +143,10 @@ public class InventoryScreen  extends JPanel implements IScreen
                 nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
                 nameL.setForeground(Color.WHITE);
 
-//                String attackData = String.valueOf(itemMgr.getAttack(itemName));
-//                JLabel attackL = new JLabel("ATTACK : " + attackData);
-//                attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-//                attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
-//                attackL.setForeground(Color.WHITE);
-//                attackL.setPreferredSize(new Dimension(280, 20));
-
 
                 itemPanel.add(itemL);
                 itemPanel.add(Box.createHorizontalStrut(5));
                 itemPanel.add(nameL);
-                //itemPanel.add(attackL);
                 itemPanel.add(Box.createHorizontalStrut(5));
 
                 gridPanel.add(itemPanel);

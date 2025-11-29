@@ -25,8 +25,6 @@ public class UserData {
 		int coin = 0;
 		String profileImage = "default_profile.png";
 		ArrayList<Item> inven = new ArrayList<>();
-		
-
 	}
 
 	// CONST
@@ -37,7 +35,7 @@ public class UserData {
 	private final int RANK_IDX = 3;
 	private final int COIN_IDX = 4;
 	private final int PROFILE_IDX = 5;
-	private final String ACCOUNT_FILE = "assets//files//account_file.csv";
+	private final String ACCOUNT_FILE = "..//assets//files//account_file.csv";
 
 	// VARIABLES
 	private HashMap<String, Info> userHashMap;

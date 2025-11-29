@@ -35,8 +35,8 @@ public class LoginScreen extends JPanel implements IScreen
     private final Color WALLPAPER_COLOR = new Color(constant.WALL_RED, constant.WALL_GREEN, constant.WALL_BLUE); // 임시 하드코딩
     private final Color ROUND_PANEL_COLOR = new Color(67, 46, 129);
 
-    private final String LOGIN_BTN = "assets//buttons//loginBtn.png";
-    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
+    private final String LOGIN_BTN = "..//assets//buttons//loginBtn.png";
+    private final String SIGNUP_BTN = "..//assets//buttons//signUpBtn.png";
 
     private UserData userData = DataManager.getInstance().getUserMgr();
     private JLabel title = new JLabel("LOGIN");

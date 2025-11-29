@@ -12,8 +12,7 @@ public class GameManager {
 	
 	public void initGame() {
 		setEntity();
-		
-		
+
 		dataMgr.getEventListener().call(EventEnum.START, null);
 	}
 	
@@ -27,7 +26,7 @@ public class GameManager {
 			itemList.add(dataMgr.getItemMgr().get(s));
 		player.setBag(itemList);
 		//TODO:아이템 전달이 안됨
-		
+
 		dataMgr.initEventListener(player);
 		dataMgr.getEventListener().setStage(1);
 	}

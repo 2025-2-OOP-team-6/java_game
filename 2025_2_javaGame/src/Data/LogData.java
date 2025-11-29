@@ -76,7 +76,7 @@ public class LogData
 
     //CONST
     private final static String SUFFIX = "_logData.csv";
-    private final static String PREFIX = "assets//files//";
+    private final static String PREFIX = "..//assets//files//";
 
     private final static String DUMMY_LOG_ENTRY = "2000-01-01,00:00:00,0,DefaultItem,DefaultChar,DefaultMob,Win";
 

@@ -14,14 +14,14 @@ import java.awt.*;
 
 public class HomeScreen extends JPanel implements IScreen {
     // CONST
-    private final String START_BTN = "assets//buttons//startBtn.png";
-    private final String LOGOUT_BTN = "assets//buttons//logoutBtn.png";
-    private final String MARKET_BTN = "assets//buttons//marketBtn.png";
-    private final String SELECT_BTN = "assets//buttons//selectBtn.png";
-    private final String INVEN_BTN = "assets//buttons//invenBtn.png";
-    private final String RANK_BTN = "assets//buttons//rankBtn.png";
-    private final String MYPAGE_BTN = "assets//buttons//myPageBtn.png";
-    private final String STATISTIC_BTN = "assets//buttons//statisticBtn.png";
+    private final String START_BTN = "..//assets//buttons//startBtn.png";
+    private final String LOGOUT_BTN = "..//assets//buttons//logoutBtn.png";
+    private final String MARKET_BTN = "..//assets//buttons//marketBtn.png";
+    private final String SELECT_BTN = "..//assets//buttons//selectBtn.png";
+    private final String INVEN_BTN = "..//assets//buttons//invenBtn.png";
+    private final String RANK_BTN = "..//assets//buttons//rankBtn.png";
+    private final String MYPAGE_BTN = "..//assets//buttons//myPageBtn.png";
+    private final String STATISTIC_BTN = "..//assets//buttons//statisticBtn.png";
 
     // VARIABLES
     private JLabel coinLabel;
@@ -153,10 +153,7 @@ public class HomeScreen extends JPanel implements IScreen {
         	
         	scManager.getGameMgr().initGame();
             scManager.show(Screen.BATTLE);
-            
-            
-            
-            
+
         });
 
         original = new ImageIcon(MARKET_BTN).getImage();

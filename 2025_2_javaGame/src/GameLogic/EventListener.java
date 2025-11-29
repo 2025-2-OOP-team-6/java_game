@@ -17,12 +17,22 @@ public class EventListener {
 	private int stage = 0; 
 	private int isWin = 0;
 	private String log = "";
-	
+
+    private static GameObserver gameOverListener;
+    private boolean pedingGameOver = false;
 	private LocalDateTime now = LocalDateTime.now();
 	
 	public EventListener(Player player) {
 		this.player = player;
 	}
+    public void addGameOverListener(GameObserver listener)
+    {
+        gameOverListener = listener;
+        if(pedingGameOver)
+        {
+            gameOverListener.onGameOver();
+        }
+    }
 	
 	public void call(EventEnum e, Object object) {
 		switch (e) {
@@ -106,6 +116,7 @@ public class EventListener {
 	
 	private void gameOver() {
 		//TODO: BattleScreen에 있는 showDefeat불러와야함
+        this.gameOverListener.onGameOver();
 	}
 
 	public void setStage(int stage) {

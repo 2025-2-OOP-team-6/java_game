@@ -20,7 +20,6 @@ public class Player extends Entity {
 	public void getItem(Item item) {
 		if(item != null)
 			bag.add(item);
-		
 	}
 	
 	@Override
