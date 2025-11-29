@@ -139,5 +139,5 @@ public class EventListener {
 	public int getIsWin() {
 		return isWin;
 	}
-
+	
 }

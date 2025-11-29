@@ -30,15 +30,9 @@ import java.awt.FlowLayout;
 
 public class SignUpScreen extends JPanel implements IScreen
 {
-<<<<<<< HEAD
     private final int    MAX_INPUT_SIZE = 15;
     private final String CANCLE_BTN     = "assets//buttons//cancleBtn.png";
     private final String SIGNUP_BTN     = "assets//buttons//signUpBtn.png";
-=======
-    private final int MAX_INPUT_SIZE = 15;
-    private final String CANCLE_BTN = "assets//buttons//cancleBtn.png";
-    private final String SIGNUP_BTN = "assets//buttons//signUpBtn.png";
->>>>>>> refs/remotes/origin/MyPage
 
     private UserData      	userData = DataManager.getInstance().getUserMgr();
     private JLabel           title       = new JLabel("Sign Up");
@@ -127,13 +121,12 @@ public class SignUpScreen extends JPanel implements IScreen
             return false;
         }
 
-        else if(!accountData.insertData(ID, PW1))
+        else if(!userData.checkUser(ID))
         {
             JOptionPane.showMessageDialog(this, "Duplicate ID please retype your ID and PW");
             return false;
         }
 
-        accountData.insertData(ID, PW1);
 
         UserData userMgr = DataManager.getInstance().getUserMgr();
         userMgr.addUserData(ID, PW2);
@@ -142,6 +135,7 @@ public class SignUpScreen extends JPanel implements IScreen
         JOptionPane.showMessageDialog(this, "SignUp Successful");
         return true;
     }
+    
 
     private void setLocationAndSize()
     {

@@ -1,7 +1,6 @@
 package Screen;
 
-import Logic.BattleManager;
-import Render.BattleView;
+import Logic.User;
 import Util.EventEnum;
 import Util.Position;
 import Util.Screen;
@@ -12,26 +11,18 @@ import Action.BlackOverlay;
 import Action.GButton;
 import Action.GPanel;
 import Data.DataManager;
+import Data.UserData;
 import GameLogic.Enemy;
 import GameLogic.Entity;
 import GameLogic.Item;
 import GameLogic.Player;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -60,6 +51,8 @@ public class BattleScreen extends JPanel implements IScreen {
 	private String STAGE_TEXT;
 	private String RESULT_TEXT;
 	private String RANGE_TEXT;
+	
+	private int coin;
 	
 	private BlackOverlay blackPanel;
 	
@@ -95,6 +88,10 @@ public class BattleScreen extends JPanel implements IScreen {
 	public void init(final ScreenManager scManager) {
 		scMgr = scManager;
 		scMgr.getGameMgr().initGame();
+		
+		coin = dataMgr.getUserMgr().getCoin(dataMgr.getCurrentUser().getId());
+		
+		
 
 		itemMap = new HashMap<>();
 		itemBarList = new ArrayList<>();
@@ -472,6 +469,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 	}
 
+	
 	private void setDefaultObject() {
 
 		background.setBounds(0, 0);
@@ -552,7 +550,12 @@ public class BattleScreen extends JPanel implements IScreen {
 	}
 
 	public void showDefeat() {
-		add(battleView, defeat);
+		UserData userMgr =dataMgr.getUserMgr();
+        User user = DataManager.getInstance().getCurrentUser();
+
+        userMgr.updateCoin(user.getId(),coin);
+		scMgr.show(Screen.HOME);
+		
 	}
 
 	@Override

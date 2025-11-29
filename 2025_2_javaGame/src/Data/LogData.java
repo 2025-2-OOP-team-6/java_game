@@ -250,37 +250,37 @@ public class LogData
 
         return null;
     }
-//
-//    public int[] getItemGraphData(final String id)
-//    {
-//        Logs node = userLogsList.get(id);
-//
-//        if(node != null && !node.logList.isEmpty())
-//        {
-//            //final int ITEM_LIST_LENGTH = itemMgr.getItemNames().length;
-//            final int ITEM_LOG_LENGTH = node.logList.size();
-//
-//            final String[] itemList = itemMgr.getItemNames();
-//            int[] itemUseCount = new int[ITEM_LIST_LENGTH];
-//
-//            for(int i = 0; i < ITEM_LIST_LENGTH; ++i)
-//            {
-//                itemUseCount[i] = 0;
-//
-//                for(int j = 0; j < ITEM_LOG_LENGTH; ++j)
-//                {
-//                    if(itemList[i].equals(node.logList.get(j).getItem()))
-//                    {
-//                        itemUseCount[i] += 1;
-//                    }
-//                }
-//            }
-//
-//            return itemUseCount;
-//        }
-//
-//        return null;
-//    }
+
+    public int[] getItemGraphData(final String id)
+    {
+        Logs node = userLogsList.get(id);
+
+        if(node != null && !node.logList.isEmpty())
+        {
+            final int ITEM_LIST_LENGTH = itemMgr.getItemNames().length;
+            final int ITEM_LOG_LENGTH = node.logList.size();
+
+            final String[] itemList = itemMgr.getItemNames();
+            int[] itemUseCount = new int[ITEM_LIST_LENGTH];
+
+            for(int i = 0; i < ITEM_LIST_LENGTH; ++i)
+            {
+                itemUseCount[i] = 0;
+
+                for(int j = 0; j < ITEM_LOG_LENGTH; ++j)
+                {
+                    if(itemList[i].equals(node.logList.get(j).getItem()))
+                    {
+                        itemUseCount[i] += 1;
+                    }
+                }
+            }
+
+            return itemUseCount;
+        }
+
+        return null;
+    }
 
 //    public int[] getCharGraphData(final String id)
 //    {

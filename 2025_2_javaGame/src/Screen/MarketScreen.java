@@ -160,12 +160,12 @@ public class MarketScreen extends JPanel implements IScreen
             priceL.setForeground(Color.YELLOW);
             priceL.setPreferredSize(new Dimension(280, 20));
 
-            String attackData = String.valueOf(itemMgr.getAttack(itemName));
-            JLabel attackL = new JLabel("ATTACK : " + attackData);
-            attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-            attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
-            attackL.setForeground(Color.WHITE);
-            attackL.setPreferredSize(new Dimension(280, 20));
+//            String attackData = String.valueOf(itemMgr.getAttack(itemName));
+//            JLabel attackL = new JLabel("ATTACK : " + attackData);
+//            attackL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+//            attackL.setAlignmentX(Component.CENTER_ALIGNMENT);
+//            attackL.setForeground(Color.WHITE);
+//            attackL.setPreferredSize(new Dimension(280, 20));
 
             GButton purchaseBtn = new GButton(PURCHASE_BTN, ()->{
                 purchaseLogic(itemName);
@@ -178,7 +178,7 @@ public class MarketScreen extends JPanel implements IScreen
             itemPanel.add(Box.createHorizontalStrut(5));
             itemPanel.add(nameL);
             itemPanel.add(priceL);
-            itemPanel.add(attackL);
+            //itemPanel.add(attackL);
             itemPanel.add(Box.createHorizontalStrut(5));
             itemPanel.add(purchaseBtn);
 
@@ -268,3 +268,4 @@ public class MarketScreen extends JPanel implements IScreen
     public void onShow() {
         System.out.println("Start: MarketScreen is now Rendering");
     }
+}

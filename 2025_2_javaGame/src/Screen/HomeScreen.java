@@ -124,15 +124,9 @@ public class HomeScreen extends JPanel implements IScreen {
         return headerPanel;
     }
 
-<<<<<<< HEAD
     private void logoutLogic()
     {
         DataManager.getInstance().getUserMgr().storeUserData();
-=======
-    private void logoutLogic() {
-        DataManager.getInstance().getAccountMgr().storeAccountData();
-        userData.storeUserData(user.getId());
->>>>>>> refs/remotes/origin/MyPage
     }
 
     // -- Set Center Panel --
@@ -196,7 +190,6 @@ public class HomeScreen extends JPanel implements IScreen {
         row1.add(startBtn);
         row1.add(selectChrBtn);
 
-<<<<<<< HEAD
         centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
         //centerPanel.add(invenBtn);
@@ -205,19 +198,7 @@ public class HomeScreen extends JPanel implements IScreen {
         centerPanel.add(marketBtn);
         centerPanel.add(selectChrBtn);
         centerPanel.add(mypageBtn);
-=======
-        JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
-        row2.setBorder(BorderFactory.createEmptyBorder(0, 0, 40, 0));
-        row2.setOpaque(false);
-        row2.add(statisticBtn);
-        row2.add(rankBtn);
-        row2.add(marketBtn);
-        row2.add(mypageBtn);
-
-        centerPanel.add(row1);
-        centerPanel.add(row2);
-
->>>>>>> refs/remotes/origin/MyPage
+        centerPanel.add(statisticBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         return centerPanel;
@@ -251,14 +232,6 @@ public class HomeScreen extends JPanel implements IScreen {
                         Color.LIGHT_GRAY));
         rankBox.add(rankLabel);
 
-<<<<<<< HEAD
-        // - Set rank -
-//        String time = String.valueOf(userData.getTime(user.getId()));
-//        timeLabel = new JLabel(time + " 초");
-//        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-//        timeLabel.setForeground(Color.WHITE);
-//        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-=======
         rankBox.setLayout(new BorderLayout());
         rankBox.setBackground(darkWall);
         rankBox.setBorder(
@@ -271,13 +244,6 @@ public class HomeScreen extends JPanel implements IScreen {
                         Color.LIGHT_GRAY));
         rankBox.add(rankLabel);
 
-        // - Set time -
-        String time = String.valueOf(userData.getTime(user.getId()));
-        timeLabel = new JLabel(time + " 초");
-        timeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-        timeLabel.setForeground(Color.WHITE);
-        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
->>>>>>> refs/remotes/origin/MyPage
 
         RoundPanel timeBox = new RoundPanel(25);
         timeBox.setLayout(new BorderLayout());
@@ -306,25 +272,13 @@ public class HomeScreen extends JPanel implements IScreen {
     }
 
     @Override
-<<<<<<< HEAD
-    public Screen getScreenType() {return Screen.HOME;}
-
-    @Override
-    public void onShow()
-    {
-//        UserData userMgr = DataManager.getInstance().getUserMgr();
-//        User user = DataManager.getInstance().getCurrentUser();
-=======
     public void onShow() {
         UserData userMgr = DataManager.getInstance().getUserMgr();
         User user = DataManager.getInstance().getCurrentUser();
->>>>>>> refs/remotes/origin/MyPage
 
         String coinString = String.valueOf(userMgr.getCoin(user.getId()));
         String rankString = String.valueOf(userMgr.getRank(user.getId()));
-        String timeString = String.valueOf(userMgr.getTime(user.getId()));
         coinLabel.setText(coinString + " coin");
-        timeLabel.setText(timeString + " sec");
         rankLabel.setText(rankString + " rank");
 
         removeAll();

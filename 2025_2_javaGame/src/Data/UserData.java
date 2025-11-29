@@ -8,6 +8,9 @@ import java.io.BufferedReader;
 
 import java.util.Map;
 import java.util.Set;
+
+import GameLogic.Item;
+
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -21,10 +24,13 @@ public class UserData {
 		int clearRank = 0;
 		int coin = 0;
 		String profileImage = "default_profile.png";
+		ArrayList<Item> inven = new ArrayList<>();
+		
 
 	}
 
 	// CONST
+	private final ItemData itemMgr;
 	private final int ID_IDX = 0;
 	private final int PW_IDX = 1;
 	private final int STAGE_IDX = 2;
@@ -36,6 +42,10 @@ public class UserData {
 	// VARIABLES
 	private HashMap<String, Info> userHashMap;
 
+	public UserData(ItemData itemMgr) {
+		this.itemMgr = itemMgr;
+	}
+	
 	public String[] getIDList() {
 		Set<String> keyList = userHashMap.keySet();
 		String[] idList = keyList.toArray(new String[2]);
@@ -112,6 +122,9 @@ public class UserData {
         userInfo.coin = coin;
     }
 
+    public boolean checkUser(final String id) {
+    	return userHashMap.containsKey(id);
+    }
 	public void addUserData(final String id, final String pw) {
 		{
 
@@ -177,7 +190,7 @@ public class UserData {
 			for (Map.Entry<String, Info> node : userHashMap.entrySet()) {
 				Info userInfo = node.getValue();
 
-				String data = String.format("%s,%s,%d,%d", userInfo.id, userInfo.pw, userInfo.clearStage,
+				String data = String.format("%s,%s,%d,%d,%d,%s", userInfo.id, userInfo.pw, userInfo.clearStage,
 						userInfo.clearRank, userInfo.coin, userInfo.profileImage);
 				writer.write(data);
 				writer.newLine();
@@ -186,5 +199,23 @@ public class UserData {
 			e.printStackTrace();
 			System.err.println("Error: Can not write data (" + ACCOUNT_FILE + ")");
 		}
+	}
+
+	public void addNewItem(String userid,String[] itemList) {
+		Info userInfo = userHashMap.get(userid);
+		for(String itemid:itemList)
+			userInfo.inven.add(itemMgr.get(itemid));
+		
+	}
+
+	public String getProfileImage(String id) {
+		return userHashMap.get(id).profileImage;
+	}
+
+	public String[] getInventory(String id) {
+		String
+		for(Item item:userHashMap.get(id).inven)
+			
+		return ;	
 	}
 }

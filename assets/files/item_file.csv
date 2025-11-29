@@ -1,4 +1,4 @@
-hpUp,hp+1,assets//battle//hpUp.png
-diceChange,changeDice,assets//battle//diceChange.png
-rangeUp,rangeUp,assets//battle//rangeUp.png
-rangeDown,rangeDown,assets//battle//rangeDown.png
+hpUp,hp+1,10,assets//battle//hpUp.png
+diceChange,changeDice,10,assets//battle//diceChange.png
+rangeUp,rangeUp,10,assets//battle//rangeUp.png
+rangeDown,rangeDown,10,assets//battle//rangeDown.png

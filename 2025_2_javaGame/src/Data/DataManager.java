@@ -43,14 +43,14 @@ public class DataManager
     private LogData 	logMgr;
     private AnalysisData 	ansMgr;
     private User currentUser;
-    private String[] rankList;
 
 
     public DataManager()
     {
-        userMgr = new UserData();
+        
         diceMgr = new DiceData();
         itemMgr = new ItemData(diceMgr);
+        userMgr = new UserData(itemMgr);
         enemyMgr = new EnemyData(diceMgr, itemMgr);
         
         
@@ -123,7 +123,7 @@ public class DataManager
     {
         if(ansMgr == null)
         {
-            ansMgr = new AnalysisData(logMgr, itemMgr, characMgr, currentUser.getId());
+            ansMgr = new AnalysisData(logMgr, itemMgr, currentUser.getId());
         }
 
         return ansMgr;

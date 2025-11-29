@@ -49,7 +49,6 @@ public class StatisticScreen extends JPanel implements IScreen
     private ItemData itemMgr;
     private AnalysisData ansMgr;
     private ScreenManager screenMgr;
-    private CharactorData charMgr;
 
     private Color wallpaper;
     private JPanel cardPanel;
@@ -65,12 +64,10 @@ public class StatisticScreen extends JPanel implements IScreen
         setBackground(wallpaper);
 
         this.screenMgr = screenMgr;
-        logMgr = DataManager.getInstance().getLogMgr();
         userMgr = DataManager.getInstance().getUserMgr();
         user = DataManager.getInstance().getCurrentUser();
         ansMgr = DataManager.getInstance().getAnsMgr();
         itemMgr = DataManager.getInstance().getItemMgr();
-        charMgr = DataManager.getInstance().getCharactorMgr();
 
         if(userMgr.getCoin(user.getId()) == 0)
         {
@@ -201,28 +198,29 @@ public class StatisticScreen extends JPanel implements IScreen
             itemUsage.add(i);
         }
 
+        
         RoundPanel item = createGraphWrapper(
                 "사용한 아이템 빈도수 (막대)", itemUsage, itemNames, new Color(250, 224, 130), GraphType.BAR);
 
         return item;
     }
 
-    private RoundPanel createCharUsageGraph()
-    {
-        List<String> charNames = Arrays.asList(charMgr.getjobList());
-        List<Integer> charUsage = new ArrayList<>();
-        final int[] usageArr = logMgr.getCharGraphData(user.getId());
-
-        for(int i : usageArr)
-        {
-            charUsage.add(i);
-        }
-
-        RoundPanel character = createGraphWrapper(
-                "사용한 캐릭터 빈도수 (막대)", charUsage, charNames, new Color(184, 255, 126), GraphType.BAR);
-
-        return character;
-    }
+//    private RoundPanel createCharUsageGraph()
+//    {
+//        List<String> charNames = Arrays.asList(charMgr.getjobList());
+//        List<Integer> charUsage = new ArrayList<>();
+//        final int[] usageArr = logMgr.getCharGraphData(user.getId());
+//
+//        for(int i : usageArr)
+//        {
+//            charUsage.add(i);
+//        }
+//
+//        RoundPanel character = createGraphWrapper(
+//                "사용한 캐릭터 빈도수 (막대)", charUsage, charNames, new Color(184, 255, 126), GraphType.BAR);
+//
+//        return character;
+//    }
 
     private RoundPanel createGraphWrapper(String title, List<Integer> data, List<String> labels, Color graphAccentColor, GraphType type)
     {
@@ -317,7 +315,7 @@ public class StatisticScreen extends JPanel implements IScreen
     private void setComponent()
     {
         cardPanel.add(createWinLoseGraph(), WIN_LOSE);
-        cardPanel.add(createCharUsageGraph(), CHAR_USAGE);
+        //cardPanel.add(createCharUsageGraph(), CHAR_USAGE);
         cardPanel.add(createItemUsageGraph(), ITEM_USAGE);
 
 

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import GameLogic.Entity;
 import GameLogic.IGameRunnable;
@@ -55,10 +56,10 @@ public class ItemData {
 
                 final String id = parts[0].trim();
                 final String description = parts[1].trim();
-                final String imagePath = parts[2].trim();
-                
+                final int price = Integer.parseInt(parts[2].trim());
+                final String imagePath = parts[3].trim();
 
-                final Item info = new Item(id, description, imagePath);
+                final Item info = new Item(id, description, price , imagePath);
                 info.setEffect(effectMap.get(id));
                 itemMap.put(id, info);
             }
@@ -80,5 +81,17 @@ public class ItemData {
     	if (id == "null") return null; 
         return itemMap.get(id);
     }
+
+	public String[] getItemNames() {
+		Set<String> keyList = itemMap.keySet();
+		String[] itemList = keyList.toArray(new String[2]);
+
+		return itemList;
+	}
+
+	public int getPrice(String itemName) {
+		if (itemName == "null") return 0; 
+        return itemMap.get(itemName).price;
+	}
     
 }

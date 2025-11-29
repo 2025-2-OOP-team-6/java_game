@@ -91,6 +91,8 @@ public class BattleManager
     // 핵심 로직: 1회 결투
     //플레이어와 적이 각각 주사위를 한 번 굴려서누가 이겼는지 결과만 리턴ㄴ
 
+    
+    
     public DuelResult duel()
     {
         int playerRoll = roll(playerDiceMin, playerDiceMax);

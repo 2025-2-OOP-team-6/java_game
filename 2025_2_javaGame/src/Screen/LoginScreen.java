@@ -84,7 +84,7 @@ public class LoginScreen extends JPanel implements IScreen
         final String PW = new String (pwField.getPassword());
 
 
-        if(accountData.matches(ID, PW))
+        if(userData.matches(ID, PW))
         {
             DataManager.getInstance().loadUser(ID);
 

@@ -182,14 +182,9 @@ public class RankScreen extends JPanel implements IScreen
             nameL.setForeground(Color.WHITE);
             nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JLabel lvL = new JLabel("Lv. " + userMgr.getTime(userid));
-            lvL.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-            lvL.setForeground(Color.LIGHT_GRAY);
-            lvL.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             centerPart.add(nameL);
             centerPart.add(Box.createVerticalStrut(5));
-            centerPart.add(lvL);
 
             JLabel scoreL = new JLabel(String.valueOf(userMgr.getRank(userid)) + "점");
             scoreL.setFont(new Font("맑은 고딕", Font.BOLD, 24));
@@ -245,14 +240,13 @@ public class RankScreen extends JPanel implements IScreen
             JLabel rankL = new JLabel(String.valueOf(i + 1), JLabel.CENTER);
             JLabel idL = new JLabel(userid, JLabel.CENTER);
 
-            JLabel timeL = new JLabel(String.valueOf(userMgr.getTime(userid)), JLabel.CENTER); // Level
             JLabel scoreL = new JLabel(String.valueOf(userMgr.getRank(userid)), JLabel.CENTER); // Score
 
             Font font = new Font("맑은 고딕", Font.BOLD, 14);
             Color color = Color.WHITE;
             Color highlightColor = (i < 3) ? GOLD_COLOR : color;
 
-            for (JLabel label : new JLabel[]{rankL, idL, timeL, scoreL}) {
+            for (JLabel label : new JLabel[]{rankL, idL, scoreL}) {
                 label.setFont(font);
                 label.setForeground(highlightColor);
                 rowPanel.add(label);

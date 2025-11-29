@@ -68,13 +68,13 @@ public class AnalysisData
     }
 
 
-//    public String[] getSuggestItems(final String id)
-//    {
-//        final String[] ITEM_LIST = itemMgr.getItemNames().clone();
-//        final int[] ITEM_USAGE = logMgr.getItemGraphData(id).clone();
-//
-//        return sortByUsage(ITEM_LIST, ITEM_USAGE);
-//    }
+    public String[] getSuggestItems(final String id)
+    {
+        final String[] ITEM_LIST = itemMgr.getItemNames().clone();
+        final int[] ITEM_USAGE = logMgr.getItemGraphData(id).clone();
+
+        return sortByUsage(ITEM_LIST, ITEM_USAGE);
+    }
 
 //    public String[] getSuggestedCharacter(final String id)
 //    {
