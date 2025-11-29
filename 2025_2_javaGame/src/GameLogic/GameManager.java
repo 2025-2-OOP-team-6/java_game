@@ -12,16 +12,25 @@ public class GameManager {
 	
 	public void initGame() {
 		setEntity();
+		
+		
 		dataMgr.getEventListener().call(EventEnum.START, null);
 	}
 	
 	private void setEntity() {
 		Player player = new Player("player", 5, dataMgr.getDiceMgr().get("dice1"));
 		if (player.dice == null) throw new RuntimeException("dice가 지정이 안됐습니다");
+		ArrayList<Item> itemList = new ArrayList<>();
+		String[] userItem = dataMgr.getUserMgr().getInventory(dataMgr.getCurrentUser().getId());
+		for (String s:userItem)
+			itemList.add(dataMgr.getItemMgr().get(s));
+		player.setBag(itemList);
+		
 		dataMgr.initEventListener(player);
 		dataMgr.getEventListener().setStage(1);
 	}
 	
+
 	Scanner openFile(String filename) {
 		Scanner filein = null;
 		try {

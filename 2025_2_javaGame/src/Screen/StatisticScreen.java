@@ -60,6 +60,7 @@ public class StatisticScreen extends JPanel implements IScreen
         setLayout(new BorderLayout(20, 20));
         setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
+        
         wallpaper = WALLPAPER_COLOR;
         setBackground(wallpaper);
 
@@ -68,6 +69,7 @@ public class StatisticScreen extends JPanel implements IScreen
         user = DataManager.getInstance().getCurrentUser();
         ansMgr = DataManager.getInstance().getAnsMgr();
         itemMgr = DataManager.getInstance().getItemMgr();
+        
 
         if(userMgr.getCoin(user.getId()) == 0)
         {
@@ -80,7 +82,7 @@ public class StatisticScreen extends JPanel implements IScreen
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         cardPanel.setOpaque(false);
-
+        logMgr = DataManager.getInstance().getLogMgr();
 
         setComponent();
     }
@@ -332,6 +334,10 @@ public class StatisticScreen extends JPanel implements IScreen
 
     @Override
     public void onShow() {
+    	removeAll();
+        setComponent();
+        revalidate();
+        repaint();
 
     }
 }

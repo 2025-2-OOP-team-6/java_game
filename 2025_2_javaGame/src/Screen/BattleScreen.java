@@ -43,6 +43,7 @@ public class BattleScreen extends JPanel implements IScreen {
 	private final String hpImage = "assets//battle//hpBar.png";
 
 	private final JLabel stageLabel = new JLabel();
+	private final JLabel coinLabel = new JLabel();
 	private final JLabel resultLabel = new JLabel();
 	private final JLabel rangeLabel = new JLabel();
 	private final JLabel resultLabel2 = new JLabel();
@@ -99,6 +100,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		dtForOpacity = 0;
 
 		stageLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		coinLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		resultLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		resultLabel.setForeground(Color.white);
 		rangeLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -107,7 +109,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		rangeLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 
 		player = dataMgr.getEventListener().getPlayer();
-		dataMgr.getEventListener().getPlayer().getItem(dataMgr.getItemMgr().get("hpUp"));
+		
 		
 		
 		setLayout(null);
@@ -127,12 +129,17 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 		STAGE_TEXT = String.format("현재 스테이지: %d", dataMgr.getEventListener().getStage());
 		stageLabel.setText(STAGE_TEXT);
+		String COIN_TEXT = String.format("내 코인: %d", coin);
+		stageLabel.setText(STAGE_TEXT);
+		coinLabel.setText(COIN_TEXT);
 		
 		player.getDice().setValue(0);
 		
 
 		stageLabel.setBounds(512 - (stageLabel.getPreferredSize().width + 30) / 2, 10,
 				stageLabel.getPreferredSize().width + 30, stageLabel.getPreferredSize().height);
+		coinLabel.setBounds(700 - (coinLabel.getPreferredSize().width + 30) / 2, 10,
+				coinLabel.getPreferredSize().width + 30, coinLabel.getPreferredSize().height);
 
 		entityMap = new HashMap<>();
 		playerBarList = new ArrayList<>();
@@ -532,6 +539,7 @@ public class BattleScreen extends JPanel implements IScreen {
 			
 		}
 		add(stageLabel);
+		add(coinLabel);
 		add(playerImg);
 		add(enemyImg);
 		add(fightBtn);
@@ -554,6 +562,7 @@ public class BattleScreen extends JPanel implements IScreen {
         User user = DataManager.getInstance().getCurrentUser();
 
         userMgr.updateCoin(user.getId(),coin);
+        userMgr.updateStage(user.getId(), dataMgr.getEventListener().getStage());
 		scMgr.show(Screen.HOME);
 		
 	}
@@ -565,7 +574,10 @@ public class BattleScreen extends JPanel implements IScreen {
 
 	@Override
 	public void onShow() {
-		
+		removeAll();
+        revalidate();
+        repaint();
+
 	}
 
 	public void setupButtonHover(GButton button) {

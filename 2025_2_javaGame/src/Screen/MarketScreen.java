@@ -199,7 +199,7 @@ public class MarketScreen extends JPanel implements IScreen
         int coin = userMgr.getCoin(user.getId());
         int price= itemMgr.getPrice(itemName);
 
-        if((coin - price) > 0)
+        if((coin - price) >= 0)
         {
             userMgr.updateCoin(user.getId(), coin - price);
             purchasedList.add(itemName);
@@ -267,5 +267,10 @@ public class MarketScreen extends JPanel implements IScreen
     @Override
     public void onShow() {
         System.out.println("Start: MarketScreen is now Rendering");
+        removeAll();
+        setComponent();
+        revalidate();
+        repaint();
+
     }
 }
