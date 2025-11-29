@@ -105,7 +105,7 @@ public class EventListener {
 	}
 	
 	private void gameOver() {
-		
+		//TODO: BattleScreen에 있는 showDefeat불러와야함
 	}
 
 	public void setStage(int stage) {

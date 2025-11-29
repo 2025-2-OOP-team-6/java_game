@@ -356,6 +356,7 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 
 		if (dataMgr.getEventListener().getClear()) {
+			//TODO: coin + 10
 			dtForMove = 0;
 			dtForOpacity = 0;
 			fightBtn.setEnabled(false);
@@ -563,7 +564,8 @@ public class BattleScreen extends JPanel implements IScreen {
 
         userMgr.updateCoin(user.getId(),coin);
         userMgr.updateStage(user.getId(), dataMgr.getEventListener().getStage());
-		scMgr.show(Screen.HOME);
+      //TODO: show를 게임오버화면으로 변경
+		//scMgr.show(Screen.HOME);
 		
 	}
 
