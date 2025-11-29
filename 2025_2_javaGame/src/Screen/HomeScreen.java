@@ -133,7 +133,7 @@ public class HomeScreen extends JPanel implements IScreen {
 
     private JPanel createCenterPanel(ScreenManager scManager) {
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
         // 패널 위쪽에 여백을 넣어서 헤더와 떨어트림
         centerPanel.add(Box.createVerticalStrut(40));
         centerPanel.setOpaque(false);
@@ -196,7 +196,7 @@ public class HomeScreen extends JPanel implements IScreen {
         centerPanel.add(startBtn);
 
         centerPanel.add(marketBtn);
-        centerPanel.add(selectChrBtn);
+        //centerPanel.add(selectChrBtn);
         centerPanel.add(mypageBtn);
         centerPanel.add(statisticBtn);
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -245,22 +245,22 @@ public class HomeScreen extends JPanel implements IScreen {
         rankBox.add(rankLabel);
 
 
-        RoundPanel timeBox = new RoundPanel(25);
-        timeBox.setLayout(new BorderLayout());
-        timeBox.setBackground(darkWall);
-        timeBox.setBorder(
-                BorderFactory.createTitledBorder(
-                        BorderFactory.createEmptyBorder(),
-                        "TIME!!",
-                        TitledBorder.CENTER,
-                        TitledBorder.TOP,
-                        new Font("맑은 고딕", Font.BOLD, 12),
-                        Color.LIGHT_GRAY));
-
-        timeBox.add(timeLabel);
+//        RoundPanel timeBox = new RoundPanel(25);
+//        timeBox.setLayout(new BorderLayout());
+//        timeBox.setBackground(darkWall);
+//        timeBox.setBorder(
+//                BorderFactory.createTitledBorder(
+//                        BorderFactory.createEmptyBorder(),
+//                        "TIME!!",
+//                        TitledBorder.CENTER,
+//                        TitledBorder.TOP,
+//                        new Font("맑은 고딕", Font.BOLD, 12),
+//                        Color.LIGHT_GRAY));
+//
+//        timeBox.add(timeLabel);
 
         bottomPanel.add(rankBox);
-        bottomPanel.add(timeBox);
+        //bottomPanel.add(timeBox);
         bottomPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return bottomPanel;

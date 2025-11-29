@@ -213,9 +213,13 @@ public class UserData {
 	}
 
 	public String[] getInventory(String id) {
-		String
-		for(Item item:userHashMap.get(id).inven)
+		String[] invenString = new String[userHashMap.get(id).inven.size()];
+		int i = 0;
+		for(Item item:userHashMap.get(id).inven) {
+			invenString[i] = userHashMap.get(id).inven.get(i).name;
+		}
 			
-		return ;	
+			
+		return invenString;	
 	}
 }
