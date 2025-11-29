@@ -150,7 +150,7 @@ public class HomeScreen extends JPanel implements IScreen {
         original = new ImageIcon(START_BTN).getImage();
         scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
         startBtn = new GButton(new ImageIcon(scaled), () -> {
-            scManager.show(Screen.GAME);
+            scManager.show(Screen.BATTLE);
         });
 
         original = new ImageIcon(MARKET_BTN).getImage();

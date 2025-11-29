@@ -47,6 +47,7 @@ public class ScreenManager
         initScreen(new BattleScreenFactory());
         initScreen(new StatisticScreenFactory());
         initScreen(new MyPageScreenFacotry());
+        initScreen(new BattleScreenFacotry());
     }
 
     private void initScreen(IScreenFactory fac)
@@ -124,6 +125,11 @@ class BattleScreenFactory implements IScreenFactory
 class StatisticScreenFactory implements  IScreenFactory
 {
     public IScreen create() {return new StatisticScreen();}
+}
+
+class BattleScreenFacotry implements IScreenFactory
+{
+    public IScreen create() {return new BattleScreen();}
 }
 
 class MyPageScreenFacotry implements IScreenFactory
