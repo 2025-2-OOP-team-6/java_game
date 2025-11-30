@@ -204,9 +204,12 @@ public class BattleScreen extends JPanel implements IScreen, GameObserver {
 	}
 
 	private void refresh(String b) {
-		
+		player = dataMgr.getEventListener().getPlayer();
+		System.out.print(player.getHp());
 		
 		for (int i = 0; i < playerBarList.size() - 2; i++) {
+			
+
 			playerBarList.get(i).setImage(hpImage);
 			
 		}
@@ -557,6 +560,7 @@ public class BattleScreen extends JPanel implements IScreen, GameObserver {
 			
 		}
 		for (int i = 0; i < playerBarList.size() - 2 - player.getHp(); i++) {
+			
 			playerBarList.get(i).setImage(blankImage);
 			
 		}
