@@ -19,6 +19,7 @@ public class EventListener {
 	public boolean isOver = false;
 	private int stage = 0; 
 	private int isWin = 0;
+	public boolean isBoss = false;
 	private String log = "";
 
     private boolean pedingGameOver = false;
@@ -80,8 +81,13 @@ public class EventListener {
 		
 		if (stage < 10) {
 			mapNum = rand.nextInt(2)+1;
-		}	
-		else if (stage >= 10) {
+		}
+		else if (stage == 10) {
+			mapNum = 3;
+			isBoss=true;
+		}
+		
+		else if (stage > 10) {
 			mapNum = rand.nextInt(2)+2;
 		}
 		
@@ -112,7 +118,7 @@ public class EventListener {
 	
 	private void gameOver(Object o) {
 		Enemy enemy = (Enemy)o;
-		log = String.format("%s,%s,%s", player.dice.name,"","WIN");
+		log = String.format("%s,%s,%s", player.dice.name,"","LOSE");
 		logMgr.insertLog(currentUser.getId(), log);
 		isOver = true;
 	}

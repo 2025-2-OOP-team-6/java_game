@@ -246,7 +246,7 @@ public class MarketScreen extends JPanel implements IScreen
 
     private void setComponent()
     {
-        final String[] itemList = ansMgr.getSuggestItems(user.getId()).clone();
+        final String[] itemList = itemMgr.getItemNames().clone();
         ArrayList<Item> items = new ArrayList<>();
         
         for (String s:itemList) {

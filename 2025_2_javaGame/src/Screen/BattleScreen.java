@@ -44,6 +44,7 @@ public class BattleScreen extends JPanel implements IScreen {
 	
 	private final String blankImage = "assets//battle//blankHpBar.png";
 	private final String hpImage = "assets//battle//hpBar.png";
+	private final String boss_background = "assets//battle//boss_background.png";
 
 	private final JLabel stageLabel = new JLabel();
 	private final JLabel coinLabel = new JLabel();
@@ -261,7 +262,6 @@ public class BattleScreen extends JPanel implements IScreen {
 		
 		
 		
-
 		Timer timerStart = new Timer(10, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -523,6 +523,10 @@ public class BattleScreen extends JPanel implements IScreen {
 	private void setDefaultObject() {
 
 		background.setBounds(0, 0);
+		if(dataMgr.getEventListener().isBoss) {
+			background.setImage(boss_background);
+		}
+
 		bottomBar.setBounds(0, 368);
 
 		

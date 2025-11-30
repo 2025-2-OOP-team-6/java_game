@@ -17,7 +17,14 @@ public class GameManager {
 	}
 	
 	private void setEntity() {
-		Player player = new Player("player", 5, dataMgr.getDiceMgr().get("dice1"));
+		Player player;
+		if(dataMgr.getUserMgr().getStage(dataMgr.getCurrentUser().getId())>=100) {
+			player = new Player("player", 5, dataMgr.getDiceMgr().get("dice3"));
+		}
+		else {
+			 player= new Player("player", 5, dataMgr.getDiceMgr().get("dice1"));
+		}
+		
 		if (player.dice == null) throw new RuntimeException("dice가 지정이 안됐습니다");
 		
 		
@@ -27,10 +34,12 @@ public class GameManager {
 		
 		player.setBag(itemList);
 		
-	
+		
 
 		dataMgr.initEventListener(player);
+		
 		dataMgr.getEventListener().setStage(1);
+		if(dataMgr.getUserMgr().getStage(dataMgr.getCurrentUser().getId())>=100)dataMgr.getEventListener().setStage(10); 
 	}
 	
 

@@ -1,3 +1,3 @@
 enemy1,3,slimedice,2,hpUp,10,null,5
 enemy2,4,stumpdice,4,hpUp,10,rangeDown,5,rangeUp,5,null,10
-enemy3,5,golemdice,4,hpUp,10,rangeUp,5,diceChange,3,null,9
+enemy3,8,golemdice,4,hpUp,10,rangeUp,5,diceChange,3,null,9
