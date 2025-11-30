@@ -98,7 +98,8 @@ public class EventListener {
 		Enemy enemy = (Enemy)o;
 		Item i = enemy.dropItem();
 		
-		player.getItem(i);
+		if (player.getBag().size()<6)
+			player.getItem(i);
 		setLog();
 		
 		isClear = true;

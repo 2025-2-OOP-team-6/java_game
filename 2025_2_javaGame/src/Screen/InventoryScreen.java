@@ -136,7 +136,7 @@ public class InventoryScreen  extends JPanel implements IScreen
                     }
                 });
 
-                Image original = new ImageIcon(ITEM_IMAGE).getImage();
+                Image original = new ImageIcon(item.imagePath).getImage();
                 Image scaledImage = original.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 JLabel itemL = new JLabel(new ImageIcon(scaledImage));
 

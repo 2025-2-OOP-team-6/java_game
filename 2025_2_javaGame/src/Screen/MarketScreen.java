@@ -119,12 +119,12 @@ public class MarketScreen extends JPanel implements IScreen
     }
 
 
-    private JScrollPane createItemPanel(final String[] itemList)
+    private JScrollPane createItemPanel(ArrayList<Item> itemList)
     {
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 
-        for(String itemName : itemList)
+        for(Item item : itemList)
         {
             JPanel itemPanel = new JPanel();
             itemPanel.setPreferredSize(new Dimension(250, 250));
@@ -147,16 +147,16 @@ public class MarketScreen extends JPanel implements IScreen
                 }
             });
 
-            Image original = new ImageIcon(ITEM_IMAGE).getImage();
+            Image original = new ImageIcon(item.imagePath).getImage();
             Image scaledImage = original.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             JLabel itemL = new JLabel(new ImageIcon(scaledImage));
 
-            JLabel nameL = new JLabel(itemName);
+            JLabel nameL = new JLabel(item.name);
             nameL.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
             nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
             nameL.setForeground(Color.WHITE);
 
-            String priceData = String.valueOf(itemMgr.getPrice(itemName));
+            String priceData = String.valueOf(itemMgr.getPrice(item.name));
             JLabel priceL = new JLabel("PRICE : " + priceData);
             priceL.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
             priceL.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -164,7 +164,7 @@ public class MarketScreen extends JPanel implements IScreen
             priceL.setPreferredSize(new Dimension(280, 20));
 
             GButton purchaseBtn = new GButton(PURCHASE_BTN, ()->{
-                purchaseLogic(itemName);
+                purchaseLogic(item.name);
             });
             purchaseBtn.setPreferredSize(new Dimension(120, 30));
             purchaseBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -195,7 +195,7 @@ public class MarketScreen extends JPanel implements IScreen
         int coin = userMgr.getCoin(user.getId());
         int price= itemMgr.getPrice(itemName);
 
-        if((coin - price) >= 0)
+        if((coin - price) >= 0 && ((purchasedList.size()+userMgr.getInventory(user.getId()).size()) < 6))
         {
             eventMgr.getPlayer().getBag().add(itemMgr.getItemObj(itemName));
             userMgr.updateCoin(user.getId(), coin - price);
@@ -205,7 +205,7 @@ public class MarketScreen extends JPanel implements IScreen
             JOptionPane.showMessageDialog(this, "Purchase success");
             return;
         }
-        JOptionPane.showMessageDialog(this, "Not enough coin");
+        JOptionPane.showMessageDialog(this, "Not enough coin or full inven");
     }
 
     private JPanel createSuggestedPanel()
@@ -224,7 +224,11 @@ public class MarketScreen extends JPanel implements IScreen
         ));
 
         final String[] itemList = ansMgr.getSuggestItems(user.getId());
-        String[] suggestedItems = {itemList[0], itemList[1], itemList[2]};
+        ArrayList<Item> suggestedItems = new ArrayList<>();
+        
+        suggestedItems.add(itemMgr.get(itemList[0]));
+        suggestedItems.add(itemMgr.get(itemList[1]));
+        suggestedItems.add(itemMgr.get(itemList[2]));
 
         JScrollPane itemDisplayPanel = createItemPanel(suggestedItems);
 
@@ -243,14 +247,19 @@ public class MarketScreen extends JPanel implements IScreen
     private void setComponent()
     {
         final String[] itemList = ansMgr.getSuggestItems(user.getId()).clone();
-
+        ArrayList<Item> items = new ArrayList<>();
+        
+        for (String s:itemList) {
+        	items.add(itemMgr.get(s));
+        }
+        
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setOpaque(false);
 
         mainPanel.add(createSuggestedPanel());
         mainPanel.add(Box.createVerticalStrut(10));
-        mainPanel.add(createItemPanel(itemList));
+        mainPanel.add(createItemPanel(items));
 
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(mainPanel, BorderLayout.CENTER);

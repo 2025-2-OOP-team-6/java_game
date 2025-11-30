@@ -35,8 +35,12 @@ public class ItemData {
     			e.getDice().range.startChange(1);
     	});
     	effectMap.put("rangeDown", (e, id) -> {
-    		if (e.getDice().range.getRange()[0] > 2)
+    		if (e.getDice().range.getRange()[1] > 2)
     			e.getDice().range.endChange(-1);	
+    	});
+    	effectMap.put("lightning", (e, id) -> {
+    		e.damage();
+    		e.damage();
     	});
     }
     private void readItemData()

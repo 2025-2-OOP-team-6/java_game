@@ -5,7 +5,7 @@ import java.util.Random;
 import Util.Debuff;
 
 public class Dice implements Cloneable{
-	String name;
+	public String name;
 	public DiceRange range;
 	private Debuff debuff;
 	private int value;

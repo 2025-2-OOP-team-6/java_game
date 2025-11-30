@@ -2,3 +2,4 @@ hpUp,hp+1,10,assets//battle//hpUp.png
 diceChange,changeDice,10,assets//battle//diceChange.png
 rangeUp,rangeUp,10,assets//battle//rangeUp.png
 rangeDown,rangeDown,10,assets//battle//rangeDown.png
+lightning,lightning,50,assets//battle//lightning.png

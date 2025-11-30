@@ -12,7 +12,9 @@ import Action.BlackOverlay;
 import Action.GButton;
 import Action.GPanel;
 import Data.DataManager;
+import Data.DiceData;
 import Data.UserData;
+import GameLogic.DiceRange;
 import GameLogic.Enemy;
 import GameLogic.Entity;
 import GameLogic.Item;
@@ -82,7 +84,8 @@ public class BattleScreen extends JPanel implements IScreen {
 	private int dtForMove = 0;
 	private int dtForOpacity = 0;
 	private int dtForMoveEnemy = 0;
-
+	private int diceStart;
+	private int diceEnd;
 
 	private ScreenManager scMgr;
 
@@ -110,6 +113,10 @@ public class BattleScreen extends JPanel implements IScreen {
 		rangeLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 
 		player = dataMgr.getEventListener().getPlayer();
+		
+		DiceData diceMgr = dataMgr.getDiceMgr();
+		diceStart = diceMgr.get(player.getDice().name).range.getRange()[0] ;
+		diceEnd = diceMgr.get(player.getDice().name).range.getRange()[1] ;
 		enemy = null;
 		
 		
@@ -268,6 +275,7 @@ public class BattleScreen extends JPanel implements IScreen {
 					dtForMove = PLAYER_POS.x;
 					
 					fightBtn.setEnabled(true);
+					
 					setStage(dataMgr.getEventListener().getMapNum());
 					
 				}
@@ -378,9 +386,10 @@ public class BattleScreen extends JPanel implements IScreen {
 		if (dataMgr.getEventListener().getClear()) {
 			UserData userMgr = DataManager.getInstance().getUserMgr();
             User user = DataManager.getInstance().getCurrentUser();
-
+            
             coin += 10;
-
+            dataMgr.getEventListener().getPlayer().getDice().range.startSet(diceStart);
+            dataMgr.getEventListener().getPlayer().getDice().range.endSet(diceEnd);
 			dtForMove = 0;
 			dtForOpacity = 0;
 			fightBtn.setEnabled(false);
@@ -497,9 +506,13 @@ public class BattleScreen extends JPanel implements IScreen {
 		}
 			
 		if (i.name.matches("diceChange")) {
-			i.useEffect(player, "dice"+(rand.nextInt(dataMgr.getDiceMgr().getSize())-3));	
+			i.useEffect(dataMgr.getEventListener().getPlayer(), "dice"+(rand.nextInt(dataMgr.getDiceMgr().getSize())-3));	
+			
 		}
-		
+		if (i.name.matches("lightning")) {
+			i.useEffect(enemy, null);
+			
+		}
 		
 		dataMgr.getEventListener().call(EventEnum.USE_ITEM, i);
 		
@@ -595,6 +608,7 @@ public class BattleScreen extends JPanel implements IScreen {
 
         userMgr.updateCoin(user.getId(),coin);
         userMgr.updateStage(user.getId(), dataMgr.getEventListener().getStage());
+        userMgr.updateInven(user.getId(),player.getBag());
 		scMgr.show(Screen.GAMEOVER);
 		
 	}

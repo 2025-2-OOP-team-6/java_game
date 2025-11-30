@@ -20,6 +20,16 @@ public class DiceRange {
 		errRange();
 	}
 	
+	public void startSet(int num) {
+		start = num;
+		errRange();
+	}
+	
+	public void endSet(int num) {
+		end = num;
+		errRange();
+	}
+	
 	private void errRange() {
 		if (start >= end) {
 			throw new RuntimeException("end보다 start가 크거나 같음");

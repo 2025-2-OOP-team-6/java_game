@@ -114,6 +114,12 @@ public class UserData {
 		storeUserData();
 	}
 
+	public void updateInven(final String id, ArrayList<Item> bag) {
+		Info userInfo = userHashMap.get(id);
+		userInfo.inven = bag;
+		
+		storeUserData();
+	}
 	public void updateRank(final String id, final int rank) {
 		Info userInfo = userHashMap.get(id);
 		userInfo.clearRank = rank;
