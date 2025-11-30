@@ -2,6 +2,8 @@ package GameLogic;
 
 import java.util.Random;
 
+import Data.LogData;
+import Logic.User;
 import Util.EventEnum;
 
 import java.time.LocalDateTime;
@@ -22,8 +24,13 @@ public class EventListener {
     private boolean pedingGameOver = false;
 	private LocalDateTime now = LocalDateTime.now();
 	
-	public EventListener(Player player) {
+	private LogData logMgr;
+	private User currentUser;
+	
+	public EventListener(Player player, LogData logMgr, User currentUser) {
 		this.player = player;
+		this.logMgr = logMgr;
+		this.currentUser = currentUser;
 	}
 	public void call(EventEnum e, Object object) {
 		switch (e) {
@@ -44,7 +51,7 @@ public class EventListener {
 			break;
 		}
 		case GAMEOVER: {
-			gameOver();
+			gameOver(object);
 			break;
 		}
 		default: throw new RuntimeException("해당하지 않는 이벤트가 입력되었습니다."); 
@@ -77,6 +84,7 @@ public class EventListener {
 		else if (stage >= 10) {
 			mapNum = rand.nextInt(2)+2;
 		}
+		
 		isClear = false;
 	}
 	
@@ -86,13 +94,6 @@ public class EventListener {
 		
 	}
 	
-	public void setLog() {
-		
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd,HH:mm:ss");
-        String formatted = now.format(formatter);
-        String log = formatted+String.format("%s", null);
-        System.out.print(formatted);
-	}
 	
 	private void nextMap(Object o) {
 		Enemy enemy = (Enemy)o;
@@ -100,7 +101,8 @@ public class EventListener {
 		
 		if (player.getBag().size()<6)
 			player.getItem(i);
-		setLog();
+		log = String.format("%s,%s,%s", player.dice.name,enemy.name,"WIN");
+		logMgr.insertLog(currentUser.getId(), log);
 		
 		isClear = true;
 		stage++;
@@ -108,7 +110,10 @@ public class EventListener {
 		
 	}
 	
-	private void gameOver() {
+	private void gameOver(Object o) {
+		Enemy enemy = (Enemy)o;
+		log = String.format("%s,%s,%s", player.dice.name,"","WIN");
+		logMgr.insertLog(currentUser.getId(), log);
 		isOver = true;
 	}
 

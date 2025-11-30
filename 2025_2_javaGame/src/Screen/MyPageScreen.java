@@ -144,7 +144,7 @@ public class MyPageScreen extends JPanel implements IScreen {
         // - set Battel Log -
         int battle = logMgr.getBattleCnt(user.getId());   // - set total battle count -
         int win   = logMgr.getWinCnt(user.getId());       // - set win count -
-        int lose  = logMgr.getLoseCnt(user.getId());      // - set lose count -
+        int lose  = battle-win;      // - set lose count -
         double rate  = logMgr.getWinRate(user.getId());        // - set win rate -
         
         JPanel battleLog = new JPanel(new BorderLayout(10, 10));
@@ -235,7 +235,7 @@ public class MyPageScreen extends JPanel implements IScreen {
         battleInfoCard.add(winCntCard);
         battleInfoCard.add(loseCntCard);
         battleInfoCard.add(winRateCard);
-
+        
         
 
 
@@ -273,5 +273,6 @@ public class MyPageScreen extends JPanel implements IScreen {
     @Override
     public void onShow() {
         System.out.println("Start: MyPageScreen is now Rendering");
+        
     }
 }

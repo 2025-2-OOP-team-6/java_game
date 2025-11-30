@@ -71,9 +71,13 @@ public class AnalysisData
     public String[] getSuggestItems(final String id)
     {
         final String[] ITEM_LIST = itemMgr.getItemNames().clone();
-        final int[] ITEM_USAGE = logMgr.getItemGraphData(id).clone();
+        //final int[] ITEM_USAGE = logMgr.getItemGraphData(id).clone();
 
-        return sortByUsage(ITEM_LIST, ITEM_USAGE);
+        String[] itemList = new String[3];
+        itemList[0] = ITEM_LIST[0];
+        itemList[1] = ITEM_LIST[1];
+        itemList[2] = ITEM_LIST[2];
+        return itemList;
     }
 
 //    public String[] getSuggestedCharacter(final String id)
@@ -89,7 +93,7 @@ public class AnalysisData
         winGraph = new ArrayList<>();
         loseGraph = new ArrayList<>();
         playTimeGraph = new ArrayList<>();
-
+        
         for (int i = 0; i < dateArray.length; i++) {
             winGraph.add(0);
             loseGraph.add(0);
@@ -110,6 +114,7 @@ public class AnalysisData
                 }
             }
         }
+        
     }
 
     public List<Integer> getWinGraph()

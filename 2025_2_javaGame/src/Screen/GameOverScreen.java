@@ -42,6 +42,7 @@ public class GameOverScreen extends JPanel implements IScreen
     private Color wallpaper;
 
     private User user;
+    private DataManager dataMgr;
     private UserData userData;
     private LogData logData;
     private ScreenManager screenMgr;
@@ -59,6 +60,7 @@ public class GameOverScreen extends JPanel implements IScreen
         wallpaper = new Color(Constant.WALL_RED, Constant.WALL_GREEN, Constant.WALL_BLUE);
         setBackground(wallpaper);
 
+        dataMgr = DataManager.getInstance();
         user = DataManager.getInstance().getCurrentUser();
         userData = DataManager.getInstance().getUserMgr();
         logData = DataManager.getInstance().getLogMgr();
@@ -113,24 +115,21 @@ public class GameOverScreen extends JPanel implements IScreen
 
 
             // 캐릭터
-            JPanel charPanel = createInfoRow("캐릭터", latestLog.getCharacter(), Color.CYAN);
+            JPanel charPanel = createInfoRow("스테이지", String.valueOf(dataMgr.getEventListener().getStage()), Color.CYAN);
             infoBox.add(charPanel);
             infoBox.add(Box.createVerticalStrut(15));
 
-            // 아이템
-            JPanel itemPanel = createInfoRow("아이템", latestLog.getItem(), Color.GREEN);
-            infoBox.add(itemPanel);
-            infoBox.add(Box.createVerticalStrut(15));
+            
 
             // 게임 결과
-            String resultText = latestLog.getResult().equals("WIN") ? "승리" : "패배";
+            String resultText = latestLog.getResult().equals("WIN") ? "신기록 갱신!" : "종료";
             Color resultColor = latestLog.getResult().equals("WIN") ? new Color(0, 255, 0) : new Color(255, 100, 100);
             JPanel resultPanel = createInfoRow("결과", resultText, resultColor);
             infoBox.add(resultPanel);
             infoBox.add(Box.createVerticalStrut(15));
 
             // 랭크 포인트
-            JPanel rankPanel = createInfoRow("랭크 포인트", latestLog.getRank(), Color.YELLOW);
+            JPanel rankPanel = createInfoRow("랭크", String.valueOf(userData.getRank(user.getId())) , Color.YELLOW);
             infoBox.add(rankPanel);
 
             centerPanel.add(Box.createVerticalGlue());

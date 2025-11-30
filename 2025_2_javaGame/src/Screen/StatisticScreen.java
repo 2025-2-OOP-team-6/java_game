@@ -193,12 +193,12 @@ public class StatisticScreen extends JPanel implements IScreen
     {
         List<String> itemNames = Arrays.asList(itemMgr.getItemNames());
         List<Integer> itemUsage = new ArrayList<>();
-        final int[] usageArr = logMgr.getItemGraphData(user.getId());
+        //final int[] usageArr = logMgr.getItemGraphData(user.getId());
 
-        for(int i : usageArr)
-        {
-            itemUsage.add(i);
-        }
+//        for(int i : usageArr)
+//        {
+//            itemUsage.add(i);
+//        }
 
         
         RoundPanel item = createGraphWrapper(

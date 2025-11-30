@@ -56,7 +56,7 @@ public class DataManager
         
         
         final Player player = new Player("player", 5, diceMgr.get("first"));
-        eventListener = new EventListener(player);
+        eventListener = new EventListener(player, logMgr, currentUser);
         //characMgr.readCharactorData();
 
         userMgr.readUserData();
@@ -107,7 +107,7 @@ public class DataManager
     }
 
     public void initEventListener(Player player) {
-    	eventListener = new EventListener(player);
+    	eventListener = new EventListener(player, logMgr, currentUser);
     }
     
 
@@ -151,7 +151,7 @@ public class DataManager
             return Integer.compare(stage2, stage1);
         });
 
-        userMgr.updateRank(currentUser.getId(), idList.indexOf(currentUser.getId()));
+        userMgr.updateRank(currentUser.getId(), idList.indexOf(currentUser.getId())+1);
         return idList.toArray(new String[0]);
     }
 
