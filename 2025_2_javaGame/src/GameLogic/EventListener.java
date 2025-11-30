@@ -14,26 +14,17 @@ public class EventListener {
 	private int mapNum = 0;
 	private boolean isClear = false;
 	private boolean isStart = false;
+	public boolean isOver = false;
 	private int stage = 0; 
 	private int isWin = 0;
 	private String log = "";
 
-    private static GameObserver gameOverListener;
     private boolean pedingGameOver = false;
 	private LocalDateTime now = LocalDateTime.now();
 	
 	public EventListener(Player player) {
 		this.player = player;
 	}
-    public void addGameOverListener(GameObserver listener)
-    {
-        gameOverListener = listener;
-        if(pedingGameOver)
-        {
-            gameOverListener.onGameOver();
-        }
-    }
-	
 	public void call(EventEnum e, Object object) {
 		switch (e) {
 		case START: {
@@ -64,7 +55,7 @@ public class EventListener {
 		Enemy enemy = (Enemy)o;
 		int playerResult = player.dice.roll();
 		int enemyResult = enemy.dice.roll();
-		isWin = 	playerResult-enemyResult ;
+		
 				
 		System.out.print("hp : "+enemy.getHp());
 		if (playerResult > enemyResult) {
@@ -74,10 +65,12 @@ public class EventListener {
 		else if (playerResult < enemyResult) {
 			player.damage();
 		}
-		System.out.print("player : "+playerResult+", enemy : "+enemyResult+"\n");	
+		isWin = 	playerResult-enemyResult ;
+			
 	}
 	
 	private void start() {
+		
 		if (stage < 10) {
 			mapNum = rand.nextInt(2)+1;
 		}	
@@ -115,8 +108,7 @@ public class EventListener {
 	}
 	
 	private void gameOver() {
-		//TODO: BattleScreen에 있는 showDefeat불러와야함
-        this.gameOverListener.onGameOver();
+		isOver = true;
 	}
 
 	public void setStage(int stage) {
@@ -144,11 +136,18 @@ public class EventListener {
 	public boolean getIsStart() {
 		return isStart;
 	}
+	public boolean getIsOver() {
+		return isStart;
+	}
 	public void setIsStart(boolean isStart) {
 		this.isStart = isStart;
 	}
 	public int getIsWin() {
 		return isWin;
+	}
+	public void setIsOver(boolean b) {
+		isOver = b;
+		System.out.print("사"+isOver+"\n");
 	}
 	
 }

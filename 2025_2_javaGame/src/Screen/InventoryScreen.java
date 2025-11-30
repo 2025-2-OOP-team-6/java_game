@@ -4,6 +4,7 @@ package Screen;
 import Data.DataManager;
 import Action.GButton;
 import Data.UserData;
+import GameLogic.Item;
 import Util.Constant;
 import Data.ItemData;
 import Util.Screen;
@@ -29,6 +30,7 @@ import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class InventoryScreen  extends JPanel implements IScreen
 {
@@ -99,11 +101,11 @@ public class InventoryScreen  extends JPanel implements IScreen
 
     private JScrollPane createItemPanel()
     {
-        String[] itemList = userMgr.getInventory(user.getId());
+        ArrayList<Item> itemList = userMgr.getInventory(user.getId());
         gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         gridPanel.setOpaque(false);
 
-        if(itemList == null || itemList.length == 0)
+        if(itemList == null || itemList.size() == 0)
         {
             JLabel emptyL = new JLabel("No times in inventory");
             emptyL.setForeground(Color.WHITE);
@@ -111,7 +113,7 @@ public class InventoryScreen  extends JPanel implements IScreen
         }
         else
         {
-            for(String itemName : itemList)
+            for(Item item : itemList)
             {
                 JPanel itemPanel = new JPanel();
                 itemPanel.setPreferredSize(new Dimension(250, 250));
@@ -138,7 +140,7 @@ public class InventoryScreen  extends JPanel implements IScreen
                 Image scaledImage = original.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 JLabel itemL = new JLabel(new ImageIcon(scaledImage));
 
-                JLabel nameL = new JLabel(itemName);
+                JLabel nameL = new JLabel(item.name);
                 nameL.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
                 nameL.setAlignmentX(Component.CENTER_ALIGNMENT);
                 nameL.setForeground(Color.WHITE);

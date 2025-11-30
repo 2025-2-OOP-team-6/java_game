@@ -179,6 +179,7 @@ public class GameOverScreen extends JPanel implements IScreen
         retryBtn = new GButton(RETRY_BTN, () -> {
             resetGameData();
             screenMgr.getGameMgr().initGame();
+            screenMgr.initGameScreen();
             screenMgr.show(Screen.BATTLE);
         });
 
@@ -186,7 +187,6 @@ public class GameOverScreen extends JPanel implements IScreen
             // 보상을 사용자에게 지급
             int currentCoin = userData.getCoin(user.getId());
             userData.updateCoin(user.getId(), currentCoin);
-            userData.storeUserData();
 
             resetGameData();
             screenMgr.show(Screen.HOME);

@@ -152,6 +152,7 @@ public class HomeScreen extends JPanel implements IScreen {
         startBtn = new GButton(new ImageIcon(scaled), () -> {
         	
         	scManager.getGameMgr().initGame();
+            scManager.initGameScreen();
             scManager.show(Screen.BATTLE);
 
         });
@@ -195,7 +196,7 @@ public class HomeScreen extends JPanel implements IScreen {
 
         centerPanel.add(statisticBtn);
         centerPanel.add(rankBtn);
-        //centerPanel.add(invenBtn);
+        centerPanel.add(invenBtn);
         centerPanel.add(startBtn);
 
         centerPanel.add(marketBtn);

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import GameLogic.Item;
 
@@ -35,6 +36,7 @@ public class UserData {
 	private final int RANK_IDX = 3;
 	private final int COIN_IDX = 4;
 	private final int PROFILE_IDX = 5;
+	private final int INVEN_IDX = 6;
 	private final String ACCOUNT_FILE = "assets//files//account_file.csv";
 
 	// VARIABLES
@@ -46,7 +48,8 @@ public class UserData {
 	
 	public String[] getIDList() {
 		Set<String> keyList = userHashMap.keySet();
-		String[] idList = keyList.toArray(new String[2]);
+		
+		String[] idList = keyList.toArray(new String[0]);
 
 		return idList;
 	}
@@ -107,17 +110,23 @@ public class UserData {
 	public void updateStage(final String id, final int stage) {
 		Info userInfo = userHashMap.get(id);
 		userInfo.clearStage = stage;
+		
+		storeUserData();
 	}
 
 	public void updateRank(final String id, final int rank) {
 		Info userInfo = userHashMap.get(id);
 		userInfo.clearRank = rank;
+		
+		storeUserData();
 	}
 
     public void updateCoin(final String id, final int coin)
     {
         Info userInfo = userHashMap.get(id);
         userInfo.coin = coin;
+
+        storeUserData();
     }
 
     public boolean checkUser(final String id) {
@@ -133,6 +142,8 @@ public class UserData {
 						userInfo.coin, userInfo.profileImage);
 				writer.write(data);
 				writer.newLine();
+				
+				userHashMap.put(id, userInfo);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -145,13 +156,16 @@ public class UserData {
 	public void readUserData() {
 
 		userHashMap = new HashMap<>();
-
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(ACCOUNT_FILE))) {
+			
 			String line;
+			
 			while ((line = br.readLine()) != null) {
+				
 				String[] parts = line.split(",");
 
-				if (parts.length <= 6) {
+				if (parts.length >= 7) {
 					String id = parts[ID_IDX];
 					String pw = parts[PW_IDX];
 
@@ -161,6 +175,11 @@ public class UserData {
 					
 					String profile = parts[PROFILE_IDX];
 
+					ArrayList<Item> itemList = new ArrayList<>();
+					for (int i=0; i<Integer.parseInt(parts[INVEN_IDX]); i++) {
+						itemList.add(itemMgr.get(parts[i+INVEN_IDX+1]));
+					}
+					
 					Info infoNode = new Info();
 
 					infoNode.id = id;
@@ -169,8 +188,10 @@ public class UserData {
 					infoNode.clearStage = stage;
 					infoNode.coin = coin;
 					infoNode.profileImage = profile;
+					infoNode.inven = itemList;
 
 					userHashMap.put(id, infoNode);
+					
 				}
 			}
 		} catch (IOException e) {
@@ -188,9 +209,13 @@ public class UserData {
 			for (Map.Entry<String, Info> node : userHashMap.entrySet()) {
 				Info userInfo = node.getValue();
 
-				String data = String.format("%s,%s,%d,%d,%d,%s", userInfo.id, userInfo.pw, userInfo.clearStage,
-						userInfo.clearRank, userInfo.coin, userInfo.profileImage);
-				writer.write(data);
+				String data = String.format("%s,%s,%d,%d,%d,%s,%d", userInfo.id, userInfo.pw, userInfo.clearStage,
+						userInfo.clearRank, userInfo.coin, userInfo.profileImage,userInfo.inven.size());
+				String inventoryString = ","+userInfo.inven
+				        .stream()
+				        .map(item -> item.name)  // Item → item.name
+				        .collect(Collectors.joining(","));
+				writer.write(data+inventoryString);
 				writer.newLine();
 			}
 		} catch (IOException e) {
@@ -199,10 +224,10 @@ public class UserData {
 		}
 	}
 
-	public void addNewItem(String userid,String[] itemList) {
+	public void addNewItem(String userid,ArrayList<Item> itemList) {
 		Info userInfo = userHashMap.get(userid);
-		for(String itemid:itemList)
-			userInfo.inven.add(itemMgr.get(itemid));
+		for (Item i: itemList)
+			userInfo.inven.add(i);
 		
 	}
 
@@ -210,14 +235,7 @@ public class UserData {
 		return userHashMap.get(id).profileImage;
 	}
 
-	public String[] getInventory(String id) {
-		String[] invenString = new String[userHashMap.get(id).inven.size()];
-		int i = 0;
-		for(Item item:userHashMap.get(id).inven) {
-			invenString[i] = userHashMap.get(id).inven.get(i).name;
-		}
-			
-			
-		return invenString;	
+	public ArrayList<Item> getInventory(String id) {
+		return userHashMap.get(id).inven;	
 	}
 }

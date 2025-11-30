@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Data.DataManager;
+import Screen.ScreenManager;
 import Util.EventEnum;
 
 public class GameManager {
@@ -12,7 +13,6 @@ public class GameManager {
 	
 	public void initGame() {
 		setEntity();
-
 		dataMgr.getEventListener().call(EventEnum.START, null);
 	}
 	
@@ -20,12 +20,14 @@ public class GameManager {
 		Player player = new Player("player", 5, dataMgr.getDiceMgr().get("dice1"));
 		if (player.dice == null) throw new RuntimeException("dice가 지정이 안됐습니다");
 		
+		
+		
 		ArrayList<Item> itemList = new ArrayList<>();
-		String[] userItem = dataMgr.getUserMgr().getInventory(dataMgr.getCurrentUser().getId());
-		for (String s:userItem)
-			itemList.add(dataMgr.getItemMgr().get(s));
+		itemList = dataMgr.getUserMgr().getInventory(dataMgr.getCurrentUser().getId());
+		
 		player.setBag(itemList);
-		//TODO:아이템 전달이 안됨
+		
+	
 
 		dataMgr.initEventListener(player);
 		dataMgr.getEventListener().setStage(1);

@@ -24,7 +24,7 @@ public class Player extends Entity {
 	
 	@Override
 	public void die() {
-		DataManager.getInstance().getEventListener().call(EventEnum.GAMEOVER, this);
+		DataManager.getInstance().getEventListener().call(EventEnum.GAMEOVER,null);
 	}
 
 	public void setBag(ArrayList<Item> itemList) {

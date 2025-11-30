@@ -2,6 +2,7 @@
 package Screen;
 
 import GameLogic.EventListener;
+import GameLogic.Item;
 import Data.AnalysisData;
 import Data.DataManager;
 import Action.GButton;
@@ -50,7 +51,7 @@ public class MarketScreen extends JPanel implements IScreen
     private GButton gobackBtn;
 
     JPanel gridPanel;
-    private ArrayList<String> purchasedList;
+    private ArrayList<Item> purchasedList;
 
     private User user;
     private ItemData itemMgr;
@@ -113,8 +114,7 @@ public class MarketScreen extends JPanel implements IScreen
 
     private void gobackLogic()
     {
-        String[] newItemList = purchasedList.toArray(new String[0]);
-        userMgr.addNewItem(user.getId(), newItemList);
+        userMgr.addNewItem(user.getId(), purchasedList);
         JOptionPane.showMessageDialog(this, "Your Inventory is up to date");
     }
 
@@ -199,7 +199,7 @@ public class MarketScreen extends JPanel implements IScreen
         {
             eventMgr.getPlayer().getBag().add(itemMgr.getItemObj(itemName));
             userMgr.updateCoin(user.getId(), coin - price);
-            purchasedList.add(itemName);
+            purchasedList.add(itemMgr.get(itemName));
             String coinString = String.valueOf(userMgr.getCoin(user.getId()));
             coinL.setText(coinString);
             JOptionPane.showMessageDialog(this, "Purchase success");

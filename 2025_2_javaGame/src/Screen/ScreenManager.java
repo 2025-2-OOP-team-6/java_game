@@ -35,13 +35,22 @@ public class ScreenManager
     public GameManager getGameMgr() {
     	return gameMgr;
     }
+    public void initGameScreen() {
+    	initBattleScreen(new BattleScreenFactory());
+    }
+    public void initBattleScreen(IScreenFactory fac) {
+    	IScreen screen = fac.create();
+        screen.init(this);
+        screenList.add(screen);
+        container.add((JPanel)screen, screen.getScreenType().name());
+    }
     
     public void initAllScreens()
     {
 //        initScreen(new StartScreenFactory());
         initScreen(new HomeScreenFactory());
         initScreen(new MarketScreenFactory());
-//        initScreen(new InventoryScreenFactory());
+        initScreen(new InventoryScreenFactory());
 //        initScreen(new SelectScreenFactory());
         initScreen(new RankScreenFactory());
         initScreen(new BattleScreenFactory());
@@ -103,10 +112,10 @@ class MarketScreenFactory implements IScreenFactory
 {
     public IScreen create() { return new MarketScreen();}
 }
-//class InventoryScreenFactory implements IScreenFactory
-//{
-//    public IScreen create() {return new InventoryScreen();}
-//}
+class InventoryScreenFactory implements IScreenFactory
+{
+    public IScreen create() {return new InventoryScreen();}
+}
 //class SelectScreenFactory implements IScreenFactory
 //{
 //    public IScreen create() {return new SelectScreen();}
@@ -148,4 +157,3 @@ class EndingCreditScreenFactory implements IScreenFactory
 {
     public IScreen create() {return new EndingCreditScreen();}
 }
-
