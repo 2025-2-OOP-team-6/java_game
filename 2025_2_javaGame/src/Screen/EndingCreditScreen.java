@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class EndingCreditScreen extends JPanel implements IScreen {
     // CONST
-    private final String SKIP_BTN = "..//assets//buttons//gobackBtn.png";
+    private final String SKIP_BTN = "assets//buttons//gobackBtn.png";
     private final int SCROLL_SPEED = 2;
     private final int CREDIT_FONT_SIZE = 28;
     private final int TITLE_FONT_SIZE = 40;

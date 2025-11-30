@@ -32,11 +32,11 @@ import java.util.Arrays;
 public class RankScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String GOBACK_BTN           = "..//assets//buttons//gobackBtn.png";
-    private final String RANKING1_IMAGE      = "..//assets//images//ranking1.png";
-    private final String RANKING2_IMAGE      = "..//assets//images//ranking2.png";
-    private final String RANKING3_IMAGE      = "..//assets//images//ranking3.png";
-    private final String RANKING_TITLE_IMAGE = "..//assets//images//rankingTitle.png";
+    private final String GOBACK_BTN           = "assets//buttons//gobackBtn.png";
+    private final String RANKING1_IMAGE      = "assets//images//ranking1.png";
+    private final String RANKING2_IMAGE      = "assets//images//ranking2.png";
+    private final String RANKING3_IMAGE      = "assets//images//ranking3.png";
+    private final String RANKING_TITLE_IMAGE = "assets//images//rankingTitle.png";
 
     // 디자인 CONST
     private final Color GOLD_COLOR = new Color(255, 204, 0); // 1위 금색

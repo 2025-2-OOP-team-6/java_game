@@ -23,9 +23,9 @@ import java.awt.FlowLayout;
 public class GameOverScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String HOME_BTN = "..//assets//buttons//gobackBtn.png";
-    private final String RETRY_BTN = "..//assets//buttons//startAdventureBtn.png";
-    private final String CREDIT_BTN = "..//assets//buttons//endingCreditBtn.png";
+    private final String HOME_BTN = "assets//buttons//gobackBtn.png";
+    private final String RETRY_BTN = "assets//buttons//startAdventureBtn.png";
+    private final String CREDIT_BTN = "assets//buttons//endingCreditBtn.png";
 
     //VARIABLES
     private JLabel titleLabel;

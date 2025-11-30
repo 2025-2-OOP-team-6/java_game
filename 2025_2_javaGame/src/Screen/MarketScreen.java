@@ -39,9 +39,9 @@ import java.util.ArrayList;
 public class MarketScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
-    private final String PURCHASE_BTN = "..//assets//buttons//purchaseBtn.png";
+    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
+    private final String PURCHASE_BTN = "assets//buttons//purchaseBtn.png";
 
     //VARIABLES
     private JLabel titleL;

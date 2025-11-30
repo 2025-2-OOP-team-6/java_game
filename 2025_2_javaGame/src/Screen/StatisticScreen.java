@@ -25,12 +25,12 @@ import java.util.Arrays;
 public class StatisticScreen extends JPanel implements IScreen
 {
     //CONST
-    private final String GOBACK_BTN      = "..//assets//buttons//gobackBtn.png";
-    private final String STATISTIC_TITLE = "..//assets//images//statisticTitle.png";
-    private final String USER_DATA_NULL  = "..//assets//images//userDataNull.png";
-    private final String ITEM_USAGE_BTN  = "..//assets//buttons//itemUsageBtn.png";
-    private final String CHAR_USAGE_BTN  = "..//assets//buttons//charUsageBtn.png";
-    private final String RESULT_BTN      = "..//assets//buttons//resultBtn.png";
+    private final String GOBACK_BTN      = "assets//buttons//gobackBtn.png";
+    private final String STATISTIC_TITLE = "assets//images//statisticTitle.png";
+    private final String USER_DATA_NULL  = "assets//images//userDataNull.png";
+    private final String ITEM_USAGE_BTN  = "assets//buttons//itemUsageBtn.png";
+    private final String CHAR_USAGE_BTN  = "assets//buttons//charUsageBtn.png";
+    private final String RESULT_BTN      = "assets//buttons//resultBtn.png";
 
     private final String CHAR_USAGE = "CHAR_USAGE";
     private final String ITEM_USAGE = "ITEM_USAGE";

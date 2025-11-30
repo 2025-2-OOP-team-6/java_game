@@ -9,7 +9,7 @@ import GameLogic.Dice;
 import GameLogic.DiceRange;
 
 public class DiceData {
-	private static final String DICE_FILE = "..//assets//files//dice_file.csv";
+	private static final String DICE_FILE = "assets//files//dice_file.csv";
         
     private final HashMap<String, Dice> diceMap;
     

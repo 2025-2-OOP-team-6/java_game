@@ -33,8 +33,8 @@ import java.awt.event.MouseEvent;
 public class InventoryScreen  extends JPanel implements IScreen
 {
     //CONST
-    private final String ITEM_IMAGE   = "..//assets//images//itemImage.png";
-    private final String GOBACK_BTN   = "..//assets//buttons//gobackBtn.png";
+    private final String ITEM_IMAGE   = "assets//images//itemImage.png";
+    private final String GOBACK_BTN   = "assets//buttons//gobackBtn.png";
 
     //VARIABLES
     private JLabel titleL;
