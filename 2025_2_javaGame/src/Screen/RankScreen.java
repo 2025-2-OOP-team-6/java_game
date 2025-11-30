@@ -186,7 +186,7 @@ public class RankScreen extends JPanel implements IScreen
             centerPart.add(nameL);
             centerPart.add(Box.createVerticalStrut(5));
 
-            JLabel scoreL = new JLabel(String.valueOf(userMgr.getRank(userid)) + "점");
+            JLabel scoreL = new JLabel(String.valueOf(userMgr.getStage(userid)) + "점");
             scoreL.setFont(new Font("맑은 고딕", Font.BOLD, 24));
             scoreL.setForeground(GOLD_COLOR);
             scoreL.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -218,7 +218,7 @@ public class RankScreen extends JPanel implements IScreen
         headerRow.setOpaque(false);
         headerRow.setPreferredSize(new Dimension(800, 40));
 
-        String[] headers = {"순위", "플레이어", "레벨", "점수"};
+        String[] headers = {"순위", "플레이어", "스테이지"};
         for(String h : headers)
         {
             JLabel label = new JLabel(h, JLabel.CENTER);
@@ -240,7 +240,7 @@ public class RankScreen extends JPanel implements IScreen
             JLabel rankL = new JLabel(String.valueOf(i + 1), JLabel.CENTER);
             JLabel idL = new JLabel(userid, JLabel.CENTER);
 
-            JLabel scoreL = new JLabel(String.valueOf(userMgr.getRank(userid)), JLabel.CENTER); // Score
+            JLabel scoreL = new JLabel(String.valueOf(userMgr.getStage(userid)), JLabel.CENTER); // Score
 
             Font font = new Font("맑은 고딕", Font.BOLD, 14);
             Color color = Color.WHITE;

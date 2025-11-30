@@ -286,6 +286,8 @@ public class HomeScreen extends JPanel implements IScreen {
         rankLabel.setText(rankString + " rank");
 
         removeAll();
+        coinLabel.setText(coinString + " coin");
+        rankLabel.setText(rankString + " 위");
         setComponent();
         revalidate();
         repaint();

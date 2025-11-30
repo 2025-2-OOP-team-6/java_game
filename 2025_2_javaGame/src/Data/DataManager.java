@@ -134,28 +134,24 @@ public class DataManager
 
         List<String> idList = new ArrayList<>(Arrays.asList(userMgr.getIDList().clone()));
         idList.sort((id1, id2) ->{
-            LogData.LogCon log1 = logMgr.getLatestLog(id1);
-            LogData.LogCon log2 = logMgr.getLatestLog(id2);
+            int stage1 =userMgr.getStage(id1);
+            int stage2 = userMgr.getStage(id2);
 
-            if(log1 == null && log2 == null) return 0;
-            if(log1 == null) return 1;
-            if(log2 == null) return -1;
+            if(stage1 == 0 && stage2 == 0) return 0;
+            if(stage1 == 0) return 1;
+            if(stage2 == 0) return -1;
 
-            int rank1 = Integer.parseInt(log1.getRank());
-            int rank2 = Integer.parseInt(log2.getRank());
+      
 
-            if(rank1 != rank2)
+            if(stage1 != stage2)
             {
-                return Integer.compare(rank1, rank2);
+                return Integer.compare(stage2, stage1);
             }
 
-
-            int time1 = log1.getTime().toSecondOfDay();
-            int time2 = log2.getTime().toSecondOfDay();
-
-            return Integer.compare(time1, time2);
+            return Integer.compare(stage2, stage1);
         });
 
+        userMgr.updateRank(currentUser.getId(), idList.indexOf(currentUser.getId()));
         return idList.toArray(new String[0]);
     }
 
