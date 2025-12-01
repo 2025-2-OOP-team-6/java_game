@@ -138,8 +138,8 @@ public class HomeScreen extends JPanel implements IScreen {
         centerPanel.add(Box.createVerticalStrut(40));
         centerPanel.setOpaque(false);
 
-        final int BTN_WIDTH = 150;
-        final int BTN_HEIGHT = 150;
+        final int BTN_WIDTH = 120;
+        final int BTN_HEIGHT = 120;
 
         Image original = new ImageIcon(STATISTIC_BTN).getImage();
         Image scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
@@ -176,7 +176,7 @@ public class HomeScreen extends JPanel implements IScreen {
         });
 
         original = new ImageIcon(RANK_BTN).getImage();
-        scaled = original.getScaledInstance(BTN_WIDTH, BTN_HEIGHT, Image.SCALE_SMOOTH);
+        scaled = original.getScaledInstance(BTN_WIDTH-10, BTN_HEIGHT, Image.SCALE_SMOOTH);
         rankBtn = new GButton(new ImageIcon(scaled), () -> {
             scManager.show(Screen.RANK);
         });
